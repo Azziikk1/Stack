@@ -43,6 +43,13 @@ jobs:
         run: |
           pip install pillow --quiet
           python3 resize_icon.py
+          # Tüm mipmap klasörlerine zorla kopyala
+          for dir in android/app/src/main/res/mipmap-*; do
+            cp icon_512_final.png "$dir/ic_launcher.png"
+            cp icon_512_final.png "$dir/ic_launcher_round.png"
+            echo "Copied to $dir"
+          done
+          ls android/app/src/main/res/mipmap-xxxhdpi/
 
       - name: Decode keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/stackgame.keystore
