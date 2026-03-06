@@ -37,34 +37,13 @@ jobs:
         run: npx cap sync android
 
       - name: Remove ripple effect
-        run: |
-          cat > android/app/src/main/res/values/styles.xml << 'STYLES_EOF'
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">#0a0a0f</item>
-        <item name="colorPrimaryDark">#0a0a0f</item>
-        <item name="colorAccent">#00ffe7</item>
-        <item name="android:colorBackground">#0a0a0f</item>
-        <item name="android:windowBackground">#0a0a0f</item>
-        <item name="android:colorControlHighlight">@android:color/transparent</item>
-        <item name="colorControlHighlight">@android:color/transparent</item>
-        <item name="selectableItemBackground">@android:color/transparent</item>
-        <item name="android:selectableItemBackground">@android:color/transparent</item>
-    </style>
-    <style name="AppTheme.NoActionBarLaunch" parent="AppTheme">
-        <item name="android:background">#0a0a0f</item>
-    </style>
-</resources>
-STYLES_EOF
+        run: python3 -c "open('android/app/src/main/res/values/styles.xml','w').write('<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n  <style name=\"AppTheme\" parent=\"Theme.AppCompat.NoActionBar\">\n    <item name=\"colorPrimary\">#0a0a0f</item>\n    <item name=\"colorPrimaryDark\">#0a0a0f</item>\n    <item name=\"colorAccent\">#00ffe7</item>\n    <item name=\"android:colorBackground\">#0a0a0f</item>\n    <item name=\"android:windowBackground\">#0a0a0f</item>\n    <item name=\"android:colorControlHighlight\">@android:color/transparent</item>\n    <item name=\"colorControlHighlight\">@android:color/transparent</item>\n    <item name=\"selectableItemBackground\">@android:color/transparent</item>\n    <item name=\"android:selectableItemBackground\">@android:color/transparent</item>\n  </style>\n  <style name=\"AppTheme.NoActionBarLaunch\" parent=\"AppTheme\">\n    <item name=\"android:background\">#0a0a0f</item>\n  </style>\n</resources>')"
 
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
       - name: Build debug APK
-        run: |
-          cd android
-          ./gradlew assembleDebug --no-daemon
+        run: cd android && ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
