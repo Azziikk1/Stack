@@ -280,12 +280,12 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
   <div class="section-title" data-lang="mode">â€” MOD â€”</div>
   <div class="mode-row" id="mode-row"></div>
   <div class="mode-desc" id="mode-desc"></div>
-  <button class="start-btn" id="start-btn">â–¶ OYNA</button>
+  <button class="start-btn" id="start-btn">OYNA</button>
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px;">
     <button class="txt-btn" id="profile-btn">ğŸ‘¤ PROFÄ°L</button>
     <button class="txt-btn" id="shop-btn">ğŸ›’ MAÄAZA</button>
     <button class="txt-btn" id="online-btn">ğŸŒ ONLINE LB</button>
-    <button class="txt-btn" id="tournament-menu-btn">ğŸ† TURNUVA</button>
+    <button class="txt-btn" id="tournament-menu-btn">TURNUVA</button>
   </div>
   <div class="section-title" data-lang="daily_section" style="margin-top:4px;">â€” GÃœNLÃœK GÃ–REVLER â€”</div>
   <div id="daily-tasks-wrap"></div>
@@ -297,7 +297,7 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
     <div id="score-wrap">
       <div id="score-display">0</div>
       <div id="score-label" data-lang="score_lbl">SKOR</div>
-      <div id="lives-display">â¤ï¸â¤ï¸â¤ï¸</div>
+      <div id="lives-display"></div>
     </div>
     <div id="center-hud">
       <div id="height-display">0m</div>
@@ -315,9 +315,9 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
   </div>
   <div id="special-hint"></div>
   <div id="powerup-bar">
-    <button class="pu-btn" id="pu-freeze">â„ï¸ <span data-lang='pu_freeze'>DONDUR</span><span class="pu-count" id="pu-freeze-count">0</span></button>
-    <button class="pu-btn" id="pu-wide">ğŸ” <span data-lang="pu_wide">GENÄ°ÅLET</span><span class="pu-count" id="pu-wide-count">0</span></button>
-    <button class="pu-btn" id="pu-auto">ğŸ’« <span data-lang="pu_auto">OTO</span><span class="pu-count" id="pu-auto-count">0</span></button>
+    <button class="pu-btn" id="pu-freeze"><span data-lang='pu_freeze'>DONDUR</span><span class="pu-count" id="pu-freeze-count">0</span></button>
+    <button class="pu-btn" id="pu-wide"> <span data-lang="pu_wide">GENÄ°ÅLET</span><span class="pu-count" id="pu-wide-count">0</span></button>
+    <button class="pu-btn" id="pu-auto"><span data-lang="pu_auto">OTO</span><span class="pu-count" id="pu-auto-count">0</span></button>
   </div>
   <div id="hud-bottom">
     <div id="combo-display"></div>
@@ -329,8 +329,8 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
 <!-- PAUSE -->
 <div class="screen hidden" id="pause-screen">
   <h2>â¸ DURAKLATILDI</h2>
-  <button class="menu-btn" id="resume-btn">â–¶ DEVAM ET</button>
-  <button class="menu-btn" id="pause-menu-btn">ğŸ  ANA MENÃœ</button>
+  <button class="menu-btn" id="resume-btn"> DEVAM ET</button>
+  <button class="menu-btn" id="pause-menu-btn"> ANA MENÃœ</button>
 </div>
 
 <!-- GAME OVER -->
@@ -356,17 +356,17 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
 <!-- STATS -->
 <!-- ACHIEVEMENTS -->
 <div class="screen hidden" id="achievements-screen" style="justify-content:flex-start;padding-top:16px;">
-  <h2 data-lang="ach_title">BAÅARIMLAR</h2>
+  <h2 data-lang="ach_title">ğŸ… BAÅARIMLAR</h2>
   <div class="ach-grid" id="ach-grid"></div>
-  <button class="menu-btn" id="ach-back" style="margin-top:12px;">â† GERÄ°</button>
+  <button class="menu-btn" id="ach-back" style="margin-top:12px;">GERÄ°</button>
 </div>
 
 <!-- SHOP -->
 <div class="screen hidden" id="shop-screen" style="justify-content:flex-start;padding-top:16px;">
   <h2 data-lang="shop_title">ğŸ›’ MAÄAZA</h2>
-  <div id="shop-xp">ğŸ’« XP: <span id="shop-xp-val">0</span></div>
+  <div id="shop-xp">XP: <span id="shop-xp-val">0</span></div>
   <div class="shop-grid" id="shop-grid"></div>
-  <button class="menu-btn" id="shop-back" style="margin-top:10px;">â† GERÄ°</button>
+  <button class="menu-btn" id="shop-back" style="margin-top:10px;">GERÄ°</button>
 </div>
 
 <!-- ONLINE LB -->
@@ -376,7 +376,7 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
   <table class="online-lb-table" id="online-lb-table">
     <tbody id="online-lb-body"></tbody>
   </table>
-  <button class="menu-btn" id="online-back" style="margin-top:12px;">â† GERÄ°</button>
+  <button class="menu-btn" id="online-back" style="margin-top:12px;">GERÄ°</button>
 </div>
 
 <!-- PROFILE -->
@@ -384,7 +384,7 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
   <div id="prof-inner">
     <!-- Ãœst: Avatar + Ä°sim + Unvan -->
     <div id="prof-header">
-      <div class="prof-avatar" id="prof-avatar">ğŸ§±</div>
+      <div class="prof-avatar" id="prof-avatar"></div>
       <div id="prof-header-right">
         <input type="text" id="player-name-input" class="prof-name-input" maxlength="12" placeholder="ADINÄ°ZÄ° GÄ°RÄ°N">
         <div class="prof-title-badge" id="prof-title-badge"></div>
@@ -408,9 +408,9 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
     <div class="prof-mode-row" id="prof-mode-row"></div>
     <!-- Alt butonlar -->
     <div id="prof-btns">
-      <button id="prof-achs-corner" onclick="showScreen('achievements')">ğŸ… BAÅARIMLAR</button>
-      <button id="prof-titles-btn" onclick="showScreen('titles')">ğŸ·ï¸ UNVANLAR</button>
-      <button class="menu-btn" id="prof-back-btn">â† GERÄ°</button>
+      <button id="prof-achs-corner" onclick="showScreen('achievements')">BAÅARIMLAR</button>
+      <button id="prof-titles-btn" onclick="showScreen('titles')">UNVANLAR</button>
+      <button class="menu-btn" id="prof-back-btn">GERÄ°</button>
     </div>
   </div>
 </div>
@@ -435,15 +435,15 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
   </div>
   <div id="t-status" style="font-family:'DM Mono','Courier New',Courier,monospace;font-size:.6rem;color:rgba(255,255,255,.25);letter-spacing:2px;text-align:center;"></div>
   <table class="t-lb-table" id="t-lb-table"><tbody id="t-lb-body"></tbody></table>
-  <button class="menu-btn" id="t-back-btn" style="margin-top:8px;">â† GERÄ°</button>
+  <button class="menu-btn" id="t-back-btn" style="margin-top:8px;">GERÄ°</button>
 </div>
 
 <!-- TITLES -->
 <div class="screen hidden" id="titles-screen" style="background:rgba(5,5,12,.99);gap:10px;">
-  <h2 data-lang="titles_title" style="font-size:2.5rem;letter-spacing:4px;color:#ffd32a;">ğŸ·ï¸ UNVANLAR</h2>
+  <h2 data-lang="titles_title" style="font-size:2.5rem;letter-spacing:4px;color:#ffd32a;">UNVANLAR</h2>
   <div id="titles-equipped" style="font-family:'DM Mono','Courier New',Courier,monospace;font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:2px;text-align:center;"></div>
   <div id="titles-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:300px;max-height:56vh;overflow-y:auto;padding-right:4px;"></div>
-  <button class="menu-btn" id="titles-back" style="margin-top:10px;">â† GERÄ°</button>
+  <button class="menu-btn" id="titles-back" style="margin-top:10px;">GERÄ°</button>
 </div>
 
 <!-- SETTINGS -->
@@ -456,21 +456,21 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
   <div class="settings-row">
     <span class="settings-label" data-lang="trail">Ä°Z STÄ°LÄ°</span>
     <select id="trail-style" style="font-family:'DM Mono','Courier New',Courier,monospace;font-size:.72rem;background:rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.25);color:#fff;padding:5px 8px;cursor:pointer;letter-spacing:1px;">
-      <option value="classic">ğŸŒŸ KLASÄ°K</option>
-      <option value="fire">ğŸ”¥ ATEÅ</option>
-      <option value="rainbow">ğŸŒˆ GÃ–KKUÅAÄI</option>
-      <option value="ghost">ğŸ‘» HAYALET</option>
-      <option value="pixel">ğŸ® PÄ°KSEL</option>
-      <option value="neon">ğŸ’¡ NEON</option>
-      <option value="ice">â„ï¸ BUZUL</option>
-      <option value="dark">ğŸŒ‘ KARANLIK</option>
-      <option value="gold">âœ¨ ALTIN</option>
-      <option value="matrix">ğŸ’š MATRÄ°X</option>
+      <option value="classic"> KLASÄ°K</option>
+      <option value="fire"> ATEÅ</option>
+      <option value="rainbow"> GÃ–KKUÅAÄI</option>
+      <option value="ghost"> HAYALET</option>
+      <option value="pixel"> PÄ°KSEL</option>
+      <option value="neon"> NEON</option>
+      <option value="ice">BUZUL</option>
+      <option value="dark"> KARANLIK</option>
+      <option value="gold"> ALTIN</option>
+      <option value="matrix"> MATRÄ°X</option>
       <option value="blood">ğŸ©¸ KAN</option>
     </select>
   </div>
   <div class="settings-row">
-    <span class="settings-label">ğŸµ TEMA</span>
+    <span class="settings-label"> TEMA</span>
     <div id="music-theme-row" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;"></div>
     <span class="settings-label" data-lang="music">MÃœZÄ°K SES</span>
     <input type="range" class="vol-slider" id="music-vol" min="0" max="100" value="55">
@@ -490,14 +490,14 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
   <div class="settings-row">
     <span class="settings-label" data-lang="language">DÄ°L / LANGUAGE</span>
     <select id="lang-select" class="name-input" style="width:140px;cursor:pointer;">
-      <option value="tr">ğŸ‡¹ğŸ‡· TÃ¼rkÃ§e</option>
-      <option value="en">ğŸ‡¬ğŸ‡§ English</option>
-      <option value="de">ğŸ‡©ğŸ‡ª Deutsch</option>
-      <option value="es">ğŸ‡ªğŸ‡¸ EspaÃ±ol</option>
-      <option value="ru">ğŸ‡·ğŸ‡º Ğ ÑƒÑÑĞºĞ¸Ğ¹</option>
+      <option value="tr"> TÃ¼rkÃ§e</option>
+      <option value="en"> English</option>
+      <option value="de"> Deutsch</option>
+      <option value="es"> EspaÃ±ol</option>
+      <option value="ru"> Ğ ÑƒÑÑĞºĞ¸Ğ¹</option>
     </select>
   </div>
-  <button class="menu-btn" id="settings-back" style="margin-top:12px;">â† GERÄ°</button>
+  <button class="menu-btn" id="settings-back" style="margin-top:12px;">GERÄ°</button>
 </div>
 
 <canvas id="canvas"></canvas>
@@ -505,20 +505,20 @@ canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:n
 <script>
 const LS={get:(k,d)=>{try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch{return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}};
 
-const LANGS={"tr": {"play": "â–¶ OYNA", "theme": "â€” TEMA â€”", "difficulty": "â€” ZORLUK â€”", "mode": "â€” MOD â€”", "easy": "KOLAY", "normal": "NORMAL", "hard": "ZOR", "settings": "âš™ï¸", "back": "â† GERÄ°", "profile": "ğŸ‘¤ PROFÄ°L", "shop": "ğŸ›’ MAÄAZA", "online": "ğŸŒ ONLINE LB", "tournament": "ğŸ† TURNUVA", "achievements": "ğŸ… BAÅARIMLAR", "titles": "ğŸ·ï¸ UNVANLAR", "daily": "â€” GÃœNLÃœK GÃ–REVLER â€”", "level": "SEVÄ°YE", "streak": "GÃœNLÃœK SERÄ°", "best": "EN Ä°YÄ°", "games": "OYUN", "combo": "KOMBO", "perfect": "MÃœKEMMEL", "blocks": "BLOK", "achievement": "BAÅARIM", "modBests": "â€” MOD EN Ä°YÄ°LERÄ° â€”", "name_placeholder": "ADINÄ°ZÄ° GÄ°RÄ°N", "settings_title": "AYARLAR", "music": "MÃœZÄ°K", "sfx": "SES EFEKTÄ°", "haptic": "TÄ°TREÅÄ°M", "swipe": "SWIPE KONTROL", "trail": "Ä°Z EFEKTI", "avatar": "AVATAR", "language": "DÄ°L", "gameover": "OYUN BÄ°TTÄ°", "score": "SKOR", "newbest": "ğŸ† YENÄ° REKOR!", "resume": "â–¶ DEVAM", "restart": "â†º YENÄ°DEN", "menu": "â˜° MENÃœ", "paused": "â€” DURAKLADI â€”", "classic": "KLASÄ°K", "time": "ZAMAN", "survival": "HAYATTA KAL", "chaos": "KAOS", "ghost": "HAYALET", "trail_classic": "ğŸŒŸ KLAÅÄ°K", "trail_fire": "ATEÅ Ä°ZÄ°", "trail_rainbow": "GÃ–KKUÅAÄI", "trail_ghost": "HAYALET", "trail_pixel": "PÄ°KSEL", "trail_neon": "NEON", "trail_sparkle": "IÅILTILI", "trail_comet": "KUYRUKLU YILDIZ", "trail_matrix": "MATRÄ°X", "trail_minimal": "MÄ°NÄ°MAL", "prof_level": "SEVÄ°YE", "prof_streak": "GÃœNLÃœK SERÄ°", "prof_modBests": "â€” MOD EN Ä°YÄ°LERÄ° â€”", "stat_best": "EN Ä°YÄ°", "stat_games": "OYUN", "stat_combo": "KOMBO", "stat_perfect": "MÃœKEMMEL", "stat_blocks": "BLOK", "stat_achs": "BAÅARIM", "task_score": "YÃ¼ksek skor yap", "task_perfect": "MÃ¼kemmel yerleÅŸtir", "task_games": "Oyun oyna", "task_combo": "Kombo yap", "online_lb": "ğŸŒ ONLINE LB", "no_trail": "Kilit", "locked": "KÄ°LÄ°TLÄ°", "active": "ğŸŸ¢ AKTÄ°F", "inactive": "â­• KAPALI", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "ğŸ“¤ PAYLAÅ", "qr": "ğŸ“± QR KOD", "classic_desc": "Klasik sonsuz mod", "time_desc": "60 saniyede kaÃ§ blok?", "survival_desc": "Blok her seferinde daralÄ±r", "chaos_desc": "HÄ±z rastgele deÄŸiÅŸir", "ghost_desc": "Blok ara ara gÃ¶rÃ¼nmez olur", "play3": "3 OYUN OYNA", "perf5": "5 MÃœKEMMEL YAP", "score15": "15 PUANA ULAÅ", "combo3": "3X KOMBO YAP", "t_beginner": "ACEMI", "t_builder": "Ä°NÅAATÃ‡I", "t_stacker": "YIÄICI", "t_pro": "USTA", "t_master": "UZMAN", "t_legend": "EFSANE", "t_god": "TANRI", "t_survivor": "HAYATTA KALAN", "t_survivor2": "EFSANEVÄ° HAYATTA KALAN", "t_perfectionist": "MÃœKEMMELÄ°YETÃ‡Ä°", "t_combo_king": "KOMBO KRALI", "t_collector": "KOLEKSÄ°YONCU", "t_allmode": "TÃœM MODLAR", "t_daily": "GÃœNDELÄ°K", "t_weekly": "HAFTALIK", "t_timeking": "ZAMAN KRALI", "t_ghost_s": "HAYALET KATILI", "t_scholar": "ALÄ°M", "t_veteran": "VETERANq", "t_champion": "ÅAMPÄ°YON", "t_diamond": "ELMASq", "trail_ice": "BUZUL", "trail_dark": "KARANLIK", "trail_gold": "ALTIN Ä°Z", "trail_blood": "KAN", "ach_title": "BAÅARIMLAR", "titles_title": "ğŸ·ï¸ UNVANLAR", "shop_title": "ğŸ›’ MAÄAZA", "tournament_title": "ğŸ† TURNUVA", "online_title": "ğŸŒ ONLINE SKOR", "daily_section": "â€” GÃœNLÃœK GÃ–REVLER â€”", "settings_back": "â† GERÄ°", "equipped": "âœ… TAKILDI", "equip": "âš¡ TAK", "owned": "âœ“ ALINDI", "cat_iz": "Ä°Z", "cat_kozmetik": "KOZMETÄ°K", "cat_guc": "GÃœÃ‡LENDIRME", "cat_avatar": "AVATAR", "shop_xp": "TOPLAM XP", "equipped_title": "âœ… AKTÄ°F UNVAN", "equip_title": "TAK", "pu_freeze": "DONDUR", "pu_wide": "GENÄ°ÅLET", "pu_auto": "OTO", "height": "YÃœKSEKLÄ°K", "msg_miss": "ğŸ’” DÄ°KKAT!", "msg_perfect": "âœ¨ MÃœKEMMEL!", "msg_combo": "ğŸ”¥ KOMBO!", "msg_gameover": "OYUN BÄ°TTÄ°", "title_active": "âœ… AKTÄ°F", "title_equip": "TAK", "msg_frozen": "â„ï¸ DONDURULDU!", "msg_wide": "ğŸ” BLOK GENÄ°ÅLEDÄ°!", "msg_auto": "ğŸ’« OTOMATÄ°K!", "msg_life_lost": "ğŸ’” DÄ°KKAT!", "msg_expand": "â¬† BLOK GENÄ°ÅLEDÄ°!", "msg_gold_perfect": "â­ ALTIN MÃœKEMMEL! 2Ã—", "msg_perfect_txt": "âœ¦ MÃœKEMMEL âœ¦", "height_lbl": "YÃœKSEKLÄ°K", "score_lbl": "SKOR", "combo_lbl": "KOMBO", "levelup_lbl": "SEVÄ°YE", "gameover_title": "OYUN BÄ°TTÄ°", "final_label": "SKOR", "stat_height": "YÃœKSEKLÄ°K", "stat_bestcombo": "EN Ä°YÄ° KOMBO", "stat_perfect_go": "MÃœKEMMEL", "stat_level": "SEVÄ°YE", "daily_done": "GÃœNLÃœK GÃ–REV TAMAM", "diff_easy": "kolay", "diff_normal": "normal", "diff_hard": "zor", "retry": "ğŸ”„ TEKRAR", "go_menu": "ğŸ  MENÃœ", "share_btn": "ğŸ“¤ PAYLAÅ", "qr_btn": "ğŸ“± QR KOD", "new_best": "ğŸ† YENÄ° REKOR!", "ach_first_game": "Ä°LK ADIM", "ach_desc_first_game": "Ä°lk oyunu oyna", "ach_first_perfect": "Ä°LK MÃœKEMMEL", "ach_desc_first_perfect": "Ä°lk mÃ¼kemmel bloÄŸu koy", "ach_shop_buy": "ALIÅVERÄ°Å", "ach_desc_shop_buy": "MaÄŸazadan bir ÅŸey al", "ach_daily1": "GÃœNLÃœK OYUNCU", "ach_desc_daily1": "Bir gÃ¼nlÃ¼k gÃ¶revi tamamla", "ach_daily_all": "TAM TAKIM", "ach_desc_daily_all": "TÃ¼m gÃ¼nlÃ¼k gÃ¶revleri bitir", "ach_shopaholic": "ALIÅVERÄ°Å KRALI", "ach_desc_shopaholic": "5 maÄŸaza Ã¼rÃ¼nÃ¼ al", "ach_collector": "KOLEKSÄ°YONCU", "ach_desc_collector": "10 maÄŸaza Ã¼rÃ¼nÃ¼ al", "ach_score_5": "BEÅLÄ°K", "ach_desc_score_5": "5 puana ulaÅŸ", "ach_score_10": "Ä°LK 10", "ach_desc_score_10": "10 puana ulaÅŸ", "ach_score_25": "YÃœKSELÄ°Å", "ach_desc_score_25": "25 puana ulaÅŸ", "ach_score_50": "USTA", "ach_desc_score_50": "50 puana ulaÅŸ", "ach_score_75": "ELÄ°T", "ach_desc_score_75": "75 puana ulaÅŸ", "ach_score_100": "YÃœZLÃœK", "ach_desc_score_100": "100 puana ulaÅŸ", "ach_score_150": "EFSANE", "ach_desc_score_150": "150 puana ulaÅŸ", "ach_score_200": "TANRI", "ach_desc_score_200": "200 puana ulaÅŸ", "ach_combo3": "ÃœÃ‡LEME", "ach_desc_combo3": "3x kombo yap", "ach_combo5": "KOMBO USTASI", "ach_desc_combo5": "5x kombo yap", "ach_combo10": "Ã‡IÄIR AÃ‡ICI", "ach_desc_combo10": "10x kombo yap", "ach_combo15": "VÄ°HRAN", "ach_desc_combo15": "15x kombo yap", "ach_combo20": "FIRTINA", "ach_desc_combo20": "20x kombo yap", "ach_games3": "BAÅLANGIÃ‡", "ach_desc_games3": "3 oyun oyna", "ach_games10": "DÃœZENLÄ°", "ach_desc_games10": "10 oyun oyna", "ach_games25": "HAFTALIK", "ach_desc_games25": "25 oyun oyna", "ach_games50": "KOÅUCU", "ach_desc_games50": "50 oyun oyna", "ach_games100": "DEMÄ°RCÄ°", "ach_desc_games100": "100 oyun oyna", "ach_games200": "MAKÄ°NE", "ach_desc_games200": "200 oyun oyna", "ach_perf5": "KESKÄ°N", "ach_desc_perf5": "Tek oyunda 5 mÃ¼kemmel", "ach_perf10": "ELMAS EL", "ach_desc_perf10": "Tek oyunda 10 mÃ¼kemmel", "ach_perf25": "SÄ°HÄ°RBAZ", "ach_desc_perf25": "Tek oyunda 25 mÃ¼kemmel", "ach_perf50": "BÃœYÃœCÃœ", "ach_desc_perf50": "Tek oyunda 50 mÃ¼kemmel", "ach_no_miss": "HATASIZ", "ach_desc_no_miss": "HiÃ§ kaÃ§Ä±rmadan bitir", "ach_gold_perfect": "ALTIN MÃœKEMMEL", "ach_desc_gold_perfect": "AltÄ±n bloÄŸa mÃ¼kemmel bas", "ach_gold5": "ALTIN KOLEKSÄ°YON", "ach_desc_gold5": "5 altÄ±n mÃ¼kemmel", "ach_gold10": "ALTIN EFSANE", "ach_desc_gold10": "10 altÄ±n mÃ¼kemmel", "ach_hardmode": "ZOR YOLCU", "ach_desc_hardmode": "Zor modda oyna", "ach_hard25": "Ã–LÃœM TACIRI", "ach_desc_hard25": "Zor modda 25 skor", "ach_survival_s": "HAYATTA KALAN", "ach_desc_survival_s": "Hayatta Kal modda 20 blok", "ach_ghost_s": "HAYALET AVCISI", "ach_desc_ghost_s": "Hayalet modda 10 blok", "ach_chaos_s": "KAOS KAPTAN", "ach_desc_chaos_s": "Kaos modda 15 blok", "ach_time_s": "ZAMAN TANIKLI", "ach_desc_time_s": "Zaman modda 30 blok", "ach_allmode": "Ã‡OKLU KÄ°ÅÄ°LÄ°K", "ach_desc_allmode": "TÃ¼m modlarda en az 1 oyna", "ach_level5": "SEVÄ°YE 5", "ach_desc_level5": "5. seviyeye ulaÅŸ", "ach_level10": "SEVÄ°YE 10", "ach_desc_level10": "10. seviyeye ulaÅŸ", "ach_level20": "SEVÄ°YE 20", "ach_desc_level20": "20. seviyeye ulaÅŸ", "ach_xp1000": "BÄ°N XP", "ach_desc_xp1000": "Toplam 1000 XP kazan", "ach_night_owl": "GECE BAYKUÅU", "ach_desc_night_owl": "Aurora moduna ulaÅŸ (85+)", "ach_powerup_use": "GÃœÃ‡ ODASI", "ach_desc_powerup_use": "Bir gÃ¼Ã§lendirme kullan", "ach_powerup10": "ENERJÄ° DEPOSU", "ach_desc_powerup10": "10 gÃ¼Ã§lendirme kullan", "ach_share_score": "PAYLAÅIMCI", "ach_desc_share_score": "Skoru paylaÅŸ", "ach_long_game": "UZUN NEFES", "ach_desc_long_game": "Tek oyunda 5 dk oyna", "ach_come_back": "GERÄ° DÃ–NDÃœM", "ach_desc_come_back": "2+ oyun oyna", "ach_three_lives": "SAÄLAM DURUÅ", "ach_desc_three_lives": "3 canla 20 skora ulaÅŸ"}, "en": {"play": "â–¶ PLAY", "theme": "â€” THEME â€”", "difficulty": "â€” DIFFICULTY â€”", "mode": "â€” MODE â€”", "easy": "EASY", "normal": "NORMAL", "hard": "HARD", "settings": "âš™ï¸", "back": "â† BACK", "profile": "ğŸ‘¤ PROFILE", "shop": "ğŸ›’ SHOP", "online": "ğŸŒ ONLINE LB", "tournament": "ğŸ† TOURNAMENT", "achievements": "ğŸ… ACHIEVEMENTS", "titles": "ğŸ·ï¸ TITLES", "daily": "â€” DAILY TASKS â€”", "level": "LEVEL", "streak": "DAY STREAK", "best": "BEST", "games": "GAMES", "combo": "COMBO", "perfect": "PERFECT", "blocks": "BLOCKS", "achievement": "ACHIEVEMENT", "modBests": "â€” MODE BESTS â€”", "name_placeholder": "ENTER YOUR NAME", "settings_title": "SETTINGS", "music": "MUSIC", "sfx": "SFX", "haptic": "HAPTIC", "swipe": "SWIPE CONTROL", "trail": "TRAIL EFFECT", "avatar": "AVATAR", "language": "LANGUAGE", "gameover": "GAME OVER", "score": "SCORE", "newbest": "ğŸ† NEW BEST!", "resume": "â–¶ RESUME", "restart": "â†º RESTART", "menu": "â˜° MENU", "paused": "â€” PAUSED â€”", "classic": "CLASSIC", "time": "TIME", "survival": "SURVIVAL", "chaos": "CHAOS", "ghost": "GHOST", "trail_classic": "ğŸŒŸ CLASSIC", "trail_fire": "FIRE TRAIL", "trail_rainbow": "RAINBOW", "trail_ghost": "GHOST", "trail_pixel": "PIXEL", "trail_neon": "NEON", "trail_sparkle": "SPARKLE", "trail_comet": "COMET", "trail_matrix": "MATRIX", "trail_minimal": "MINIMAL", "prof_level": "LEVEL", "prof_streak": "DAY STREAK", "prof_modBests": "â€” MODE BESTS â€”", "stat_best": "BEST", "stat_games": "GAMES", "stat_combo": "COMBO", "stat_perfect": "PERFECT", "stat_blocks": "BLOCKS", "stat_achs": "ACHIEV.", "task_score": "High score", "task_perfect": "Perfect place", "task_games": "Play games", "task_combo": "Get combo", "online_lb": "ğŸŒ ONLINE LB", "no_trail": "Locked", "locked": "LOCKED", "active": "ğŸŸ¢ ACTIVE", "inactive": "â­• OFF", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "ğŸ“¤ SHARE", "qr": "ğŸ“± QR CODE", "classic_desc": "Classic endless mode", "time_desc": "How many blocks in 60s?", "survival_desc": "Block shrinks each turn", "chaos_desc": "Speed changes randomly", "ghost_desc": "Block disappears at times", "play3": "PLAY 3 GAMES", "perf5": "5 PERFECT DROPS", "score15": "REACH 15 POINTS", "combo3": "3X COMBO", "t_beginner": "BEGINNER", "t_builder": "BUILDER", "t_stacker": "STACKER", "t_pro": "PRO", "t_master": "MASTER", "t_legend": "LEGEND", "t_god": "GOD", "t_survivor": "SURVIVOR", "t_survivor2": "LEGENDARY SURVIVOR", "t_perfectionist": "PERFECTIONIST", "t_combo_king": "COMBO KING", "t_collector": "COLLECTOR", "t_allmode": "ALL MODES", "t_daily": "DAILY", "t_weekly": "WEEKLY", "t_timeking": "TIME KING", "t_ghost_s": "GHOST SLAYER", "t_scholar": "SCHOLAR", "t_veteran": "VETERAN", "t_champion": "CHAMPION", "t_diamond": "DIAMOND", "trail_ice": "ICE", "trail_dark": "DARK", "trail_gold": "GOLD TRAIL", "trail_blood": "BLOOD", "ach_title": "ACHIEVEMENTS", "titles_title": "ğŸ·ï¸ TITLES", "shop_title": "ğŸ›’ SHOP", "tournament_title": "ğŸ† TOURNAMENT", "online_title": "ğŸŒ ONLINE SCORES", "daily_section": "â€” DAILY TASKS â€”", "settings_back": "â† BACK", "equipped": "âœ… EQUIPPED", "equip": "âš¡ EQUIP", "owned": "âœ“ OWNED", "cat_iz": "TRAIL", "cat_kozmetik": "COSMETIC", "cat_guc": "PERK", "cat_avatar": "AVATAR", "shop_xp": "TOTAL XP", "equipped_title": "âœ… ACTIVE TITLE", "equip_title": "EQUIP", "pu_freeze": "FREEZE", "pu_wide": "WIDEN", "pu_auto": "AUTO", "height": "HEIGHT", "msg_miss": "ğŸ’” MISS!", "msg_perfect": "âœ¨ PERFECT!", "msg_combo": "ğŸ”¥ COMBO!", "msg_gameover": "GAME OVER", "title_active": "âœ… ACTIVE", "title_equip": "EQUIP", "msg_frozen": "â„ï¸ FROZEN!", "msg_wide": "ğŸ” BLOCK WIDENED!", "msg_auto": "ğŸ’« AUTO DROP!", "msg_life_lost": "ğŸ’” CAREFUL!", "msg_expand": "â¬† BLOCK EXPANDED!", "msg_gold_perfect": "â­ GOLD PERFECT! 2Ã—", "msg_perfect_txt": "âœ¦ PERFECT âœ¦", "height_lbl": "HEIGHT", "score_lbl": "SCORE", "combo_lbl": "COMBO", "levelup_lbl": "LEVEL", "gameover_title": "GAME OVER", "final_label": "SCORE", "stat_height": "HEIGHT", "stat_bestcombo": "BEST COMBO", "stat_perfect_go": "PERFECT", "stat_level": "LEVEL", "daily_done": "DAILY TASKS DONE", "diff_easy": "easy", "diff_normal": "normal", "diff_hard": "hard", "retry": "ğŸ”„ RETRY", "go_menu": "ğŸ  MENU", "share_btn": "ğŸ“¤ SHARE", "qr_btn": "ğŸ“± QR CODE", "new_best": "ğŸ† NEW BEST!", "ach_first_game": "FIRST STEP", "ach_desc_first_game": "Play first game", "ach_first_perfect": "FIRST PERFECT", "ach_desc_first_perfect": "Place first perfect block", "ach_shop_buy": "SHOPPING", "ach_desc_shop_buy": "Buy something from shop", "ach_daily1": "DAILY PLAYER", "ach_desc_daily1": "Complete a daily task", "ach_daily_all": "FULL TEAM", "ach_desc_daily_all": "Complete all daily tasks", "ach_shopaholic": "SHOPAHOLIC", "ach_desc_shopaholic": "Buy 5 shop items", "ach_collector": "COLLECTOR", "ach_desc_collector": "Buy 10 shop items", "ach_score_5": "FIVER", "ach_desc_score_5": "Reach 5 points", "ach_score_10": "FIRST TEN", "ach_desc_score_10": "Reach 10 points", "ach_score_25": "RISING", "ach_desc_score_25": "Reach 25 points", "ach_score_50": "SKILLED", "ach_desc_score_50": "Reach 50 points", "ach_score_75": "ELITE", "ach_desc_score_75": "Reach 75 points", "ach_score_100": "CENTURY", "ach_desc_score_100": "Reach 100 points", "ach_score_150": "LEGEND", "ach_desc_score_150": "Reach 150 points", "ach_score_200": "GOD", "ach_desc_score_200": "Reach 200 points", "ach_combo3": "TRIPLE", "ach_desc_combo3": "3x combo", "ach_combo5": "COMBO MASTER", "ach_desc_combo5": "5x combo", "ach_combo10": "CHAIN BREAKER", "ach_desc_combo10": "10x combo", "ach_combo15": "VORTEX", "ach_desc_combo15": "15x combo", "ach_combo20": "STORM", "ach_desc_combo20": "20x combo", "ach_games3": "BEGINNER", "ach_desc_games3": "Play 3 games", "ach_games10": "REGULAR", "ach_desc_games10": "Play 10 games", "ach_games25": "WEEKLY", "ach_desc_games25": "Play 25 games", "ach_games50": "RUNNER", "ach_desc_games50": "Play 50 games", "ach_games100": "SMITH", "ach_desc_games100": "Play 100 games", "ach_games200": "MACHINE", "ach_desc_games200": "Play 200 games", "ach_perf5": "SHARP", "ach_desc_perf5": "5 perfects in one game", "ach_perf10": "DIAMOND HAND", "ach_desc_perf10": "10 perfects in one game", "ach_perf25": "WIZARD", "ach_desc_perf25": "25 perfects in one game", "ach_perf50": "SORCERER", "ach_desc_perf50": "50 perfects in one game", "ach_no_miss": "FLAWLESS", "ach_desc_no_miss": "Finish without missing", "ach_gold_perfect": "GOLD PERFECT", "ach_desc_gold_perfect": "Perfect on gold block", "ach_gold5": "GOLD COLLECTION", "ach_desc_gold5": "5 gold perfects", "ach_gold10": "GOLD LEGEND", "ach_desc_gold10": "10 gold perfects", "ach_hardmode": "HARD ROAD", "ach_desc_hardmode": "Play on hard mode", "ach_hard25": "DEATH DEALER", "ach_desc_hard25": "25 score on hard", "ach_survival_s": "SURVIVOR", "ach_desc_survival_s": "20 blocks in survival", "ach_ghost_s": "GHOST HUNTER", "ach_desc_ghost_s": "10 blocks in ghost mode", "ach_chaos_s": "CHAOS CAPTAIN", "ach_desc_chaos_s": "15 blocks in chaos", "ach_time_s": "TIME WITNESS", "ach_desc_time_s": "30 blocks in time mode", "ach_allmode": "ALL MODES", "ach_desc_allmode": "Play all modes at least once", "ach_level5": "LEVEL 5", "ach_desc_level5": "Reach level 5", "ach_level10": "LEVEL 10", "ach_desc_level10": "Reach level 10", "ach_level20": "LEVEL 20", "ach_desc_level20": "Reach level 20", "ach_xp1000": "THOUSAND XP", "ach_desc_xp1000": "Earn 1000 total XP", "ach_night_owl": "NIGHT OWL", "ach_desc_night_owl": "Aurora mode (85+ score)", "ach_powerup_use": "POWER ROOM", "ach_desc_powerup_use": "Use a power-up", "ach_powerup10": "ENERGY DEPOT", "ach_desc_powerup10": "Use 10 power-ups", "ach_share_score": "SHARER", "ach_desc_share_score": "Share your score", "ach_long_game": "LONG BREATH", "ach_desc_long_game": "Play 5 min in one game", "ach_come_back": "CAME BACK", "ach_desc_come_back": "Play 2+ games", "ach_three_lives": "IRON STANCE", "ach_desc_three_lives": "Reach 20 with 3 lives"}, "de": {"play": "â–¶ SPIELEN", "theme": "â€” THEMA â€”", "difficulty": "â€” SCHWIERIGKEIT â€”", "mode": "â€” MODUS â€”", "easy": "LEICHT", "normal": "NORMAL", "hard": "SCHWER", "settings": "âš™ï¸", "back": "â† ZURÃœCK", "profile": "ğŸ‘¤ PROFIL", "shop": "ğŸ›’ SHOP", "online": "ğŸŒ ONLINE LB", "tournament": "ğŸ† TURNIER", "achievements": "ğŸ… ERFOLGE", "titles": "ğŸ·ï¸ TITEL", "daily": "â€” TÃ„GLICHE AUFGABEN â€”", "level": "STUFE", "streak": "TAGES-SERIE", "best": "BESTES", "games": "SPIELE", "combo": "KOMBO", "perfect": "PERFEKT", "blocks": "BLÃ–CKE", "achievement": "ERFOLG", "modBests": "â€” MODUS BESTLEISTUNGEN â€”", "name_placeholder": "NAMEN EINGEBEN", "settings_title": "EINSTELLUNGEN", "music": "MUSIK", "sfx": "SFX", "haptic": "VIBRATION", "swipe": "SWIPE-STEUERUNG", "trail": "SPUREFFEKT", "avatar": "AVATAR", "language": "SPRACHE", "gameover": "SPIEL VORBEI", "score": "PUNKTE", "newbest": "ğŸ† NEUER REKORD!", "resume": "â–¶ WEITER", "restart": "â†º NEU STARTEN", "menu": "â˜° MENÃœ", "paused": "â€” PAUSIERT â€”", "classic": "KLASSISCH", "time": "ZEIT", "survival": "ÃœBERLEBEN", "chaos": "CHAOS", "ghost": "GEIST", "trail_classic": "ğŸŒŸ KLASSISCH", "trail_fire": "FEUERSPUR", "trail_rainbow": "REGENBOGEN", "trail_ghost": "GEIST", "trail_pixel": "PIXEL", "trail_neon": "NEON", "trail_sparkle": "FUNKEN", "trail_comet": "KOMET", "trail_matrix": "MATRIX", "trail_minimal": "MINIMAL", "prof_level": "STUFE", "prof_streak": "TAGES-SERIE", "prof_modBests": "â€” MODUS BESTLEISTUNGEN â€”", "stat_best": "BESTES", "stat_games": "SPIELE", "stat_combo": "KOMBO", "stat_perfect": "PERFEKT", "stat_blocks": "BLÃ–CKE", "stat_achs": "ERFOLGE", "task_score": "Hohe Punktzahl", "task_perfect": "Perfekt platzieren", "task_games": "Spiele spielen", "task_combo": "Kombo machen", "online_lb": "ğŸŒ ONLINE LB", "no_trail": "Gesperrt", "locked": "GESPERRT", "active": "ğŸŸ¢ AKTIV", "inactive": "â­• AUS", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "ğŸ“¤ TEILEN", "qr": "ğŸ“± QR CODE", "classic_desc": "Klassischer Endlosmodus", "time_desc": "Wieviele BlÃ¶cke in 60s?", "survival_desc": "Block schrumpft jede Runde", "chaos_desc": "Geschwindigkeit wechselt", "ghost_desc": "Block wird unsichtbar", "play3": "3 SPIELE SPIELEN", "perf5": "5 PERFEKT SETZEN", "score15": "15 PUNKTE ERREICHEN", "combo3": "3X KOMBO", "t_beginner": "ANFÃ„NGER", "t_builder": "ERBAUER", "t_stacker": "STAPLER", "t_pro": "PROFI", "t_master": "MEISTER", "t_legend": "LEGENDE", "t_god": "GOTT", "t_survivor": "ÃœBERLEBENDER", "t_survivor2": "LEGENDÃ„RER ÃœBERLEBENDER", "t_perfectionist": "PERFEKTIONIST", "t_combo_king": "KOMBO-KÃ–NIG", "t_collector": "SAMMLER", "t_allmode": "ALLE MODI", "t_daily": "TÃ„GLICH", "t_weekly": "WÃ–CHENTLICH", "t_timeking": "ZEITKÃ–NIG", "t_ghost_s": "GEISTJÃ„GER", "t_scholar": "GELEHRTER", "t_veteran": "VETERAN", "t_champion": "CHAMPION", "t_diamond": "DIAMANT", "trail_ice": "EIS", "trail_dark": "DUNKEL", "trail_gold": "GOLDSPUR", "trail_blood": "BLUT", "ach_title": "ERFOLGE", "titles_title": "ğŸ·ï¸ TITEL", "shop_title": "ğŸ›’ SHOP", "tournament_title": "ğŸ† TURNIER", "online_title": "ğŸŒ ONLINE PUNKTE", "daily_section": "â€” TÃ„GLICHE AUFGABEN â€”", "settings_back": "â† ZURÃœCK", "equipped": "âœ… AUSGERÃœSTET", "equip": "âš¡ AUSRÃœSTEN", "owned": "âœ“ BESESSEN", "cat_iz": "SPUR", "cat_kozmetik": "KOSMETIK", "cat_guc": "VERSTÃ„RKER", "cat_avatar": "AVATAR", "shop_xp": "GESAMT XP", "equipped_title": "âœ… AKTIVER TITEL", "equip_title": "AUSRÃœSTEN", "pu_freeze": "EINFRIEREN", "pu_wide": "ERWEITERN", "pu_auto": "AUTO", "height": "HÃ–HE", "msg_miss": "ğŸ’” DANEBEN!", "msg_perfect": "âœ¨ PERFEKT!", "msg_combo": "ğŸ”¥ KOMBO!", "msg_gameover": "SPIEL VORBEI", "title_active": "âœ… AKTIV", "title_equip": "AUSRÃœSTEN", "msg_frozen": "â„ï¸ EINGEFROREN!", "msg_wide": "ğŸ” BLOCK ERWEITERT!", "msg_auto": "ğŸ’« AUTOMATISCH!", "msg_life_lost": "ğŸ’” VORSICHT!", "msg_expand": "â¬† BLOCK ERWEITERT!", "msg_gold_perfect": "â­ GOLD PERFEKT! 2Ã—", "msg_perfect_txt": "âœ¦ PERFEKT âœ¦", "height_lbl": "HÃ–HE", "score_lbl": "PUNKTE", "combo_lbl": "KOMBO", "levelup_lbl": "STUFE", "gameover_title": "SPIEL VORBEI", "final_label": "PUNKTE", "stat_height": "HÃ–HE", "stat_bestcombo": "BESTE KOMBO", "stat_perfect_go": "PERFEKT", "stat_level": "STUFE", "daily_done": "TÃ„GLICHE AUFGABEN ERLEDIGT", "diff_easy": "leicht", "diff_normal": "normal", "diff_hard": "schwer", "retry": "ğŸ”„ NOCHMAL", "go_menu": "ğŸ  MENÃœ", "share_btn": "ğŸ“¤ TEILEN", "qr_btn": "ğŸ“± QR CODE", "new_best": "ğŸ† NEUER REKORD!", "ach_first_game": "ERSTER SCHRITT", "ach_desc_first_game": "Erstes Spiel spielen", "ach_first_perfect": "ERSTES PERFEKT", "ach_desc_first_perfect": "Ersten perfekten Block", "ach_shop_buy": "EINKAUFEN", "ach_desc_shop_buy": "Im Shop kaufen", "ach_daily1": "TAGESSPIELER", "ach_desc_daily1": "Eine Tagesaufgabe", "ach_daily_all": "VOLLES TEAM", "ach_desc_daily_all": "Alle Tagesaufgaben", "ach_shopaholic": "KAUFSÃœCHTIG", "ach_desc_shopaholic": "5 Shop-Artikel", "ach_collector": "SAMMLER", "ach_desc_collector": "10 Shop-Artikel", "ach_score_5": "FÃœNFER", "ach_desc_score_5": "5 Punkte erreichen", "ach_score_10": "ERSTE 10", "ach_desc_score_10": "10 Punkte erreichen", "ach_score_25": "AUFSTIEG", "ach_desc_score_25": "25 Punkte erreichen", "ach_score_50": "KÃ–NNER", "ach_desc_score_50": "50 Punkte erreichen", "ach_score_75": "ELITE", "ach_desc_score_75": "75 Punkte erreichen", "ach_score_100": "JAHRHUNDERT", "ach_desc_score_100": "100 Punkte erreichen", "ach_score_150": "LEGENDE", "ach_desc_score_150": "150 Punkte", "ach_score_200": "GOTT", "ach_desc_score_200": "200 Punkte erreichen", "ach_combo3": "DREIERPACK", "ach_desc_combo3": "3x Kombo", "ach_combo5": "KOMBO-MEISTER", "ach_desc_combo5": "5x Kombo", "ach_combo10": "KETTENBRECHER", "ach_desc_combo10": "10x Kombo", "ach_combo15": "STRUDEL", "ach_desc_combo15": "15x Kombo", "ach_combo20": "STURM", "ach_desc_combo20": "20x Kombo", "ach_games3": "ANFÃ„NGER", "ach_desc_games3": "3 Spiele spielen", "ach_games10": "REGELMÃ„SSIG", "ach_desc_games10": "10 Spiele", "ach_games25": "WÃ–CHENTLICH", "ach_desc_games25": "25 Spiele", "ach_games50": "LÃ„UFER", "ach_desc_games50": "50 Spiele", "ach_games100": "SCHMIED", "ach_desc_games100": "100 Spiele", "ach_games200": "MASCHINE", "ach_desc_games200": "200 Spiele", "ach_perf5": "SCHARF", "ach_desc_perf5": "5 Perfekt in einem Spiel", "ach_perf10": "DIAMANTHAND", "ach_desc_perf10": "10 Perfekt", "ach_perf25": "ZAUBERER", "ach_desc_perf25": "25 Perfekt", "ach_perf50": "HEXER", "ach_desc_perf50": "50 Perfekt", "ach_no_miss": "MAKELLOS", "ach_desc_no_miss": "Ohne Fehler beenden", "ach_gold_perfect": "GOLDPERFEKT", "ach_desc_gold_perfect": "Perfekt auf Goldblock", "ach_gold5": "GOLDSAMMLUNG", "ach_desc_gold5": "5 Goldperfekt", "ach_gold10": "GOLDLEGENDE", "ach_desc_gold10": "10 Goldperfekt", "ach_hardmode": "HARTER WEG", "ach_desc_hardmode": "Im Schwer-Modus spielen", "ach_hard25": "TODESBOTE", "ach_desc_hard25": "25 Punkte schwer", "ach_survival_s": "ÃœBERLEBENDER", "ach_desc_survival_s": "20 BlÃ¶cke Ãœberleben", "ach_ghost_s": "GEISTJÃ„GER", "ach_desc_ghost_s": "10 BlÃ¶cke Geist", "ach_chaos_s": "CHAOSKAPITÃ„N", "ach_desc_chaos_s": "15 BlÃ¶cke Chaos", "ach_time_s": "ZEITZEUGE", "ach_desc_time_s": "30 BlÃ¶cke Zeit", "ach_allmode": "ALLE MODI", "ach_desc_allmode": "Alle Modi einmal spielen", "ach_level5": "STUFE 5", "ach_desc_level5": "Stufe 5 erreichen", "ach_level10": "STUFE 10", "ach_desc_level10": "Stufe 10 erreichen", "ach_level20": "STUFE 20", "ach_desc_level20": "Stufe 20 erreichen", "ach_xp1000": "TAUSEND XP", "ach_desc_xp1000": "1000 Gesamt-XP", "ach_night_owl": "NACHTEULE", "ach_desc_night_owl": "Aurora-Modus (85+)", "ach_powerup_use": "KRAFTRAUM", "ach_desc_powerup_use": "Ein Upgrade verwenden", "ach_powerup10": "ENERGIEDEPOT", "ach_desc_powerup10": "10 Upgrades", "ach_share_score": "TEILER", "ach_desc_share_score": "Punktzahl teilen", "ach_long_game": "LANGER ATEM", "ach_desc_long_game": "5 Min spielen", "ach_come_back": "ZURÃœCKGEKEHRT", "ach_desc_come_back": "2+ Spiele spielen", "ach_three_lives": "EISERNE HALTUNG", "ach_desc_three_lives": "20 Punkte mit 3 Leben"}, "es": {"play": "â–¶ JUGAR", "theme": "â€” TEMA â€”", "difficulty": "â€” DIFICULTAD â€”", "mode": "â€” MODO â€”", "easy": "FÃCIL", "normal": "NORMAL", "hard": "DIFÃCIL", "settings": "âš™ï¸", "back": "â† ATRÃS", "profile": "ğŸ‘¤ PERFIL", "shop": "ğŸ›’ TIENDA", "online": "ğŸŒ ONLINE LB", "tournament": "ğŸ† TORNEO", "achievements": "ğŸ… LOGROS", "titles": "ğŸ·ï¸ TÃTULOS", "daily": "â€” TAREAS DIARIAS â€”", "level": "NIVEL", "streak": "RACHA DIARIA", "best": "MEJOR", "games": "PARTIDAS", "combo": "COMBO", "perfect": "PERFECTO", "blocks": "BLOQUES", "achievement": "LOGRO", "modBests": "â€” MEJORES POR MODO â€”", "name_placeholder": "INGRESA TU NOMBRE", "settings_title": "AJUSTES", "music": "MÃšSICA", "sfx": "EFECTOS", "haptic": "VIBRACIÃ“N", "swipe": "CONTROL SWIPE", "trail": "EFECTO RASTRO", "avatar": "AVATAR", "language": "IDIOMA", "gameover": "FIN DEL JUEGO", "score": "PUNTOS", "newbest": "ğŸ† Â¡NUEVO RÃ‰CORD!", "resume": "â–¶ CONTINUAR", "restart": "â†º REINICIAR", "menu": "â˜° MENÃš", "paused": "â€” PAUSADO â€”", "classic": "CLÃSICO", "time": "TIEMPO", "survival": "SUPERVIVENCIA", "chaos": "CAOS", "ghost": "FANTASMA", "trail_classic": "ğŸŒŸ CLÃSICO", "trail_fire": "RASTRO FUEGO", "trail_rainbow": "ARCOÃRIS", "trail_ghost": "FANTASMA", "trail_pixel": "PÃXEL", "trail_neon": "NEÃ“N", "trail_sparkle": "DESTELLOS", "trail_comet": "COMETA", "trail_matrix": "MATRIX", "trail_minimal": "MÃNIMO", "prof_level": "NIVEL", "prof_streak": "RACHA DIARIA", "prof_modBests": "â€” MEJORES POR MODO â€”", "stat_best": "MEJOR", "stat_games": "PARTIDAS", "stat_combo": "COMBO", "stat_perfect": "PERFECTO", "stat_blocks": "BLOQUES", "stat_achs": "LOGROS", "task_score": "PuntuaciÃ³n alta", "task_perfect": "Colocar perfecto", "task_games": "Jugar partidas", "task_combo": "Hacer combo", "online_lb": "ğŸŒ ONLINE LB", "no_trail": "Bloqueado", "locked": "BLOQUEADO", "active": "ğŸŸ¢ ACTIVO", "inactive": "â­• APAGADO", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "ğŸ“¤ COMPARTIR", "qr": "ğŸ“± CÃ“DIGO QR", "classic_desc": "Modo clÃ¡sico sin fin", "time_desc": "Â¿CuÃ¡ntos bloques en 60s?", "survival_desc": "El bloque se encoge", "chaos_desc": "Velocidad cambia al azar", "ghost_desc": "El bloque desaparece", "play3": "JUGAR 3 PARTIDAS", "perf5": "5 COLOCACIONES PERFECTAS", "score15": "LLEGAR A 15 PUNTOS", "combo3": "COMBO 3X", "t_beginner": "PRINCIPIANTE", "t_builder": "CONSTRUCTOR", "t_stacker": "APILADOR", "t_pro": "PROFESIONAL", "t_master": "MAESTRO", "t_legend": "LEYENDA", "t_god": "DIOS", "t_survivor": "SUPERVIVIENTE", "t_survivor2": "SUPERVIVIENTE LEGENDARIO", "t_perfectionist": "PERFECCIONISTA", "t_combo_king": "REY DEL COMBO", "t_collector": "COLECCIONISTA", "t_allmode": "TODOS LOS MODOS", "t_daily": "DIARIO", "t_weekly": "SEMANAL", "t_timeking": "REY DEL TIEMPO", "t_ghost_s": "CAZAFANTASMAS", "t_scholar": "ERUDITO", "t_veteran": "VETERANO", "t_champion": "CAMPEÃ“N", "t_diamond": "DIAMANTE", "trail_ice": "HIELO", "trail_dark": "OSCURO", "trail_gold": "RASTRO ORO", "trail_blood": "SANGRE", "ach_title": "LOGROS", "titles_title": "ğŸ·ï¸ TÃTULOS", "shop_title": "ğŸ›’ TIENDA", "tournament_title": "ğŸ† TORNEO", "online_title": "ğŸŒ PUNTUACIÃ“N ONLINE", "daily_section": "â€” TAREAS DIARIAS â€”", "settings_back": "â† ATRÃS", "equipped": "âœ… EQUIPADO", "equip": "âš¡ EQUIPAR", "owned": "âœ“ COMPRADO", "cat_iz": "RASTRO", "cat_kozmetik": "COSMÃ‰TICO", "cat_guc": "MEJORA", "cat_avatar": "AVATAR", "shop_xp": "XP TOTAL", "equipped_title": "âœ… TÃTULO ACTIVO", "equip_title": "EQUIPAR", "pu_freeze": "CONGELAR", "pu_wide": "AMPLIAR", "pu_auto": "AUTO", "height": "ALTURA", "msg_miss": "ğŸ’” Â¡FALLO!", "msg_perfect": "âœ¨ Â¡PERFECTO!", "msg_combo": "ğŸ”¥ Â¡COMBO!", "msg_gameover": "FIN DEL JUEGO", "title_active": "âœ… ACTIVO", "title_equip": "EQUIPAR", "msg_frozen": "â„ï¸ Â¡CONGELADO!", "msg_wide": "ğŸ” Â¡BLOQUE AMPLIADO!", "msg_auto": "ğŸ’« Â¡AUTOMÃTICO!", "msg_life_lost": "ğŸ’” Â¡CUIDADO!", "msg_expand": "â¬† Â¡BLOQUE EXPANDIDO!", "msg_gold_perfect": "â­ ORO PERFECTO! 2Ã—", "msg_perfect_txt": "âœ¦ PERFECTO âœ¦", "height_lbl": "ALTURA", "score_lbl": "PUNTOS", "combo_lbl": "COMBO", "levelup_lbl": "NIVEL", "gameover_title": "FIN DEL JUEGO", "final_label": "PUNTOS", "stat_height": "ALTURA", "stat_bestcombo": "MEJOR COMBO", "stat_perfect_go": "PERFECTO", "stat_level": "NIVEL", "daily_done": "TAREAS DIARIAS COMPLETADAS", "diff_easy": "fÃ¡cil", "diff_normal": "normal", "diff_hard": "difÃ­cil", "retry": "ğŸ”„ REINTENTAR", "go_menu": "ğŸ  MENÃš", "share_btn": "ğŸ“¤ COMPARTIR", "qr_btn": "ğŸ“± CÃ“D. QR", "new_best": "ğŸ† Â¡NUEVO RÃ‰CORD!", "ach_first_game": "PRIMER PASO", "ach_desc_first_game": "Jugar primera partida", "ach_first_perfect": "PRIMER PERFECTO", "ach_desc_first_perfect": "Primer bloque perfecto", "ach_shop_buy": "COMPRAS", "ach_desc_shop_buy": "Comprar en tienda", "ach_daily1": "JUGADOR DIARIO", "ach_desc_daily1": "Completar tarea diaria", "ach_daily_all": "EQUIPO COMPLETO", "ach_desc_daily_all": "Completar todas las tareas", "ach_shopaholic": "COMPRADOR", "ach_desc_shopaholic": "5 artÃ­culos", "ach_collector": "COLECCIONISTA", "ach_desc_collector": "10 artÃ­culos", "ach_score_5": "CINCO", "ach_desc_score_5": "5 puntos", "ach_score_10": "PRIMEROS 10", "ach_desc_score_10": "10 puntos", "ach_score_25": "EN ASCENSO", "ach_desc_score_25": "25 puntos", "ach_score_50": "HÃBIL", "ach_desc_score_50": "50 puntos", "ach_score_75": "Ã‰LITE", "ach_desc_score_75": "75 puntos", "ach_score_100": "CENTENARIO", "ach_desc_score_100": "100 puntos", "ach_score_150": "LEYENDA", "ach_desc_score_150": "150 puntos", "ach_score_200": "DIOS", "ach_desc_score_200": "200 puntos", "ach_combo3": "TRIPLE", "ach_desc_combo3": "Combo 3x", "ach_combo5": "MAESTRO COMBO", "ach_desc_combo5": "Combo 5x", "ach_combo10": "ROMPECADENAS", "ach_desc_combo10": "Combo 10x", "ach_combo15": "VÃ“RTICE", "ach_desc_combo15": "Combo 15x", "ach_combo20": "TORMENTA", "ach_desc_combo20": "Combo 20x", "ach_games3": "PRINCIPIANTE", "ach_desc_games3": "3 partidas", "ach_games10": "REGULAR", "ach_desc_games10": "10 partidas", "ach_games25": "SEMANAL", "ach_desc_games25": "25 partidas", "ach_games50": "CORREDOR", "ach_desc_games50": "50 partidas", "ach_games100": "HERRERO", "ach_desc_games100": "100 partidas", "ach_games200": "MÃQUINA", "ach_desc_games200": "200 partidas", "ach_perf5": "PRECISO", "ach_desc_perf5": "5 perfectos en partida", "ach_perf10": "MANO DIAMANTE", "ach_desc_perf10": "10 perfectos", "ach_perf25": "MAGO", "ach_desc_perf25": "25 perfectos", "ach_perf50": "HECHICERO", "ach_desc_perf50": "50 perfectos", "ach_no_miss": "IMPECABLE", "ach_desc_no_miss": "Sin fallos", "ach_gold_perfect": "PERFECTO ORO", "ach_desc_gold_perfect": "Perfecto en oro", "ach_gold5": "COLECCIÃ“N ORO", "ach_desc_gold5": "5 perfectos dorados", "ach_gold10": "LEYENDA ORO", "ach_desc_gold10": "10 perfectos dorados", "ach_hardmode": "CAMINO DURO", "ach_desc_hardmode": "Modo difÃ­cil", "ach_hard25": "NEGOCIANTE", "ach_desc_hard25": "25 puntos difÃ­cil", "ach_survival_s": "SUPERVIVIENTE", "ach_desc_survival_s": "20 bloques supervivencia", "ach_ghost_s": "CAZAFANTASMAS", "ach_desc_ghost_s": "10 bloques fantasma", "ach_chaos_s": "CAPITÃN CAOS", "ach_desc_chaos_s": "15 bloques caos", "ach_time_s": "TESTIGO TIEMPO", "ach_desc_time_s": "30 bloques tiempo", "ach_allmode": "TODOS MODOS", "ach_desc_allmode": "Todos los modos", "ach_level5": "NIVEL 5", "ach_desc_level5": "Nivel 5", "ach_level10": "NIVEL 10", "ach_desc_level10": "Nivel 10", "ach_level20": "NIVEL 20", "ach_desc_level20": "Nivel 20", "ach_xp1000": "MIL XP", "ach_desc_xp1000": "1000 XP total", "ach_night_owl": "BÃšHO NOCTURNO", "ach_desc_night_owl": "Aurora (85+)", "ach_powerup_use": "SALA PODER", "ach_desc_powerup_use": "Usar potenciador", "ach_powerup10": "DEPÃ“SITO", "ach_desc_powerup10": "10 potenciadores", "ach_share_score": "COMPARTIDOR", "ach_desc_share_score": "Compartir puntuaciÃ³n", "ach_long_game": "LARGA PARTIDA", "ach_desc_long_game": "5 min jugando", "ach_come_back": "REGRESÃ‰", "ach_desc_come_back": "2+ partidas", "ach_three_lives": "POSTURA FÃ‰RREA", "ach_desc_three_lives": "20 con 3 vidas"}, "ru": {"play": "â–¶ Ğ˜Ğ“Ğ ĞĞ¢Ğ¬", "theme": "â€” Ğ¢Ğ•ĞœĞ â€”", "difficulty": "â€” Ğ¡Ğ›ĞĞ–ĞĞĞ¡Ğ¢Ğ¬ â€”", "mode": "â€” Ğ Ğ•Ğ–Ğ˜Ğœ â€”", "easy": "Ğ›Ğ•Ğ“ĞšĞ", "normal": "ĞĞĞ ĞœĞĞ›Ğ¬ĞĞ", "hard": "Ğ¡Ğ›ĞĞ–ĞĞ", "settings": "âš™ï¸", "back": "â† ĞĞĞ—ĞĞ”", "profile": "ğŸ‘¤ ĞŸĞ ĞĞ¤Ğ˜Ğ›Ğ¬", "shop": "ğŸ›’ ĞœĞĞ“ĞĞ—Ğ˜Ğ", "online": "ğŸŒ ĞĞĞ›ĞĞ™Ğ Ğ¢Ğ‘", "tournament": "ğŸ† Ğ¢Ğ£Ğ ĞĞ˜Ğ ", "achievements": "ğŸ… Ğ”ĞĞ¡Ğ¢Ğ˜Ğ–Ğ•ĞĞ˜Ğ¯", "titles": "ğŸ·ï¸ Ğ—Ğ’ĞĞĞ˜Ğ¯", "daily": "â€” Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ• Ğ—ĞĞ”ĞĞ§Ğ˜ â€”", "level": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬", "streak": "Ğ”ĞĞ•Ğ™ ĞŸĞĞ”Ğ Ğ¯Ğ”", "best": "Ğ›Ğ£Ğ§Ğ¨Ğ˜Ğ™", "games": "Ğ˜Ğ“Ğ Ğ«", "combo": "ĞšĞĞœĞ‘Ğ", "perfect": "Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "blocks": "Ğ‘Ğ›ĞĞšĞ˜", "achievement": "Ğ”ĞĞ¡Ğ¢Ğ˜Ğ–Ğ•ĞĞ˜Ğ•", "modBests": "â€” Ğ›Ğ£Ğ§Ğ¨Ğ•Ğ• ĞŸĞ Ğ Ğ•Ğ–Ğ˜ĞœĞĞœ â€”", "name_placeholder": "Ğ’Ğ’Ğ•Ğ”Ğ˜Ğ¢Ğ• Ğ˜ĞœĞ¯", "settings_title": "ĞĞĞ¡Ğ¢Ğ ĞĞ™ĞšĞ˜", "music": "ĞœĞ£Ğ—Ğ«ĞšĞ", "sfx": "Ğ­Ğ¤Ğ¤Ğ•ĞšĞ¢Ğ«", "haptic": "Ğ’Ğ˜Ğ‘Ğ ĞĞ¦Ğ˜Ğ¯", "swipe": "Ğ¡Ğ’ĞĞ™ĞŸ", "trail": "Ğ¡Ğ›Ğ•Ğ”", "avatar": "ĞĞ’ĞĞ¢ĞĞ ", "language": "Ğ¯Ğ—Ğ«Ğš", "gameover": "Ğ˜Ğ“Ğ Ğ ĞĞšĞĞĞ§Ğ•ĞĞ", "score": "ĞĞ§ĞšĞ˜", "newbest": "ğŸ† ĞĞĞ’Ğ«Ğ™ Ğ Ğ•ĞšĞĞ Ğ”!", "resume": "â–¶ ĞŸĞ ĞĞ”ĞĞ›Ğ–Ğ˜Ğ¢Ğ¬", "restart": "â†º Ğ—ĞĞĞĞ’Ğ", "menu": "â˜° ĞœĞ•ĞĞ®", "paused": "â€” ĞŸĞĞ£Ğ—Ğ â€”", "classic": "ĞšĞ›ĞĞ¡Ğ¡Ğ˜ĞšĞ", "time": "Ğ’Ğ Ğ•ĞœĞ¯", "survival": "Ğ’Ğ«Ğ–Ğ˜Ğ’ĞĞĞ˜Ğ•", "chaos": "Ğ¥ĞĞĞ¡", "ghost": "ĞŸĞ Ğ˜Ğ—Ğ ĞĞš", "trail_classic": "ğŸŒŸ ĞšĞ›ĞĞ¡Ğ¡Ğ˜ĞšĞ", "trail_fire": "ĞĞ“ĞĞ•ĞĞĞ«Ğ™ Ğ¡Ğ›Ğ•Ğ”", "trail_rainbow": "Ğ ĞĞ”Ğ£Ğ“Ğ", "trail_ghost": "ĞŸĞ Ğ˜Ğ—Ğ ĞĞš", "trail_pixel": "ĞŸĞ˜ĞšĞ¡Ğ•Ğ›Ğ¬", "trail_neon": "ĞĞ•ĞĞ", "trail_sparkle": "Ğ˜Ğ¡ĞšĞ Ğ«", "trail_comet": "ĞšĞĞœĞ•Ğ¢Ğ", "trail_matrix": "ĞœĞĞ¢Ğ Ğ˜Ğ¦Ğ", "trail_minimal": "ĞœĞ˜ĞĞ˜ĞœĞĞ›", "prof_level": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬", "prof_streak": "Ğ”ĞĞ•Ğ™ ĞŸĞĞ”Ğ Ğ¯Ğ”", "prof_modBests": "â€” Ğ›Ğ£Ğ§Ğ¨Ğ•Ğ• ĞŸĞ Ğ Ğ•Ğ–Ğ˜ĞœĞĞœ â€”", "stat_best": "Ğ›Ğ£Ğ§Ğ¨Ğ˜Ğ™", "stat_games": "Ğ˜Ğ“Ğ Ğ«", "stat_combo": "ĞšĞĞœĞ‘Ğ", "stat_perfect": "Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "stat_blocks": "Ğ‘Ğ›ĞĞšĞ˜", "stat_achs": "Ğ”ĞĞ¡Ğ¢Ğ˜Ğ–.", "task_score": "ĞĞ°Ğ±Ñ€Ğ°Ñ‚ÑŒ Ğ¾Ñ‡ĞºĞ¸", "task_perfect": "Ğ˜Ğ´ĞµĞ°Ğ»ÑŒĞ½Ğ¾ Ğ¿Ğ¾ÑÑ‚Ğ°Ğ²Ğ¸Ñ‚ÑŒ", "task_games": "Ğ¡Ñ‹Ğ³Ñ€Ğ°Ñ‚ÑŒ Ğ¸Ğ³Ñ€Ñ‹", "task_combo": "Ğ¡Ğ´ĞµĞ»Ğ°Ñ‚ÑŒ ĞºĞ¾Ğ¼Ğ±Ğ¾", "online_lb": "ğŸŒ ĞĞĞ›ĞĞ™Ğ Ğ¢Ğ‘", "no_trail": "Ğ—Ğ°Ğ±Ğ»Ğ¾Ğº.", "locked": "Ğ—ĞĞ‘Ğ›ĞĞš.", "active": "ğŸŸ¢ ĞĞšĞ¢Ğ˜Ğ’ĞĞ", "inactive": "â­• Ğ’Ğ«ĞšĞ›", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "ğŸ“¤ ĞŸĞĞ”Ğ•Ğ›Ğ˜Ğ¢Ğ¬Ğ¡Ğ¯", "qr": "ğŸ“± QR ĞšĞĞ”", "classic_desc": "ĞšĞ»Ğ°ÑÑĞ¸Ñ‡ĞµÑĞºĞ¸Ğ¹ Ğ±ĞµÑĞºĞ¾Ğ½ĞµÑ‡Ğ½Ñ‹Ğ¹", "time_desc": "Ğ¡ĞºĞ¾Ğ»ÑŒĞºĞ¾ Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ğ·Ğ° 60Ñ?", "survival_desc": "Ğ‘Ğ»Ğ¾Ğº ÑÑƒĞ¶Ğ°ĞµÑ‚ÑÑ ĞºĞ°Ğ¶Ğ´Ñ‹Ğ¹ Ñ…Ğ¾Ğ´", "chaos_desc": "Ğ¡ĞºĞ¾Ñ€Ğ¾ÑÑ‚ÑŒ Ğ¼ĞµĞ½ÑĞµÑ‚ÑÑ", "ghost_desc": "Ğ‘Ğ»Ğ¾Ğº Ğ¸Ğ½Ğ¾Ğ³Ğ´Ğ° Ğ½ĞµĞ²Ğ¸Ğ´Ğ¸Ğ¼", "play3": "Ğ¡Ğ«Ğ“Ğ ĞĞ¢Ğ¬ 3 Ğ˜Ğ“Ğ Ğ«", "perf5": "5 Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ«Ğ¥ Ğ¥ĞĞ”ĞĞ’", "score15": "ĞĞĞ‘Ğ ĞĞ¢Ğ¬ 15 ĞĞ§ĞšĞĞ’", "combo3": "ĞšĞĞœĞ‘Ğ 3X", "t_beginner": "ĞĞĞ’Ğ˜Ğ§ĞĞš", "t_builder": "Ğ¡Ğ¢Ğ ĞĞ˜Ğ¢Ğ•Ğ›Ğ¬", "t_stacker": "Ğ£ĞšĞ›ĞĞ”Ğ§Ğ˜Ğš", "t_pro": "ĞŸĞ Ğ", "t_master": "ĞœĞĞ¡Ğ¢Ğ•Ğ ", "t_legend": "Ğ›Ğ•Ğ“Ğ•ĞĞ”Ğ", "t_god": "Ğ‘ĞĞ“", "t_survivor": "Ğ’Ğ«Ğ–Ğ˜Ğ’Ğ¨Ğ˜Ğ™", "t_survivor2": "Ğ›Ğ•Ğ“Ğ•ĞĞ”ĞĞ ĞĞ«Ğ™ Ğ’Ğ«Ğ–Ğ˜Ğ’Ğ¨Ğ˜Ğ™", "t_perfectionist": "ĞŸĞ•Ğ Ğ¤Ğ•ĞšĞ¦Ğ˜ĞĞĞ˜Ğ¡Ğ¢", "t_combo_king": "ĞšĞĞ ĞĞ›Ğ¬ ĞšĞĞœĞ‘Ğ", "t_collector": "ĞšĞĞ›Ğ›Ğ•ĞšĞ¦Ğ˜ĞĞĞ•Ğ ", "t_allmode": "Ğ’Ğ¡Ğ• Ğ Ğ•Ğ–Ğ˜ĞœĞ«", "t_daily": "Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ™", "t_weekly": "Ğ•Ğ–Ğ•ĞĞ•Ğ”Ğ•Ğ›Ğ¬ĞĞ«Ğ™", "t_timeking": "ĞšĞĞ ĞĞ›Ğ¬ Ğ’Ğ Ğ•ĞœĞ•ĞĞ˜", "t_ghost_s": "ĞĞ¥ĞĞ¢ĞĞ˜Ğš ĞĞ ĞŸĞ Ğ˜Ğ—Ğ ĞĞšĞĞ’", "t_scholar": "Ğ£Ğ§ĞĞĞ«Ğ™", "t_veteran": "Ğ’Ğ•Ğ¢Ğ•Ğ ĞĞ", "t_champion": "Ğ§Ğ•ĞœĞŸĞ˜ĞĞ", "t_diamond": "ĞĞ›ĞœĞĞ—", "trail_ice": "Ğ›ĞĞ”", "trail_dark": "Ğ¢ĞĞœĞĞ«Ğ™", "trail_gold": "Ğ—ĞĞ›ĞĞ¢ĞĞ™ Ğ¡Ğ›Ğ•Ğ”", "trail_blood": "ĞšĞ ĞĞ’Ğ¬", "ach_title": "Ğ”ĞĞ¡Ğ¢Ğ˜Ğ–Ğ•ĞĞ˜Ğ¯", "titles_title": "ğŸ·ï¸ Ğ—Ğ’ĞĞĞ˜Ğ¯", "shop_title": "ğŸ›’ ĞœĞĞ“ĞĞ—Ğ˜Ğ", "tournament_title": "ğŸ† Ğ¢Ğ£Ğ ĞĞ˜Ğ ", "online_title": "ğŸŒ ĞĞĞ›ĞĞ™Ğ ĞĞ§ĞšĞ˜", "daily_section": "â€” Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ• Ğ—ĞĞ”ĞĞ§Ğ˜ â€”", "settings_back": "â† ĞĞĞ—ĞĞ”", "equipped": "âœ… ĞĞ”Ğ•Ğ¢Ğ", "equip": "âš¡ ĞĞ”Ğ•Ğ¢Ğ¬", "owned": "âœ“ ĞšĞ£ĞŸĞ›Ğ•ĞĞ", "cat_iz": "Ğ¡Ğ›Ğ•Ğ”", "cat_kozmetik": "ĞšĞĞ¡ĞœĞ•Ğ¢Ğ˜ĞšĞ", "cat_guc": "Ğ£Ğ›Ğ£Ğ§Ğ¨Ğ•ĞĞ˜Ğ•", "cat_avatar": "ĞĞ’ĞĞ¢ĞĞ ", "shop_xp": "Ğ’Ğ¡Ğ•Ğ“Ğ XP", "equipped_title": "âœ… ĞĞšĞ¢Ğ˜Ğ’ĞĞĞ• Ğ—Ğ’ĞĞĞ˜Ğ•", "equip_title": "ĞĞ”Ğ•Ğ¢Ğ¬", "pu_freeze": "Ğ—ĞĞœĞĞ ĞĞ—Ğ˜Ğ¢Ğ¬", "pu_wide": "Ğ ĞĞ¡Ğ¨Ğ˜Ğ Ğ˜Ğ¢Ğ¬", "pu_auto": "ĞĞ’Ğ¢Ğ", "height": "Ğ’Ğ«Ğ¡ĞĞ¢Ğ", "msg_miss": "ğŸ’” ĞœĞ˜ĞœĞ!", "msg_perfect": "âœ¨ Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ!", "msg_combo": "ğŸ”¥ ĞšĞĞœĞ‘Ğ!", "msg_gameover": "Ğ˜Ğ“Ğ Ğ ĞĞšĞĞĞ§Ğ•ĞĞ", "title_active": "âœ… ĞĞšĞ¢Ğ˜Ğ’ĞĞ", "title_equip": "ĞĞ”Ğ•Ğ¢Ğ¬", "msg_frozen": "â„ï¸ Ğ—ĞĞœĞĞ ĞĞ–Ğ•ĞĞ!", "msg_wide": "ğŸ” Ğ‘Ğ›ĞĞš Ğ ĞĞ¡Ğ¨Ğ˜Ğ Ğ•Ğ!", "msg_auto": "ğŸ’« ĞĞ’Ğ¢Ğ!", "msg_life_lost": "ğŸ’” ĞĞ¡Ğ¢ĞĞ ĞĞ–ĞĞ!", "msg_expand": "â¬† Ğ‘Ğ›ĞĞš Ğ ĞĞ¡Ğ¨Ğ˜Ğ Ğ•Ğ!", "msg_gold_perfect": "â­ Ğ—ĞĞ›ĞĞ¢Ğ Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ! 2Ã—", "msg_perfect_txt": "âœ¦ Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ âœ¦", "height_lbl": "Ğ’Ğ«Ğ¡ĞĞ¢Ğ", "score_lbl": "ĞĞ§ĞšĞ˜", "combo_lbl": "ĞšĞĞœĞ‘Ğ", "levelup_lbl": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬", "gameover_title": "Ğ˜Ğ“Ğ Ğ ĞĞšĞĞĞ§Ğ•ĞĞ", "final_label": "ĞĞ§ĞšĞ˜", "stat_height": "Ğ’Ğ«Ğ¡ĞĞ¢Ğ", "stat_bestcombo": "Ğ›Ğ£Ğ§Ğ¨Ğ•Ğ• ĞšĞĞœĞ‘Ğ", "stat_perfect_go": "Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "stat_level": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬", "daily_done": "Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ• Ğ—ĞĞ”ĞĞ§Ğ˜ Ğ’Ğ«ĞŸĞĞ›ĞĞ•ĞĞ«", "diff_easy": "Ğ»ĞµĞ³ĞºĞ¾", "diff_normal": "Ğ½Ğ¾Ñ€Ğ¼Ğ°Ğ»ÑŒĞ½Ğ¾", "diff_hard": "ÑĞ»Ğ¾Ğ¶Ğ½Ğ¾", "retry": "ğŸ”„ Ğ—ĞĞĞĞ’Ğ", "go_menu": "ğŸ  ĞœĞ•ĞĞ®", "share_btn": "ğŸ“¤ ĞŸĞĞ”Ğ•Ğ›Ğ˜Ğ¢Ğ¬Ğ¡Ğ¯", "qr_btn": "ğŸ“± QR ĞšĞĞ”", "new_best": "ğŸ† ĞĞĞ’Ğ«Ğ™ Ğ Ğ•ĞšĞĞ Ğ”!", "ach_first_game": "ĞŸĞ•Ğ Ğ’Ğ«Ğ™ Ğ¨ĞĞ“", "ach_desc_first_game": "Ğ¡Ñ‹Ğ³Ñ€Ğ°Ñ‚ÑŒ Ğ¿ĞµÑ€Ğ²ÑƒÑ Ğ¸Ğ³Ñ€Ñƒ", "ach_first_perfect": "ĞŸĞ•Ğ Ğ’ĞĞ• Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "ach_desc_first_perfect": "ĞŸĞµÑ€Ğ²Ñ‹Ğ¹ Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ğ¹ Ğ±Ğ»Ğ¾Ğº", "ach_shop_buy": "ĞŸĞĞšĞ£ĞŸĞšĞ˜", "ach_desc_shop_buy": "ĞšÑƒĞ¿Ğ¸Ñ‚ÑŒ Ğ² Ğ¼Ğ°Ğ³Ğ°Ğ·Ğ¸Ğ½Ğµ", "ach_daily1": "Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ™", "ach_desc_daily1": "Ğ’Ñ‹Ğ¿Ğ¾Ğ»Ğ½Ğ¸Ñ‚ÑŒ Ğ·Ğ°Ğ´Ğ°Ğ½Ğ¸Ğµ", "ach_daily_all": "ĞŸĞĞ›ĞĞĞ¯ ĞšĞĞœĞĞĞ”Ğ", "ach_desc_daily_all": "Ğ’ÑĞµ Ğ·Ğ°Ğ´Ğ°Ğ½Ğ¸Ñ", "ach_shopaholic": "Ğ¨ĞĞŸĞĞ“ĞĞ›Ğ˜Ğš", "ach_desc_shopaholic": "5 Ñ‚Ğ¾Ğ²Ğ°Ñ€Ğ¾Ğ²", "ach_collector": "ĞšĞĞ›Ğ›Ğ•ĞšĞ¦Ğ˜ĞĞĞ•Ğ ", "ach_desc_collector": "10 Ñ‚Ğ¾Ğ²Ğ°Ñ€Ğ¾Ğ²", "ach_score_5": "ĞŸĞ¯Ğ¢ĞĞ ĞšĞ", "ach_desc_score_5": "5 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_10": "ĞŸĞ•Ğ Ğ’Ğ«Ğ• 10", "ach_desc_score_10": "10 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_25": "ĞŸĞĞ”ĞªĞĞœ", "ach_desc_score_25": "25 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_50": "Ğ£ĞœĞ•Ğ›Ğ«Ğ™", "ach_desc_score_50": "50 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_75": "Ğ­Ğ›Ğ˜Ğ¢Ğ", "ach_desc_score_75": "75 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_100": "Ğ¡ĞĞ¢ĞĞ¯", "ach_desc_score_100": "100 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_150": "Ğ›Ğ•Ğ“Ğ•ĞĞ”Ğ", "ach_desc_score_150": "150 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_200": "Ğ‘ĞĞ“", "ach_desc_score_200": "200 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_combo3": "Ğ¢Ğ ĞĞ™ĞĞ˜Ğš", "ach_desc_combo3": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 3x", "ach_combo5": "ĞœĞĞ¡Ğ¢Ğ•Ğ  ĞšĞĞœĞ‘Ğ", "ach_desc_combo5": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 5x", "ach_combo10": "Ğ ĞĞ—Ğ Ğ«Ğ’ĞĞ¢Ğ•Ğ›Ğ¬", "ach_desc_combo10": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 10x", "ach_combo15": "Ğ’Ğ˜Ğ¥Ğ Ğ¬", "ach_desc_combo15": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 15x", "ach_combo20": "Ğ¨Ğ¢ĞĞ Ğœ", "ach_desc_combo20": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 20x", "ach_games3": "ĞĞĞ§Ğ˜ĞĞĞ®Ğ©Ğ˜Ğ™", "ach_desc_games3": "3 Ğ¸Ğ³Ñ€Ñ‹", "ach_games10": "ĞŸĞĞ¡Ğ¢ĞĞ¯ĞĞĞ«Ğ™", "ach_desc_games10": "10 Ğ¸Ğ³Ñ€", "ach_games25": "Ğ•Ğ–Ğ•ĞĞ•Ğ”Ğ•Ğ›Ğ¬ĞĞ«Ğ™", "ach_desc_games25": "25 Ğ¸Ğ³Ñ€", "ach_games50": "Ğ‘Ğ•Ğ“Ğ£Ğ", "ach_desc_games50": "50 Ğ¸Ğ³Ñ€", "ach_games100": "ĞšĞ£Ğ—ĞĞ•Ğ¦", "ach_desc_games100": "100 Ğ¸Ğ³Ñ€", "ach_games200": "ĞœĞĞ¨Ğ˜ĞĞ", "ach_desc_games200": "200 Ğ¸Ğ³Ñ€", "ach_perf5": "Ğ¢ĞĞ§ĞĞ«Ğ™", "ach_desc_perf5": "5 Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ñ…", "ach_perf10": "ĞĞ›ĞœĞĞ—ĞĞĞ¯ Ğ Ğ£ĞšĞ", "ach_desc_perf10": "10 Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ñ…", "ach_perf25": "Ğ’ĞĞ›Ğ¨Ğ•Ğ‘ĞĞ˜Ğš", "ach_desc_perf25": "25 Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ñ…", "ach_perf50": "Ğ§ĞĞ ĞĞ”Ğ•Ğ™", "ach_desc_perf50": "50 Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ñ…", "ach_no_miss": "Ğ‘Ğ•Ğ—Ğ£ĞŸĞ Ğ•Ğ§ĞĞ«Ğ™", "ach_desc_no_miss": "Ğ‘ĞµĞ· Ğ¿Ñ€Ğ¾Ğ¼Ğ°Ñ…Ğ¾Ğ²", "ach_gold_perfect": "Ğ—ĞĞ›ĞĞ¢Ğ Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "ach_desc_gold_perfect": "Ğ˜Ğ´ĞµĞ°Ğ»ÑŒĞ½Ğ¾ Ğ½Ğ° Ğ·Ğ¾Ğ»Ğ¾Ñ‚Ğµ", "ach_gold5": "Ğ—ĞĞ›ĞĞ¢ĞĞ¯ ĞšĞĞ›Ğ›Ğ•ĞšĞ¦Ğ˜Ğ¯", "ach_desc_gold5": "5 Ğ·Ğ¾Ğ»Ğ¾Ñ‚Ñ‹Ñ…", "ach_gold10": "Ğ—ĞĞ›ĞĞ¢ĞĞ¯ Ğ›Ğ•Ğ“Ğ•ĞĞ”Ğ", "ach_desc_gold10": "10 Ğ·Ğ¾Ğ»Ğ¾Ñ‚Ñ‹Ñ…", "ach_hardmode": "Ğ¢Ğ¯Ğ–ĞĞ›Ğ«Ğ™ ĞŸĞ£Ğ¢Ğ¬", "ach_desc_hardmode": "Ğ¡Ğ»Ğ¾Ğ¶Ğ½Ñ‹Ğ¹ Ñ€ĞµĞ¶Ğ¸Ğ¼", "ach_hard25": "Ğ¢ĞĞ Ğ“ĞĞ’Ğ•Ğ¦ Ğ¡ĞœĞ•Ğ Ğ¢Ğ¬Ğ®", "ach_desc_hard25": "25 Ğ½Ğ° ÑĞ»Ğ¾Ğ¶Ğ½Ğ¾Ğ¼", "ach_survival_s": "Ğ’Ğ«Ğ–Ğ˜Ğ’Ğ¨Ğ˜Ğ™", "ach_desc_survival_s": "20 Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ğ²Ñ‹Ğ¶Ğ¸Ğ²Ğ°Ğ½Ğ¸Ğµ", "ach_ghost_s": "ĞĞ¥ĞĞ¢ĞĞ˜Ğš ĞĞ ĞŸĞ Ğ˜Ğ—Ğ ĞĞšĞĞ’", "ach_desc_ghost_s": "10 Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ğ¿Ñ€Ğ¸Ğ·Ñ€Ğ°Ğº", "ach_chaos_s": "ĞšĞĞŸĞ˜Ğ¢ĞĞ Ğ¥ĞĞĞ¡Ğ", "ach_desc_chaos_s": "15 Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ñ…Ğ°Ğ¾Ñ", "ach_time_s": "Ğ¡Ğ’Ğ˜Ğ”Ğ•Ğ¢Ğ•Ğ›Ğ¬ Ğ’Ğ Ğ•ĞœĞ•ĞĞ˜", "ach_desc_time_s": "30 Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ğ²Ñ€ĞµĞ¼Ñ", "ach_allmode": "Ğ’Ğ¡Ğ• Ğ Ğ•Ğ–Ğ˜ĞœĞ«", "ach_desc_allmode": "Ğ’ÑĞµ Ñ€ĞµĞ¶Ğ¸Ğ¼Ñ‹", "ach_level5": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬ 5", "ach_desc_level5": "Ğ£Ñ€Ğ¾Ğ²ĞµĞ½ÑŒ 5", "ach_level10": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬ 10", "ach_desc_level10": "Ğ£Ñ€Ğ¾Ğ²ĞµĞ½ÑŒ 10", "ach_level20": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬ 20", "ach_desc_level20": "Ğ£Ñ€Ğ¾Ğ²ĞµĞ½ÑŒ 20", "ach_xp1000": "Ğ¢Ğ«Ğ¡Ğ¯Ğ§Ğ XP", "ach_desc_xp1000": "1000 XP", "ach_night_owl": "ĞĞĞ§ĞĞĞ¯ Ğ¡ĞĞ’Ğ", "ach_desc_night_owl": "ĞĞ²Ñ€Ğ¾Ñ€Ğ° (85+)", "ach_powerup_use": "Ğ—ĞĞ› Ğ¡Ğ˜Ğ›Ğ«", "ach_desc_powerup_use": "Ğ˜ÑĞ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ÑŒ ÑƒÑĞ¸Ğ»ĞµĞ½Ğ¸Ğµ", "ach_powerup10": "Ğ¡ĞšĞ›ĞĞ”", "ach_desc_powerup10": "10 ÑƒÑĞ¸Ğ»ĞµĞ½Ğ¸Ğ¹", "ach_share_score": "Ğ”Ğ•Ğ›Ğ˜Ğ¢Ğ•Ğ›Ğ¬", "ach_desc_share_score": "ĞŸĞ¾Ğ´ĞµĞ»Ğ¸Ñ‚ÑŒÑÑ", "ach_long_game": "Ğ”ĞĞ›Ğ“ĞĞ• Ğ”Ğ«Ğ¥ĞĞĞ˜Ğ•", "ach_desc_long_game": "5 Ğ¼Ğ¸Ğ½", "ach_come_back": "Ğ’Ğ•Ğ ĞĞ£Ğ›Ğ¡Ğ¯", "ach_desc_come_back": "2+ Ğ¸Ğ³Ñ€Ñ‹", "ach_three_lives": "Ğ–Ğ•Ğ›Ğ•Ğ—ĞĞĞ¯ Ğ¡Ğ¢ĞĞ™ĞšĞ", "ach_desc_three_lives": "20 Ñ 3 Ğ¶Ğ¸Ğ·Ğ½ÑĞ¼Ğ¸"}};
+const LANGS={"tr": {"play": "â–¶ OYNA", "theme": "â€” TEMA â€”", "difficulty": "â€” ZORLUK â€”", "mode": "â€” MOD â€”", "easy": "KOLAY", "normal": "NORMAL", "hard": "ZOR", "settings": "âš™ï¸", "back": "â† GERÄ°", "profile": "ğŸ‘¤ PROFÄ°L", "shop": "ğŸ›’ MAÄAZA", "online": "ğŸŒ ONLINE LB", "tournament": "ğŸ† TURNUVA", "achievements": "ğŸ… BAÅARIMLAR", "titles": "ğŸ·ï¸ UNVANLAR", "daily": "â€” GÃœNLÃœK GÃ–REVLER â€”", "level": "SEVÄ°YE", "streak": "GÃœNLÃœK SERÄ°", "best": "EN Ä°YÄ°", "games": "OYUN", "combo": "KOMBO", "perfect": "MÃœKEMMEL", "blocks": "BLOK", "achievement": "BAÅARIM", "modBests": "â€” MOD EN Ä°YÄ°LERÄ° â€”", "name_placeholder": "ADINÄ°ZÄ° GÄ°RÄ°N", "settings_title": "AYARLAR", "music": "MÃœZÄ°K", "sfx": "SES EFEKTÄ°", "haptic": "TÄ°TREÅÄ°M", "swipe": "SWIPE KONTROL", "trail": "Ä°Z EFEKTI", "avatar": "AVATAR", "language": "DÄ°L", "gameover": "OYUN BÄ°TTÄ°", "score": "SKOR", "newbest": "ğŸ† YENÄ° REKOR!", "resume": "â–¶ DEVAM", "restart": "â†º YENÄ°DEN", "menu": "â˜° MENÃœ", "paused": "â€” DURAKLADI â€”", "classic": "KLASÄ°K", "time": "ZAMAN", "survival": "HAYATTA KAL", "chaos": "KAOS", "ghost": "HAYALET", "trail_classic": "ğŸŒŸ KLAÅÄ°K", "trail_fire": "ğŸ”¥ ATEÅ Ä°ZÄ°", "trail_rainbow": "ğŸŒˆ GÃ–KKUÅAÄI", "trail_ghost": "ğŸ‘» HAYALET", "trail_pixel": "ğŸ® PÄ°KSEL", "trail_neon": "âš¡ NEON", "trail_sparkle": "âœ¨ IÅILTILI", "trail_comet": "â˜„ï¸ KUYRUKLU YILDIZ", "trail_matrix": "ğŸ’š MATRÄ°X", "trail_minimal": "Â· MÄ°NÄ°MAL", "prof_level": "SEVÄ°YE", "prof_streak": "GÃœNLÃœK SERÄ°", "prof_modBests": "â€” MOD EN Ä°YÄ°LERÄ° â€”", "stat_best": "EN Ä°YÄ°", "stat_games": "OYUN", "stat_combo": "KOMBO", "stat_perfect": "MÃœKEMMEL", "stat_blocks": "BLOK", "stat_achs": "BAÅARIM", "task_score": "YÃ¼ksek skor yap", "task_perfect": "MÃ¼kemmel yerleÅŸtir", "task_games": "Oyun oyna", "task_combo": "Kombo yap", "online_lb": "ONLINE LB", "no_trail": "Kilit", "locked": "KÄ°LÄ°TLÄ°", "active": "ğŸŸ¢ AKTÄ°F", "inactive": "â­• KAPALI", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "PAYLAÅ", "qr": "QR KOD", "classic_desc": "Klasik sonsuz mod", "time_desc": "60 saniyede kaÃ§ blok?", "survival_desc": "Blok her seferinde daralÄ±r", "chaos_desc": "HÄ±z rastgele deÄŸiÅŸir", "ghost_desc": "Blok ara ara gÃ¶rÃ¼nmez olur", "play3": "3 OYUN OYNA", "perf5": "5 MÃœKEMMEL YAP", "score15": "15 PUANA ULAÅ", "combo3": "3X KOMBO YAP", "t_beginner": "ACEMI", "t_builder": "Ä°NÅAATÃ‡I", "t_stacker": "YIÄICI", "t_pro": "USTA", "t_master": "UZMAN", "t_legend": "EFSANE", "t_god": "TANRI", "t_survivor": "HAYATTA KALAN", "t_survivor2": "EFSANEVÄ° HAYATTA KALAN", "t_perfectionist": "MÃœKEMMELÄ°YETÃ‡Ä°", "t_combo_king": "KOMBO KRALI", "t_collector": "KOLEKSÄ°YONCU", "t_allmode": "TÃœM MODLAR", "t_daily": "GÃœNDELÄ°K", "t_weekly": "HAFTALIK", "t_timeking": "ZAMAN KRALI", "t_ghost_s": "HAYALET KATILI", "t_scholar": "ALÄ°M", "t_veteran": "VETERANq", "t_champion": "ÅAMPÄ°YON", "t_diamond": "ELMASq", "trail_ice": "ğŸ§Š BUZUL", "trail_dark": "ğŸŒ‘ KARANLIK", "trail_gold": "â­ ALTIN Ä°Z", "trail_blood": "ğŸ©¸ KAN", "ach_title": "ğŸ… BAÅARIMLAR", "titles_title": "ğŸ·ï¸ UNVANLAR", "shop_title": "ğŸ›’ MAÄAZA", "tournament_title": "ğŸ† TURNUVA", "online_title": "ğŸŒ ONLINE SKOR", "daily_section": "â€” GÃœNLÃœK GÃ–REVLER â€”", "settings_back": "â† GERÄ°", "equipped": "âœ… TAKILDI", "equip": "âš¡ TAK", "owned": "âœ“ ALINDI", "cat_iz": "Ä°Z", "cat_kozmetik": "KOZMETÄ°K", "cat_guc": "GÃœÃ‡LENDIRME", "cat_avatar": "AVATAR", "shop_xp": "TOPLAM XP", "equipped_title": "âœ… AKTÄ°F UNVAN", "equip_title": "TAK", "pu_freeze": "â„ï¸ DONDUR", "pu_wide": "ğŸ“ GENÄ°ÅLET", "pu_auto": "ğŸ¤– OTO", "height": "YÃœKSEKLÄ°K", "msg_miss": "ğŸ’” DÄ°KKAT!", "msg_perfect": "âœ¨ MÃœKEMMEL!", "msg_combo": "ğŸ”¥ KOMBO!", "msg_gameover": "OYUN BÄ°TTÄ°", "title_active": "âœ… AKTÄ°F", "title_equip": "TAK", "msg_frozen": "â„ï¸ DONDURULDU!", "msg_wide": "ğŸ” BLOK GENÄ°ÅLEDÄ°!", "msg_auto": "ğŸ’« OTOMATÄ°K!", "msg_life_lost": "ğŸ’” DÄ°KKAT!", "msg_expand": "â¬† BLOK GENÄ°ÅLEDÄ°!", "msg_gold_perfect": "â­ ALTIN MÃœKEMMEL! 2Ã—", "msg_perfect_txt": "âœ¦ MÃœKEMMEL âœ¦", "height_lbl": "YÃœKSEKLÄ°K", "score_lbl": "SKOR", "combo_lbl": "KOMBO", "levelup_lbl": "SEVÄ°YE", "gameover_title": "OYUN BÄ°TTÄ°", "final_label": "SKOR", "stat_height": "YÃœKSEKLÄ°K", "stat_bestcombo": "EN Ä°YÄ° KOMBO", "stat_perfect_go": "MÃœKEMMEL", "stat_level": "SEVÄ°YE", "daily_done": "GÃœNLÃœK GÃ–REV TAMAM", "diff_easy": "kolay", "diff_normal": "normal", "diff_hard": "zor", "retry": "ğŸ”„ TEKRAR", "go_menu": "ğŸ  MENÃœ", "share_btn": "ğŸ“¤ PAYLAÅ", "qr_btn": "ğŸ“± QR KOD", "new_best": "ğŸ† YENÄ° REKOR!", "ach_first_game": "Ä°LK ADIM", "ach_desc_first_game": "Ä°lk oyunu oyna", "ach_first_perfect": "Ä°LK MÃœKEMMEL", "ach_desc_first_perfect": "Ä°lk mÃ¼kemmel bloÄŸu koy", "ach_shop_buy": "ALIÅVERÄ°Å", "ach_desc_shop_buy": "MaÄŸazadan bir ÅŸey al", "ach_daily1": "GÃœNLÃœK OYUNCU", "ach_desc_daily1": "Bir gÃ¼nlÃ¼k gÃ¶revi tamamla", "ach_daily_all": "TAM TAKIM", "ach_desc_daily_all": "TÃ¼m gÃ¼nlÃ¼k gÃ¶revleri bitir", "ach_shopaholic": "ALIÅVERÄ°Å KRALI", "ach_desc_shopaholic": "5 maÄŸaza Ã¼rÃ¼nÃ¼ al", "ach_collector": "KOLEKSÄ°YONCU", "ach_desc_collector": "10 maÄŸaza Ã¼rÃ¼nÃ¼ al", "ach_score_5": "BEÅLÄ°K", "ach_desc_score_5": "5 puana ulaÅŸ", "ach_score_10": "Ä°LK 10", "ach_desc_score_10": "10 puana ulaÅŸ", "ach_score_25": "YÃœKSELÄ°Å", "ach_desc_score_25": "25 puana ulaÅŸ", "ach_score_50": "USTA", "ach_desc_score_50": "50 puana ulaÅŸ", "ach_score_75": "ELÄ°T", "ach_desc_score_75": "75 puana ulaÅŸ", "ach_score_100": "YÃœZLÃœK", "ach_desc_score_100": "100 puana ulaÅŸ", "ach_score_150": "EFSANE", "ach_desc_score_150": "150 puana ulaÅŸ", "ach_score_200": "TANRI", "ach_desc_score_200": "200 puana ulaÅŸ", "ach_combo3": "ÃœÃ‡LEME", "ach_desc_combo3": "3x kombo yap", "ach_combo5": "KOMBO USTASI", "ach_desc_combo5": "5x kombo yap", "ach_combo10": "Ã‡IÄIR AÃ‡ICI", "ach_desc_combo10": "10x kombo yap", "ach_combo15": "VÄ°HRAN", "ach_desc_combo15": "15x kombo yap", "ach_combo20": "FIRTINA", "ach_desc_combo20": "20x kombo yap", "ach_games3": "BAÅLANGIÃ‡", "ach_desc_games3": "3 oyun oyna", "ach_games10": "DÃœZENLÄ°", "ach_desc_games10": "10 oyun oyna", "ach_games25": "HAFTALIK", "ach_desc_games25": "25 oyun oyna", "ach_games50": "KOÅUCU", "ach_desc_games50": "50 oyun oyna", "ach_games100": "DEMÄ°RCÄ°", "ach_desc_games100": "100 oyun oyna", "ach_games200": "MAKÄ°NE", "ach_desc_games200": "200 oyun oyna", "ach_perf5": "KESKÄ°N", "ach_desc_perf5": "Tek oyunda 5 mÃ¼kemmel", "ach_perf10": "ELMAS EL", "ach_desc_perf10": "Tek oyunda 10 mÃ¼kemmel", "ach_perf25": "SÄ°HÄ°RBAZ", "ach_desc_perf25": "Tek oyunda 25 mÃ¼kemmel", "ach_perf50": "BÃœYÃœCÃœ", "ach_desc_perf50": "Tek oyunda 50 mÃ¼kemmel", "ach_no_miss": "HATASIZ", "ach_desc_no_miss": "HiÃ§ kaÃ§Ä±rmadan bitir", "ach_gold_perfect": "ALTIN MÃœKEMMEL", "ach_desc_gold_perfect": "AltÄ±n bloÄŸa mÃ¼kemmel bas", "ach_gold5": "ALTIN KOLEKSÄ°YON", "ach_desc_gold5": "5 altÄ±n mÃ¼kemmel", "ach_gold10": "ALTIN EFSANE", "ach_desc_gold10": "10 altÄ±n mÃ¼kemmel", "ach_hardmode": "ZOR YOLCU", "ach_desc_hardmode": "Zor modda oyna", "ach_hard25": "Ã–LÃœM TACIRI", "ach_desc_hard25": "Zor modda 25 skor", "ach_survival_s": "HAYATTA KALAN", "ach_desc_survival_s": "Hayatta Kal modda 20 blok", "ach_ghost_s": "HAYALET AVCISI", "ach_desc_ghost_s": "Hayalet modda 10 blok", "ach_chaos_s": "KAOS KAPTAN", "ach_desc_chaos_s": "Kaos modda 15 blok", "ach_time_s": "ZAMAN TANIKLI", "ach_desc_time_s": "Zaman modda 30 blok", "ach_allmode": "Ã‡OKLU KÄ°ÅÄ°LÄ°K", "ach_desc_allmode": "TÃ¼m modlarda en az 1 oyna", "ach_level5": "SEVÄ°YE 5", "ach_desc_level5": "5. seviyeye ulaÅŸ", "ach_level10": "SEVÄ°YE 10", "ach_desc_level10": "10. seviyeye ulaÅŸ", "ach_level20": "SEVÄ°YE 20", "ach_desc_level20": "20. seviyeye ulaÅŸ", "ach_xp1000": "BÄ°N XP", "ach_desc_xp1000": "Toplam 1000 XP kazan", "ach_night_owl": "GECE BAYKUÅU", "ach_desc_night_owl": "Aurora moduna ulaÅŸ (85+)", "ach_powerup_use": "GÃœÃ‡ ODASI", "ach_desc_powerup_use": "Bir gÃ¼Ã§lendirme kullan", "ach_powerup10": "ENERJÄ° DEPOSU", "ach_desc_powerup10": "10 gÃ¼Ã§lendirme kullan", "ach_share_score": "PAYLAÅIMCI", "ach_desc_share_score": "Skoru paylaÅŸ", "ach_long_game": "UZUN NEFES", "ach_desc_long_game": "Tek oyunda 5 dk oyna", "ach_come_back": "GERÄ° DÃ–NDÃœM", "ach_desc_come_back": "2+ oyun oyna", "ach_three_lives": "SAÄLAM DURUÅ", "ach_desc_three_lives": "3 canla 20 skora ulaÅŸ"}, "en": {"play": "â–¶ PLAY", "theme": "â€” THEME â€”", "difficulty": "â€” DIFFICULTY â€”", "mode": "â€” MODE â€”", "easy": "EASY", "normal": "NORMAL", "hard": "HARD", "settings": "âš™ï¸", "back": "â† BACK", "profile": "ğŸ‘¤ PROFILE", "shop": "ğŸ›’ SHOP", "online": "ğŸŒ ONLINE LB", "tournament": "ğŸ† TOURNAMENT", "achievements": "ğŸ… ACHIEVEMENTS", "titles": "ğŸ·ï¸ TITLES", "daily": "â€” DAILY TASKS â€”", "level": "LEVEL", "streak": "DAY STREAK", "best": "BEST", "games": "GAMES", "combo": "COMBO", "perfect": "PERFECT", "blocks": "BLOCKS", "achievement": "ACHIEVEMENT", "modBests": "â€” MODE BESTS â€”", "name_placeholder": "ENTER YOUR NAME", "settings_title": "SETTINGS", "music": "MUSIC", "sfx": "SFX", "haptic": "HAPTIC", "swipe": "SWIPE CONTROL", "trail": "TRAIL EFFECT", "avatar": "AVATAR", "language": "LANGUAGE", "gameover": "GAME OVER", "score": "SCORE", "newbest": "ğŸ† NEW BEST!", "resume": "â–¶ RESUME", "restart": "â†º RESTART", "menu": "â˜° MENU", "paused": "â€” PAUSED â€”", "classic": "CLASSIC", "time": "TIME", "survival": "SURVIVAL", "chaos": "CHAOS", "ghost": "GHOST", "trail_classic": "ğŸŒŸ CLASSIC", "trail_fire": "ğŸ”¥ FIRE", "trail_rainbow": "ğŸŒˆ RAINBOW", "trail_ghost": "ğŸ‘» GHOST", "trail_pixel": "ğŸ® PIXEL", "trail_neon": "âš¡ NEON", "trail_sparkle": "âœ¨ SPARKLE", "trail_comet": "â˜„ï¸ COMET", "trail_matrix": "ğŸ’š MATRIX", "trail_minimal": "Â· MINIMAL", "prof_level": "LEVEL", "prof_streak": "DAY STREAK", "prof_modBests": "â€” MODE BESTS â€”", "stat_best": "BEST", "stat_games": "GAMES", "stat_combo": "COMBO", "stat_perfect": "PERFECT", "stat_blocks": "BLOCKS", "stat_achs": "ACHIEV.", "task_score": "High score", "task_perfect": "Perfect place", "task_games": "Play games", "task_combo": "Get combo", "online_lb": "ONLINE LB", "no_trail": "Locked", "locked": "LOCKED", "active": "ğŸŸ¢ ACTIVE", "inactive": "â­• OFF", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "SHARE", "qr": "QR CODE", "classic_desc": "Classic endless mode", "time_desc": "How many blocks in 60s?", "survival_desc": "Block shrinks each turn", "chaos_desc": "Speed changes randomly", "ghost_desc": "Block disappears at times", "play3": "PLAY 3 GAMES", "perf5": "5 PERFECT DROPS", "score15": "REACH 15 POINTS", "combo3": "3X COMBO", "t_beginner": "BEGINNER", "t_builder": "BUILDER", "t_stacker": "STACKER", "t_pro": "PRO", "t_master": "MASTER", "t_legend": "LEGEND", "t_god": "GOD", "t_survivor": "SURVIVOR", "t_survivor2": "LEGENDARY SURVIVOR", "t_perfectionist": "PERFECTIONIST", "t_combo_king": "COMBO KING", "t_collector": "COLLECTOR", "t_allmode": "ALL MODES", "t_daily": "DAILY", "t_weekly": "WEEKLY", "t_timeking": "TIME KING", "t_ghost_s": "GHOST SLAYER", "t_scholar": "SCHOLAR", "t_veteran": "VETERAN", "t_champion": "CHAMPION", "t_diamond": "DIAMOND", "trail_ice": "ğŸ§Š ICE", "trail_dark": "ğŸŒ‘ DARK", "trail_gold": "â­ GOLD TRAIL", "trail_blood": "ğŸ©¸ BLOOD", "ach_title": "ğŸ… ACHIEVEMENTS", "titles_title": "ğŸ·ï¸ TITLES", "shop_title": "ğŸ›’ SHOP", "tournament_title": "ğŸ† TOURNAMENT", "online_title": "ğŸŒ ONLINE SCORES", "daily_section": "â€” DAILY TASKS â€”", "settings_back": "â† BACK", "equipped": "âœ… EQUIPPED", "equip": "âš¡ EQUIP", "owned": "âœ“ OWNED", "cat_iz": "TRAIL", "cat_kozmetik": "COSMETIC", "cat_guc": "PERK", "cat_avatar": "AVATAR", "shop_xp": "TOTAL XP", "equipped_title": "âœ… ACTIVE TITLE", "equip_title": "EQUIP", "pu_freeze": "â„ï¸ FREEZE", "pu_wide": "ğŸ“ WIDEN", "pu_auto": "ğŸ¤– AUTO", "height": "HEIGHT", "msg_miss": "ğŸ’” MISS!", "msg_perfect": "âœ¨ PERFECT!", "msg_combo": "ğŸ”¥ COMBO!", "msg_gameover": "GAME OVER", "title_active": "âœ… ACTIVE", "title_equip": "EQUIP", "msg_frozen": "â„ï¸ FROZEN!", "msg_wide": "ğŸ” BLOCK WIDENED!", "msg_auto": "ğŸ’« AUTO DROP!", "msg_life_lost": "ğŸ’” CAREFUL!", "msg_expand": "â¬† BLOCK EXPANDED!", "msg_gold_perfect": "â­ GOLD PERFECT! 2Ã—", "msg_perfect_txt": "âœ¦ PERFECT âœ¦", "height_lbl": "HEIGHT", "score_lbl": "SCORE", "combo_lbl": "COMBO", "levelup_lbl": "LEVEL", "gameover_title": "GAME OVER", "final_label": "SCORE", "stat_height": "HEIGHT", "stat_bestcombo": "BEST COMBO", "stat_perfect_go": "PERFECT", "stat_level": "LEVEL", "daily_done": "DAILY TASKS DONE", "diff_easy": "easy", "diff_normal": "normal", "diff_hard": "hard", "retry": "ğŸ”„ RETRY", "go_menu": "ğŸ  MENU", "share_btn": "ğŸ“¤ SHARE", "qr_btn": "ğŸ“± QR CODE", "new_best": "ğŸ† NEW BEST!", "ach_first_game": "FIRST STEP", "ach_desc_first_game": "Play first game", "ach_first_perfect": "FIRST PERFECT", "ach_desc_first_perfect": "Place first perfect block", "ach_shop_buy": "SHOPPING", "ach_desc_shop_buy": "Buy something from shop", "ach_daily1": "DAILY PLAYER", "ach_desc_daily1": "Complete a daily task", "ach_daily_all": "FULL TEAM", "ach_desc_daily_all": "Complete all daily tasks", "ach_shopaholic": "SHOPAHOLIC", "ach_desc_shopaholic": "Buy 5 shop items", "ach_collector": "COLLECTOR", "ach_desc_collector": "Buy 10 shop items", "ach_score_5": "FIVER", "ach_desc_score_5": "Reach 5 points", "ach_score_10": "FIRST TEN", "ach_desc_score_10": "Reach 10 points", "ach_score_25": "RISING", "ach_desc_score_25": "Reach 25 points", "ach_score_50": "SKILLED", "ach_desc_score_50": "Reach 50 points", "ach_score_75": "ELITE", "ach_desc_score_75": "Reach 75 points", "ach_score_100": "CENTURY", "ach_desc_score_100": "Reach 100 points", "ach_score_150": "LEGEND", "ach_desc_score_150": "Reach 150 points", "ach_score_200": "GOD", "ach_desc_score_200": "Reach 200 points", "ach_combo3": "TRIPLE", "ach_desc_combo3": "3x combo", "ach_combo5": "COMBO MASTER", "ach_desc_combo5": "5x combo", "ach_combo10": "CHAIN BREAKER", "ach_desc_combo10": "10x combo", "ach_combo15": "VORTEX", "ach_desc_combo15": "15x combo", "ach_combo20": "STORM", "ach_desc_combo20": "20x combo", "ach_games3": "BEGINNER", "ach_desc_games3": "Play 3 games", "ach_games10": "REGULAR", "ach_desc_games10": "Play 10 games", "ach_games25": "WEEKLY", "ach_desc_games25": "Play 25 games", "ach_games50": "RUNNER", "ach_desc_games50": "Play 50 games", "ach_games100": "SMITH", "ach_desc_games100": "Play 100 games", "ach_games200": "MACHINE", "ach_desc_games200": "Play 200 games", "ach_perf5": "SHARP", "ach_desc_perf5": "5 perfects in one game", "ach_perf10": "DIAMOND HAND", "ach_desc_perf10": "10 perfects in one game", "ach_perf25": "WIZARD", "ach_desc_perf25": "25 perfects in one game", "ach_perf50": "SORCERER", "ach_desc_perf50": "50 perfects in one game", "ach_no_miss": "FLAWLESS", "ach_desc_no_miss": "Finish without missing", "ach_gold_perfect": "GOLD PERFECT", "ach_desc_gold_perfect": "Perfect on gold block", "ach_gold5": "GOLD COLLECTION", "ach_desc_gold5": "5 gold perfects", "ach_gold10": "GOLD LEGEND", "ach_desc_gold10": "10 gold perfects", "ach_hardmode": "HARD ROAD", "ach_desc_hardmode": "Play on hard mode", "ach_hard25": "DEATH DEALER", "ach_desc_hard25": "25 score on hard", "ach_survival_s": "SURVIVOR", "ach_desc_survival_s": "20 blocks in survival", "ach_ghost_s": "GHOST HUNTER", "ach_desc_ghost_s": "10 blocks in ghost mode", "ach_chaos_s": "CHAOS CAPTAIN", "ach_desc_chaos_s": "15 blocks in chaos", "ach_time_s": "TIME WITNESS", "ach_desc_time_s": "30 blocks in time mode", "ach_allmode": "ALL MODES", "ach_desc_allmode": "Play all modes at least once", "ach_level5": "LEVEL 5", "ach_desc_level5": "Reach level 5", "ach_level10": "LEVEL 10", "ach_desc_level10": "Reach level 10", "ach_level20": "LEVEL 20", "ach_desc_level20": "Reach level 20", "ach_xp1000": "THOUSAND XP", "ach_desc_xp1000": "Earn 1000 total XP", "ach_night_owl": "NIGHT OWL", "ach_desc_night_owl": "Aurora mode (85+ score)", "ach_powerup_use": "POWER ROOM", "ach_desc_powerup_use": "Use a power-up", "ach_powerup10": "ENERGY DEPOT", "ach_desc_powerup10": "Use 10 power-ups", "ach_share_score": "SHARER", "ach_desc_share_score": "Share your score", "ach_long_game": "LONG BREATH", "ach_desc_long_game": "Play 5 min in one game", "ach_come_back": "CAME BACK", "ach_desc_come_back": "Play 2+ games", "ach_three_lives": "IRON STANCE", "ach_desc_three_lives": "Reach 20 with 3 lives"}, "de": {"play": "â–¶ SPIELEN", "theme": "â€” THEMA â€”", "difficulty": "â€” SCHWIERIGKEIT â€”", "mode": "â€” MODUS â€”", "easy": "LEICHT", "normal": "NORMAL", "hard": "SCHWER", "settings": "âš™ï¸", "back": "â† ZURÃœCK", "profile": "ğŸ‘¤ PROFIL", "shop": "ğŸ›’ SHOP", "online": "ğŸŒ ONLINE LB", "tournament": "ğŸ† TURNIER", "achievements": "ğŸ… ERFOLGE", "titles": "ğŸ·ï¸ TITEL", "daily": "â€” TÃ„GLICHE AUFGABEN â€”", "level": "STUFE", "streak": "TAGES-SERIE", "best": "BESTES", "games": "SPIELE", "combo": "KOMBO", "perfect": "PERFEKT", "blocks": "BLÃ–CKE", "achievement": "ERFOLG", "modBests": "â€” MODUS BESTLEISTUNGEN â€”", "name_placeholder": "NAMEN EINGEBEN", "settings_title": "EINSTELLUNGEN", "music": "MUSIK", "sfx": "SFX", "haptic": "VIBRATION", "swipe": "SWIPE-STEUERUNG", "trail": "SPUREFFEKT", "avatar": "AVATAR", "language": "SPRACHE", "gameover": "SPIEL VORBEI", "score": "PUNKTE", "newbest": "ğŸ† NEUER REKORD!", "resume": "â–¶ WEITER", "restart": "â†º NEU STARTEN", "menu": "â˜° MENÃœ", "paused": "â€” PAUSIERT â€”", "classic": "KLASSISCH", "time": "ZEIT", "survival": "ÃœBERLEBEN", "chaos": "CHAOS", "ghost": "GEIST", "trail_classic": "ğŸŒŸ KLASSISCH", "trail_fire": "ğŸ”¥ FEUER", "trail_rainbow": "ğŸŒˆ REGENBOGEN", "trail_ghost": "ğŸ‘» GEIST", "trail_pixel": "ğŸ® PIXEL", "trail_neon": "âš¡ NEON", "trail_sparkle": "âœ¨ FUNKEN", "trail_comet": "â˜„ï¸ KOMET", "trail_matrix": "ğŸ’š MATRIX", "trail_minimal": "Â· MINIMAL", "prof_level": "STUFE", "prof_streak": "TAGES-SERIE", "prof_modBests": "â€” MODUS BESTLEISTUNGEN â€”", "stat_best": "BESTES", "stat_games": "SPIELE", "stat_combo": "KOMBO", "stat_perfect": "PERFEKT", "stat_blocks": "BLÃ–CKE", "stat_achs": "ERFOLGE", "task_score": "Hohe Punktzahl", "task_perfect": "Perfekt platzieren", "task_games": "Spiele spielen", "task_combo": "Kombo machen", "online_lb": "ONLINE LB", "no_trail": "Gesperrt", "locked": "GESPERRT", "active": "ğŸŸ¢ AKTIV", "inactive": "â­• AUS", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "TEILEN", "qr": "QR CODE", "classic_desc": "Klassischer Endlosmodus", "time_desc": "Wieviele BlÃ¶cke in 60s?", "survival_desc": "Block schrumpft jede Runde", "chaos_desc": "Geschwindigkeit wechselt", "ghost_desc": "Block wird unsichtbar", "play3": "3 SPIELE SPIELEN", "perf5": "5 PERFEKT SETZEN", "score15": "15 PUNKTE ERREICHEN", "combo3": "3X KOMBO", "t_beginner": "ANFÃ„NGER", "t_builder": "ERBAUER", "t_stacker": "STAPLER", "t_pro": "PROFI", "t_master": "MEISTER", "t_legend": "LEGENDE", "t_god": "GOTT", "t_survivor": "ÃœBERLEBENDER", "t_survivor2": "LEGENDÃ„RER ÃœBERLEBENDER", "t_perfectionist": "PERFEKTIONIST", "t_combo_king": "KOMBO-KÃ–NIG", "t_collector": "SAMMLER", "t_allmode": "ALLE MODI", "t_daily": "TÃ„GLICH", "t_weekly": "WÃ–CHENTLICH", "t_timeking": "ZEITKÃ–NIG", "t_ghost_s": "GEISTJÃ„GER", "t_scholar": "GELEHRTER", "t_veteran": "VETERAN", "t_champion": "CHAMPION", "t_diamond": "DIAMANT", "trail_ice": "ğŸ§Š EIS", "trail_dark": "ğŸŒ‘ DUNKEL", "trail_gold": "â­ GOLDSPUR", "trail_blood": "ğŸ©¸ BLUT", "ach_title": "ğŸ… ERFOLGE", "titles_title": "ğŸ·ï¸ TITEL", "shop_title": "ğŸ›’ SHOP", "tournament_title": "ğŸ† TURNIER", "online_title": "ğŸŒ ONLINE PUNKTE", "daily_section": "â€” TÃ„GLICHE AUFGABEN â€”", "settings_back": "â† ZURÃœCK", "equipped": "âœ… AUSGERÃœSTET", "equip": "âš¡ AUSRÃœSTEN", "owned": "âœ“ BESESSEN", "cat_iz": "SPUR", "cat_kozmetik": "KOSMETIK", "cat_guc": "VERSTÃ„RKER", "cat_avatar": "AVATAR", "shop_xp": "GESAMT XP", "equipped_title": "âœ… AKTIVER TITEL", "equip_title": "AUSRÃœSTEN", "pu_freeze": "â„ï¸ EINFRIEREN", "pu_wide": "ğŸ“ ERWEITERN", "pu_auto": "ğŸ¤– AUTO", "height": "HÃ–HE", "msg_miss": "ğŸ’” DANEBEN!", "msg_perfect": "âœ¨ PERFEKT!", "msg_combo": "ğŸ”¥ KOMBO!", "msg_gameover": "SPIEL VORBEI", "title_active": "âœ… AKTIV", "title_equip": "AUSRÃœSTEN", "msg_frozen": "â„ï¸ EINGEFROREN!", "msg_wide": "ğŸ” BLOCK ERWEITERT!", "msg_auto": "ğŸ’« AUTOMATISCH!", "msg_life_lost": "ğŸ’” VORSICHT!", "msg_expand": "â¬† BLOCK ERWEITERT!", "msg_gold_perfect": "â­ GOLD PERFEKT! 2Ã—", "msg_perfect_txt": "âœ¦ PERFEKT âœ¦", "height_lbl": "HÃ–HE", "score_lbl": "PUNKTE", "combo_lbl": "KOMBO", "levelup_lbl": "STUFE", "gameover_title": "SPIEL VORBEI", "final_label": "PUNKTE", "stat_height": "HÃ–HE", "stat_bestcombo": "BESTE KOMBO", "stat_perfect_go": "PERFEKT", "stat_level": "STUFE", "daily_done": "TÃ„GLICHE AUFGABEN ERLEDIGT", "diff_easy": "leicht", "diff_normal": "normal", "diff_hard": "schwer", "retry": "ğŸ”„ NOCHMAL", "go_menu": "ğŸ  MENÃœ", "share_btn": "ğŸ“¤ TEILEN", "qr_btn": "ğŸ“± QR CODE", "new_best": "ğŸ† NEUER REKORD!", "ach_first_game": "ERSTER SCHRITT", "ach_desc_first_game": "Erstes Spiel spielen", "ach_first_perfect": "ERSTES PERFEKT", "ach_desc_first_perfect": "Ersten perfekten Block", "ach_shop_buy": "EINKAUFEN", "ach_desc_shop_buy": "Im Shop kaufen", "ach_daily1": "TAGESSPIELER", "ach_desc_daily1": "Eine Tagesaufgabe", "ach_daily_all": "VOLLES TEAM", "ach_desc_daily_all": "Alle Tagesaufgaben", "ach_shopaholic": "KAUFSÃœCHTIG", "ach_desc_shopaholic": "5 Shop-Artikel", "ach_collector": "SAMMLER", "ach_desc_collector": "10 Shop-Artikel", "ach_score_5": "FÃœNFER", "ach_desc_score_5": "5 Punkte erreichen", "ach_score_10": "ERSTE 10", "ach_desc_score_10": "10 Punkte erreichen", "ach_score_25": "AUFSTIEG", "ach_desc_score_25": "25 Punkte erreichen", "ach_score_50": "KÃ–NNER", "ach_desc_score_50": "50 Punkte erreichen", "ach_score_75": "ELITE", "ach_desc_score_75": "75 Punkte erreichen", "ach_score_100": "JAHRHUNDERT", "ach_desc_score_100": "100 Punkte erreichen", "ach_score_150": "LEGENDE", "ach_desc_score_150": "150 Punkte", "ach_score_200": "GOTT", "ach_desc_score_200": "200 Punkte erreichen", "ach_combo3": "DREIERPACK", "ach_desc_combo3": "3x Kombo", "ach_combo5": "KOMBO-MEISTER", "ach_desc_combo5": "5x Kombo", "ach_combo10": "KETTENBRECHER", "ach_desc_combo10": "10x Kombo", "ach_combo15": "STRUDEL", "ach_desc_combo15": "15x Kombo", "ach_combo20": "STURM", "ach_desc_combo20": "20x Kombo", "ach_games3": "ANFÃ„NGER", "ach_desc_games3": "3 Spiele spielen", "ach_games10": "REGELMÃ„SSIG", "ach_desc_games10": "10 Spiele", "ach_games25": "WÃ–CHENTLICH", "ach_desc_games25": "25 Spiele", "ach_games50": "LÃ„UFER", "ach_desc_games50": "50 Spiele", "ach_games100": "SCHMIED", "ach_desc_games100": "100 Spiele", "ach_games200": "MASCHINE", "ach_desc_games200": "200 Spiele", "ach_perf5": "SCHARF", "ach_desc_perf5": "5 Perfekt in einem Spiel", "ach_perf10": "DIAMANTHAND", "ach_desc_perf10": "10 Perfekt", "ach_perf25": "ZAUBERER", "ach_desc_perf25": "25 Perfekt", "ach_perf50": "HEXER", "ach_desc_perf50": "50 Perfekt", "ach_no_miss": "MAKELLOS", "ach_desc_no_miss": "Ohne Fehler beenden", "ach_gold_perfect": "GOLDPERFEKT", "ach_desc_gold_perfect": "Perfekt auf Goldblock", "ach_gold5": "GOLDSAMMLUNG", "ach_desc_gold5": "5 Goldperfekt", "ach_gold10": "GOLDLEGENDE", "ach_desc_gold10": "10 Goldperfekt", "ach_hardmode": "HARTER WEG", "ach_desc_hardmode": "Im Schwer-Modus spielen", "ach_hard25": "TODESBOTE", "ach_desc_hard25": "25 Punkte schwer", "ach_survival_s": "ÃœBERLEBENDER", "ach_desc_survival_s": "20 BlÃ¶cke Ãœberleben", "ach_ghost_s": "GEISTJÃ„GER", "ach_desc_ghost_s": "10 BlÃ¶cke Geist", "ach_chaos_s": "CHAOSKAPITÃ„N", "ach_desc_chaos_s": "15 BlÃ¶cke Chaos", "ach_time_s": "ZEITZEUGE", "ach_desc_time_s": "30 BlÃ¶cke Zeit", "ach_allmode": "ALLE MODI", "ach_desc_allmode": "Alle Modi einmal spielen", "ach_level5": "STUFE 5", "ach_desc_level5": "Stufe 5 erreichen", "ach_level10": "STUFE 10", "ach_desc_level10": "Stufe 10 erreichen", "ach_level20": "STUFE 20", "ach_desc_level20": "Stufe 20 erreichen", "ach_xp1000": "TAUSEND XP", "ach_desc_xp1000": "1000 Gesamt-XP", "ach_night_owl": "NACHTEULE", "ach_desc_night_owl": "Aurora-Modus (85+)", "ach_powerup_use": "KRAFTRAUM", "ach_desc_powerup_use": "Ein Upgrade verwenden", "ach_powerup10": "ENERGIEDEPOT", "ach_desc_powerup10": "10 Upgrades", "ach_share_score": "TEILER", "ach_desc_share_score": "Punktzahl teilen", "ach_long_game": "LANGER ATEM", "ach_desc_long_game": "5 Min spielen", "ach_come_back": "ZURÃœCKGEKEHRT", "ach_desc_come_back": "2+ Spiele spielen", "ach_three_lives": "EISERNE HALTUNG", "ach_desc_three_lives": "20 Punkte mit 3 Leben"}, "es": {"play": "â–¶ JUGAR", "theme": "â€” TEMA â€”", "difficulty": "â€” DIFICULTAD â€”", "mode": "â€” MODO â€”", "easy": "FÃCIL", "normal": "NORMAL", "hard": "DIFÃCIL", "settings": "âš™ï¸", "back": "â† ATRÃS", "profile": "ğŸ‘¤ PERFIL", "shop": "ğŸ›’ TIENDA", "online": "ğŸŒ ONLINE LB", "tournament": "ğŸ† TORNEO", "achievements": "ğŸ… LOGROS", "titles": "ğŸ·ï¸ TÃTULOS", "daily": "â€” TAREAS DIARIAS â€”", "level": "NIVEL", "streak": "RACHA DIARIA", "best": "MEJOR", "games": "PARTIDAS", "combo": "COMBO", "perfect": "PERFECTO", "blocks": "BLOQUES", "achievement": "LOGRO", "modBests": "â€” MEJORES POR MODO â€”", "name_placeholder": "INGRESA TU NOMBRE", "settings_title": "AJUSTES", "music": "MÃšSICA", "sfx": "EFECTOS", "haptic": "VIBRACIÃ“N", "swipe": "CONTROL SWIPE", "trail": "EFECTO RASTRO", "avatar": "AVATAR", "language": "IDIOMA", "gameover": "FIN DEL JUEGO", "score": "PUNTOS", "newbest": "ğŸ† Â¡NUEVO RÃ‰CORD!", "resume": "â–¶ CONTINUAR", "restart": "â†º REINICIAR", "menu": "â˜° MENÃš", "paused": "â€” PAUSADO â€”", "classic": "CLÃSICO", "time": "TIEMPO", "survival": "SUPERVIVENCIA", "chaos": "CAOS", "ghost": "FANTASMA", "trail_classic": "ğŸŒŸ CLÃSICO", "trail_fire": "ğŸ”¥ FUEGO", "trail_rainbow": "ğŸŒˆ ARCOÃRIS", "trail_ghost": "ğŸ‘» FANTASMA", "trail_pixel": "ğŸ® PÃXEL", "trail_neon": "âš¡ NEÃ“N", "trail_sparkle": "âœ¨ DESTELLOS", "trail_comet": "â˜„ï¸ COMETA", "trail_matrix": "ğŸ’š MATRIX", "trail_minimal": "Â· MÃNIMO", "prof_level": "NIVEL", "prof_streak": "RACHA DIARIA", "prof_modBests": "â€” MEJORES POR MODO â€”", "stat_best": "MEJOR", "stat_games": "PARTIDAS", "stat_combo": "COMBO", "stat_perfect": "PERFECTO", "stat_blocks": "BLOQUES", "stat_achs": "LOGROS", "task_score": "PuntuaciÃ³n alta", "task_perfect": "Colocar perfecto", "task_games": "Jugar partidas", "task_combo": "Hacer combo", "online_lb": "ONLINE LB", "no_trail": "Bloqueado", "locked": "BLOQUEADO", "active": "ğŸŸ¢ ACTIVO", "inactive": "â­• APAGADO", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "COMPARTIR", "qr": "CÃ“DIGO QR", "classic_desc": "Modo clÃ¡sico sin fin", "time_desc": "Â¿CuÃ¡ntos bloques en 60s?", "survival_desc": "El bloque se encoge", "chaos_desc": "Velocidad cambia al azar", "ghost_desc": "El bloque desaparece", "play3": "JUGAR 3 PARTIDAS", "perf5": "5 COLOCACIONES PERFECTAS", "score15": "LLEGAR A 15 PUNTOS", "combo3": "COMBO 3X", "t_beginner": "PRINCIPIANTE", "t_builder": "CONSTRUCTOR", "t_stacker": "APILADOR", "t_pro": "PROFESIONAL", "t_master": "MAESTRO", "t_legend": "LEYENDA", "t_god": "DIOS", "t_survivor": "SUPERVIVIENTE", "t_survivor2": "SUPERVIVIENTE LEGENDARIO", "t_perfectionist": "PERFECCIONISTA", "t_combo_king": "REY DEL COMBO", "t_collector": "COLECCIONISTA", "t_allmode": "TODOS LOS MODOS", "t_daily": "DIARIO", "t_weekly": "SEMANAL", "t_timeking": "REY DEL TIEMPO", "t_ghost_s": "CAZAFANTASMAS", "t_scholar": "ERUDITO", "t_veteran": "VETERANO", "t_champion": "CAMPEÃ“N", "t_diamond": "DIAMANTE", "trail_ice": "ğŸ§Š HIELO", "trail_dark": "ğŸŒ‘ OSCURO", "trail_gold": "â­ RASTRO ORO", "trail_blood": "ğŸ©¸ SANGRE", "ach_title": "ğŸ… LOGROS", "titles_title": "ğŸ·ï¸ TÃTULOS", "shop_title": "ğŸ›’ TIENDA", "tournament_title": "ğŸ† TORNEO", "online_title": "ğŸŒ PUNTUACIÃ“N ONLINE", "daily_section": "â€” TAREAS DIARIAS â€”", "settings_back": "â† ATRÃS", "equipped": "âœ… EQUIPADO", "equip": "âš¡ EQUIPAR", "owned": "âœ“ COMPRADO", "cat_iz": "RASTRO", "cat_kozmetik": "COSMÃ‰TICO", "cat_guc": "MEJORA", "cat_avatar": "AVATAR", "shop_xp": "XP TOTAL", "equipped_title": "âœ… TÃTULO ACTIVO", "equip_title": "EQUIPAR", "pu_freeze": "â„ï¸ CONGELAR", "pu_wide": "ğŸ“ AMPLIAR", "pu_auto": "ğŸ¤– AUTO", "height": "ALTURA", "msg_miss": "ğŸ’” Â¡FALLO!", "msg_perfect": "âœ¨ Â¡PERFECTO!", "msg_combo": "ğŸ”¥ Â¡COMBO!", "msg_gameover": "FIN DEL JUEGO", "title_active": "âœ… ACTIVO", "title_equip": "EQUIPAR", "msg_frozen": "â„ï¸ Â¡CONGELADO!", "msg_wide": "ğŸ” Â¡BLOQUE AMPLIADO!", "msg_auto": "ğŸ’« Â¡AUTOMÃTICO!", "msg_life_lost": "ğŸ’” Â¡CUIDADO!", "msg_expand": "â¬† Â¡BLOQUE EXPANDIDO!", "msg_gold_perfect": "â­ ORO PERFECTO! 2Ã—", "msg_perfect_txt": "âœ¦ PERFECTO âœ¦", "height_lbl": "ALTURA", "score_lbl": "PUNTOS", "combo_lbl": "COMBO", "levelup_lbl": "NIVEL", "gameover_title": "FIN DEL JUEGO", "final_label": "PUNTOS", "stat_height": "ALTURA", "stat_bestcombo": "MEJOR COMBO", "stat_perfect_go": "PERFECTO", "stat_level": "NIVEL", "daily_done": "TAREAS DIARIAS COMPLETADAS", "diff_easy": "fÃ¡cil", "diff_normal": "normal", "diff_hard": "difÃ­cil", "retry": "ğŸ”„ REINTENTAR", "go_menu": "ğŸ  MENÃš", "share_btn": "ğŸ“¤ COMPARTIR", "qr_btn": "ğŸ“± CÃ“D. QR", "new_best": "ğŸ† Â¡NUEVO RÃ‰CORD!", "ach_first_game": "PRIMER PASO", "ach_desc_first_game": "Jugar primera partida", "ach_first_perfect": "PRIMER PERFECTO", "ach_desc_first_perfect": "Primer bloque perfecto", "ach_shop_buy": "COMPRAS", "ach_desc_shop_buy": "Comprar en tienda", "ach_daily1": "JUGADOR DIARIO", "ach_desc_daily1": "Completar tarea diaria", "ach_daily_all": "EQUIPO COMPLETO", "ach_desc_daily_all": "Completar todas las tareas", "ach_shopaholic": "COMPRADOR", "ach_desc_shopaholic": "5 artÃ­culos", "ach_collector": "COLECCIONISTA", "ach_desc_collector": "10 artÃ­culos", "ach_score_5": "CINCO", "ach_desc_score_5": "5 puntos", "ach_score_10": "PRIMEROS 10", "ach_desc_score_10": "10 puntos", "ach_score_25": "EN ASCENSO", "ach_desc_score_25": "25 puntos", "ach_score_50": "HÃBIL", "ach_desc_score_50": "50 puntos", "ach_score_75": "Ã‰LITE", "ach_desc_score_75": "75 puntos", "ach_score_100": "CENTENARIO", "ach_desc_score_100": "100 puntos", "ach_score_150": "LEYENDA", "ach_desc_score_150": "150 puntos", "ach_score_200": "DIOS", "ach_desc_score_200": "200 puntos", "ach_combo3": "TRIPLE", "ach_desc_combo3": "Combo 3x", "ach_combo5": "MAESTRO COMBO", "ach_desc_combo5": "Combo 5x", "ach_combo10": "ROMPECADENAS", "ach_desc_combo10": "Combo 10x", "ach_combo15": "VÃ“RTICE", "ach_desc_combo15": "Combo 15x", "ach_combo20": "TORMENTA", "ach_desc_combo20": "Combo 20x", "ach_games3": "PRINCIPIANTE", "ach_desc_games3": "3 partidas", "ach_games10": "REGULAR", "ach_desc_games10": "10 partidas", "ach_games25": "SEMANAL", "ach_desc_games25": "25 partidas", "ach_games50": "CORREDOR", "ach_desc_games50": "50 partidas", "ach_games100": "HERRERO", "ach_desc_games100": "100 partidas", "ach_games200": "MÃQUINA", "ach_desc_games200": "200 partidas", "ach_perf5": "PRECISO", "ach_desc_perf5": "5 perfectos en partida", "ach_perf10": "MANO DIAMANTE", "ach_desc_perf10": "10 perfectos", "ach_perf25": "MAGO", "ach_desc_perf25": "25 perfectos", "ach_perf50": "HECHICERO", "ach_desc_perf50": "50 perfectos", "ach_no_miss": "IMPECABLE", "ach_desc_no_miss": "Sin fallos", "ach_gold_perfect": "PERFECTO ORO", "ach_desc_gold_perfect": "Perfecto en oro", "ach_gold5": "COLECCIÃ“N ORO", "ach_desc_gold5": "5 perfectos dorados", "ach_gold10": "LEYENDA ORO", "ach_desc_gold10": "10 perfectos dorados", "ach_hardmode": "CAMINO DURO", "ach_desc_hardmode": "Modo difÃ­cil", "ach_hard25": "NEGOCIANTE", "ach_desc_hard25": "25 puntos difÃ­cil", "ach_survival_s": "SUPERVIVIENTE", "ach_desc_survival_s": "20 bloques supervivencia", "ach_ghost_s": "CAZAFANTASMAS", "ach_desc_ghost_s": "10 bloques fantasma", "ach_chaos_s": "CAPITÃN CAOS", "ach_desc_chaos_s": "15 bloques caos", "ach_time_s": "TESTIGO TIEMPO", "ach_desc_time_s": "30 bloques tiempo", "ach_allmode": "TODOS MODOS", "ach_desc_allmode": "Todos los modos", "ach_level5": "NIVEL 5", "ach_desc_level5": "Nivel 5", "ach_level10": "NIVEL 10", "ach_desc_level10": "Nivel 10", "ach_level20": "NIVEL 20", "ach_desc_level20": "Nivel 20", "ach_xp1000": "MIL XP", "ach_desc_xp1000": "1000 XP total", "ach_night_owl": "BÃšHO NOCTURNO", "ach_desc_night_owl": "Aurora (85+)", "ach_powerup_use": "SALA PODER", "ach_desc_powerup_use": "Usar potenciador", "ach_powerup10": "DEPÃ“SITO", "ach_desc_powerup10": "10 potenciadores", "ach_share_score": "COMPARTIDOR", "ach_desc_share_score": "Compartir puntuaciÃ³n", "ach_long_game": "LARGA PARTIDA", "ach_desc_long_game": "5 min jugando", "ach_come_back": "REGRESÃ‰", "ach_desc_come_back": "2+ partidas", "ach_three_lives": "POSTURA FÃ‰RREA", "ach_desc_three_lives": "20 con 3 vidas"}, "ru": {"play": "â–¶ Ğ˜Ğ“Ğ ĞĞ¢Ğ¬", "theme": "â€” Ğ¢Ğ•ĞœĞ â€”", "difficulty": "â€” Ğ¡Ğ›ĞĞ–ĞĞĞ¡Ğ¢Ğ¬ â€”", "mode": "â€” Ğ Ğ•Ğ–Ğ˜Ğœ â€”", "easy": "Ğ›Ğ•Ğ“ĞšĞ", "normal": "ĞĞĞ ĞœĞĞ›Ğ¬ĞĞ", "hard": "Ğ¡Ğ›ĞĞ–ĞĞ", "settings": "âš™ï¸", "back": "â† ĞĞĞ—ĞĞ”", "profile": "ğŸ‘¤ ĞŸĞ ĞĞ¤Ğ˜Ğ›Ğ¬", "shop": "ğŸ›’ ĞœĞĞ“ĞĞ—Ğ˜Ğ", "online": "ğŸŒ ĞĞĞ›ĞĞ™Ğ Ğ¢Ğ‘", "tournament": "ğŸ† Ğ¢Ğ£Ğ ĞĞ˜Ğ ", "achievements": "ğŸ… Ğ”ĞĞ¡Ğ¢Ğ˜Ğ–Ğ•ĞĞ˜Ğ¯", "titles": "ğŸ·ï¸ Ğ—Ğ’ĞĞĞ˜Ğ¯", "daily": "â€” Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ• Ğ—ĞĞ”ĞĞ§Ğ˜ â€”", "level": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬", "streak": "Ğ”ĞĞ•Ğ™ ĞŸĞĞ”Ğ Ğ¯Ğ”", "best": "Ğ›Ğ£Ğ§Ğ¨Ğ˜Ğ™", "games": "Ğ˜Ğ“Ğ Ğ«", "combo": "ĞšĞĞœĞ‘Ğ", "perfect": "Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "blocks": "Ğ‘Ğ›ĞĞšĞ˜", "achievement": "Ğ”ĞĞ¡Ğ¢Ğ˜Ğ–Ğ•ĞĞ˜Ğ•", "modBests": "â€” Ğ›Ğ£Ğ§Ğ¨Ğ•Ğ• ĞŸĞ Ğ Ğ•Ğ–Ğ˜ĞœĞĞœ â€”", "name_placeholder": "Ğ’Ğ’Ğ•Ğ”Ğ˜Ğ¢Ğ• Ğ˜ĞœĞ¯", "settings_title": "ĞĞĞ¡Ğ¢Ğ ĞĞ™ĞšĞ˜", "music": "ĞœĞ£Ğ—Ğ«ĞšĞ", "sfx": "Ğ­Ğ¤Ğ¤Ğ•ĞšĞ¢Ğ«", "haptic": "Ğ’Ğ˜Ğ‘Ğ ĞĞ¦Ğ˜Ğ¯", "swipe": "Ğ¡Ğ’ĞĞ™ĞŸ", "trail": "Ğ¡Ğ›Ğ•Ğ”", "avatar": "ĞĞ’ĞĞ¢ĞĞ ", "language": "Ğ¯Ğ—Ğ«Ğš", "gameover": "Ğ˜Ğ“Ğ Ğ ĞĞšĞĞĞ§Ğ•ĞĞ", "score": "ĞĞ§ĞšĞ˜", "newbest": "ğŸ† ĞĞĞ’Ğ«Ğ™ Ğ Ğ•ĞšĞĞ Ğ”!", "resume": "â–¶ ĞŸĞ ĞĞ”ĞĞ›Ğ–Ğ˜Ğ¢Ğ¬", "restart": "â†º Ğ—ĞĞĞĞ’Ğ", "menu": "â˜° ĞœĞ•ĞĞ®", "paused": "â€” ĞŸĞĞ£Ğ—Ğ â€”", "classic": "ĞšĞ›ĞĞ¡Ğ¡Ğ˜ĞšĞ", "time": "Ğ’Ğ Ğ•ĞœĞ¯", "survival": "Ğ’Ğ«Ğ–Ğ˜Ğ’ĞĞĞ˜Ğ•", "chaos": "Ğ¥ĞĞĞ¡", "ghost": "ĞŸĞ Ğ˜Ğ—Ğ ĞĞš", "trail_classic": "ğŸŒŸ ĞšĞ›ĞĞ¡Ğ¡Ğ˜ĞšĞ", "trail_fire": "ğŸ”¥ ĞĞ“ĞĞĞ¬", "trail_rainbow": "ğŸŒˆ Ğ ĞĞ”Ğ£Ğ“Ğ", "trail_ghost": "ğŸ‘» ĞŸĞ Ğ˜Ğ—Ğ ĞĞš", "trail_pixel": "ğŸ® ĞŸĞ˜ĞšĞ¡Ğ•Ğ›Ğ¬", "trail_neon": "âš¡ ĞĞ•ĞĞ", "trail_sparkle": "âœ¨ Ğ˜Ğ¡ĞšĞ Ğ«", "trail_comet": "â˜„ï¸ ĞšĞĞœĞ•Ğ¢Ğ", "trail_matrix": "ğŸ’š ĞœĞĞ¢Ğ Ğ˜Ğ¦Ğ", "trail_minimal": "Â· ĞœĞ˜ĞĞ˜ĞœĞĞ›", "prof_level": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬", "prof_streak": "Ğ”ĞĞ•Ğ™ ĞŸĞĞ”Ğ Ğ¯Ğ”", "prof_modBests": "â€” Ğ›Ğ£Ğ§Ğ¨Ğ•Ğ• ĞŸĞ Ğ Ğ•Ğ–Ğ˜ĞœĞĞœ â€”", "stat_best": "Ğ›Ğ£Ğ§Ğ¨Ğ˜Ğ™", "stat_games": "Ğ˜Ğ“Ğ Ğ«", "stat_combo": "ĞšĞĞœĞ‘Ğ", "stat_perfect": "Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "stat_blocks": "Ğ‘Ğ›ĞĞšĞ˜", "stat_achs": "Ğ”ĞĞ¡Ğ¢Ğ˜Ğ–.", "task_score": "ĞĞ°Ğ±Ñ€Ğ°Ñ‚ÑŒ Ğ¾Ñ‡ĞºĞ¸", "task_perfect": "Ğ˜Ğ´ĞµĞ°Ğ»ÑŒĞ½Ğ¾ Ğ¿Ğ¾ÑÑ‚Ğ°Ğ²Ğ¸Ñ‚ÑŒ", "task_games": "Ğ¡Ñ‹Ğ³Ñ€Ğ°Ñ‚ÑŒ Ğ¸Ğ³Ñ€Ñ‹", "task_combo": "Ğ¡Ğ´ĞµĞ»Ğ°Ñ‚ÑŒ ĞºĞ¾Ğ¼Ğ±Ğ¾", "online_lb": "ĞĞĞ›ĞĞ™Ğ Ğ¢Ğ‘", "no_trail": "Ğ—Ğ°Ğ±Ğ»Ğ¾Ğº.", "locked": "Ğ—ĞĞ‘Ğ›ĞĞš.", "active": "ğŸŸ¢ ĞĞšĞ¢Ğ˜Ğ’ĞĞ", "inactive": "â­• Ğ’Ğ«ĞšĞ›", "mute": "ğŸ”‡", "unmute": "ğŸ”Š", "share": "ĞŸĞĞ”Ğ•Ğ›Ğ˜Ğ¢Ğ¬Ğ¡Ğ¯", "qr": "QR ĞšĞĞ”", "classic_desc": "ĞšĞ»Ğ°ÑÑĞ¸Ñ‡ĞµÑĞºĞ¸Ğ¹ Ğ±ĞµÑĞºĞ¾Ğ½ĞµÑ‡Ğ½Ñ‹Ğ¹", "time_desc": "Ğ¡ĞºĞ¾Ğ»ÑŒĞºĞ¾ Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ğ·Ğ° 60Ñ?", "survival_desc": "Ğ‘Ğ»Ğ¾Ğº ÑÑƒĞ¶Ğ°ĞµÑ‚ÑÑ ĞºĞ°Ğ¶Ğ´Ñ‹Ğ¹ Ñ…Ğ¾Ğ´", "chaos_desc": "Ğ¡ĞºĞ¾Ñ€Ğ¾ÑÑ‚ÑŒ Ğ¼ĞµĞ½ÑĞµÑ‚ÑÑ", "ghost_desc": "Ğ‘Ğ»Ğ¾Ğº Ğ¸Ğ½Ğ¾Ğ³Ğ´Ğ° Ğ½ĞµĞ²Ğ¸Ğ´Ğ¸Ğ¼", "play3": "Ğ¡Ğ«Ğ“Ğ ĞĞ¢Ğ¬ 3 Ğ˜Ğ“Ğ Ğ«", "perf5": "5 Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ«Ğ¥ Ğ¥ĞĞ”ĞĞ’", "score15": "ĞĞĞ‘Ğ ĞĞ¢Ğ¬ 15 ĞĞ§ĞšĞĞ’", "combo3": "ĞšĞĞœĞ‘Ğ 3X", "t_beginner": "ĞĞĞ’Ğ˜Ğ§ĞĞš", "t_builder": "Ğ¡Ğ¢Ğ ĞĞ˜Ğ¢Ğ•Ğ›Ğ¬", "t_stacker": "Ğ£ĞšĞ›ĞĞ”Ğ§Ğ˜Ğš", "t_pro": "ĞŸĞ Ğ", "t_master": "ĞœĞĞ¡Ğ¢Ğ•Ğ ", "t_legend": "Ğ›Ğ•Ğ“Ğ•ĞĞ”Ğ", "t_god": "Ğ‘ĞĞ“", "t_survivor": "Ğ’Ğ«Ğ–Ğ˜Ğ’Ğ¨Ğ˜Ğ™", "t_survivor2": "Ğ›Ğ•Ğ“Ğ•ĞĞ”ĞĞ ĞĞ«Ğ™ Ğ’Ğ«Ğ–Ğ˜Ğ’Ğ¨Ğ˜Ğ™", "t_perfectionist": "ĞŸĞ•Ğ Ğ¤Ğ•ĞšĞ¦Ğ˜ĞĞĞ˜Ğ¡Ğ¢", "t_combo_king": "ĞšĞĞ ĞĞ›Ğ¬ ĞšĞĞœĞ‘Ğ", "t_collector": "ĞšĞĞ›Ğ›Ğ•ĞšĞ¦Ğ˜ĞĞĞ•Ğ ", "t_allmode": "Ğ’Ğ¡Ğ• Ğ Ğ•Ğ–Ğ˜ĞœĞ«", "t_daily": "Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ™", "t_weekly": "Ğ•Ğ–Ğ•ĞĞ•Ğ”Ğ•Ğ›Ğ¬ĞĞ«Ğ™", "t_timeking": "ĞšĞĞ ĞĞ›Ğ¬ Ğ’Ğ Ğ•ĞœĞ•ĞĞ˜", "t_ghost_s": "ĞĞ¥ĞĞ¢ĞĞ˜Ğš ĞĞ ĞŸĞ Ğ˜Ğ—Ğ ĞĞšĞĞ’", "t_scholar": "Ğ£Ğ§ĞĞĞ«Ğ™", "t_veteran": "Ğ’Ğ•Ğ¢Ğ•Ğ ĞĞ", "t_champion": "Ğ§Ğ•ĞœĞŸĞ˜ĞĞ", "t_diamond": "ĞĞ›ĞœĞĞ—", "trail_ice": "ğŸ§Š Ğ›ĞĞ”", "trail_dark": "ğŸŒ‘ Ğ¢ĞĞœĞĞ«Ğ™", "trail_gold": "â­ Ğ—ĞĞ›ĞĞ¢ĞĞ™ Ğ¡Ğ›Ğ•Ğ”", "trail_blood": "ğŸ©¸ ĞšĞ ĞĞ’Ğ¬", "ach_title": "ğŸ… Ğ”ĞĞ¡Ğ¢Ğ˜Ğ–Ğ•ĞĞ˜Ğ¯", "titles_title": "ğŸ·ï¸ Ğ—Ğ’ĞĞĞ˜Ğ¯", "shop_title": "ğŸ›’ ĞœĞĞ“ĞĞ—Ğ˜Ğ", "tournament_title": "ğŸ† Ğ¢Ğ£Ğ ĞĞ˜Ğ ", "online_title": "ğŸŒ ĞĞĞ›ĞĞ™Ğ ĞĞ§ĞšĞ˜", "daily_section": "â€” Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ• Ğ—ĞĞ”ĞĞ§Ğ˜ â€”", "settings_back": "â† ĞĞĞ—ĞĞ”", "equipped": "âœ… ĞĞ”Ğ•Ğ¢Ğ", "equip": "âš¡ ĞĞ”Ğ•Ğ¢Ğ¬", "owned": "âœ“ ĞšĞ£ĞŸĞ›Ğ•ĞĞ", "cat_iz": "Ğ¡Ğ›Ğ•Ğ”", "cat_kozmetik": "ĞšĞĞ¡ĞœĞ•Ğ¢Ğ˜ĞšĞ", "cat_guc": "Ğ£Ğ›Ğ£Ğ§Ğ¨Ğ•ĞĞ˜Ğ•", "cat_avatar": "ĞĞ’ĞĞ¢ĞĞ ", "shop_xp": "Ğ’Ğ¡Ğ•Ğ“Ğ XP", "equipped_title": "âœ… ĞĞšĞ¢Ğ˜Ğ’ĞĞĞ• Ğ—Ğ’ĞĞĞ˜Ğ•", "equip_title": "ĞĞ”Ğ•Ğ¢Ğ¬", "pu_freeze": "â„ï¸ Ğ—ĞĞœĞĞ ĞĞ—Ğ˜Ğ¢Ğ¬", "pu_wide": "ğŸ“ Ğ ĞĞ¡Ğ¨Ğ˜Ğ Ğ˜Ğ¢Ğ¬", "pu_auto": "ğŸ¤– ĞĞ’Ğ¢Ğ", "height": "Ğ’Ğ«Ğ¡ĞĞ¢Ğ", "msg_miss": "ğŸ’” ĞœĞ˜ĞœĞ!", "msg_perfect": "âœ¨ Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ!", "msg_combo": "ğŸ”¥ ĞšĞĞœĞ‘Ğ!", "msg_gameover": "Ğ˜Ğ“Ğ Ğ ĞĞšĞĞĞ§Ğ•ĞĞ", "title_active": "âœ… ĞĞšĞ¢Ğ˜Ğ’ĞĞ", "title_equip": "ĞĞ”Ğ•Ğ¢Ğ¬", "msg_frozen": "â„ï¸ Ğ—ĞĞœĞĞ ĞĞ–Ğ•ĞĞ!", "msg_wide": "ğŸ” Ğ‘Ğ›ĞĞš Ğ ĞĞ¡Ğ¨Ğ˜Ğ Ğ•Ğ!", "msg_auto": "ğŸ’« ĞĞ’Ğ¢Ğ!", "msg_life_lost": "ğŸ’” ĞĞ¡Ğ¢ĞĞ ĞĞ–ĞĞ!", "msg_expand": "â¬† Ğ‘Ğ›ĞĞš Ğ ĞĞ¡Ğ¨Ğ˜Ğ Ğ•Ğ!", "msg_gold_perfect": "â­ Ğ—ĞĞ›ĞĞ¢Ğ Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ! 2Ã—", "msg_perfect_txt": "âœ¦ Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ âœ¦", "height_lbl": "Ğ’Ğ«Ğ¡ĞĞ¢Ğ", "score_lbl": "ĞĞ§ĞšĞ˜", "combo_lbl": "ĞšĞĞœĞ‘Ğ", "levelup_lbl": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬", "gameover_title": "Ğ˜Ğ“Ğ Ğ ĞĞšĞĞĞ§Ğ•ĞĞ", "final_label": "ĞĞ§ĞšĞ˜", "stat_height": "Ğ’Ğ«Ğ¡ĞĞ¢Ğ", "stat_bestcombo": "Ğ›Ğ£Ğ§Ğ¨Ğ•Ğ• ĞšĞĞœĞ‘Ğ", "stat_perfect_go": "Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "stat_level": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬", "daily_done": "Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ• Ğ—ĞĞ”ĞĞ§Ğ˜ Ğ’Ğ«ĞŸĞĞ›ĞĞ•ĞĞ«", "diff_easy": "Ğ»ĞµĞ³ĞºĞ¾", "diff_normal": "Ğ½Ğ¾Ñ€Ğ¼Ğ°Ğ»ÑŒĞ½Ğ¾", "diff_hard": "ÑĞ»Ğ¾Ğ¶Ğ½Ğ¾", "retry": "ğŸ”„ Ğ—ĞĞĞĞ’Ğ", "go_menu": "ğŸ  ĞœĞ•ĞĞ®", "share_btn": "ğŸ“¤ ĞŸĞĞ”Ğ•Ğ›Ğ˜Ğ¢Ğ¬Ğ¡Ğ¯", "qr_btn": "ğŸ“± QR ĞšĞĞ”", "new_best": "ğŸ† ĞĞĞ’Ğ«Ğ™ Ğ Ğ•ĞšĞĞ Ğ”!", "ach_first_game": "ĞŸĞ•Ğ Ğ’Ğ«Ğ™ Ğ¨ĞĞ“", "ach_desc_first_game": "Ğ¡Ñ‹Ğ³Ñ€Ğ°Ñ‚ÑŒ Ğ¿ĞµÑ€Ğ²ÑƒÑ Ğ¸Ğ³Ñ€Ñƒ", "ach_first_perfect": "ĞŸĞ•Ğ Ğ’ĞĞ• Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "ach_desc_first_perfect": "ĞŸĞµÑ€Ğ²Ñ‹Ğ¹ Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ğ¹ Ğ±Ğ»Ğ¾Ğº", "ach_shop_buy": "ĞŸĞĞšĞ£ĞŸĞšĞ˜", "ach_desc_shop_buy": "ĞšÑƒĞ¿Ğ¸Ñ‚ÑŒ Ğ² Ğ¼Ğ°Ğ³Ğ°Ğ·Ğ¸Ğ½Ğµ", "ach_daily1": "Ğ•Ğ–Ğ•Ğ”ĞĞ•Ğ’ĞĞ«Ğ™", "ach_desc_daily1": "Ğ’Ñ‹Ğ¿Ğ¾Ğ»Ğ½Ğ¸Ñ‚ÑŒ Ğ·Ğ°Ğ´Ğ°Ğ½Ğ¸Ğµ", "ach_daily_all": "ĞŸĞĞ›ĞĞĞ¯ ĞšĞĞœĞĞĞ”Ğ", "ach_desc_daily_all": "Ğ’ÑĞµ Ğ·Ğ°Ğ´Ğ°Ğ½Ğ¸Ñ", "ach_shopaholic": "Ğ¨ĞĞŸĞĞ“ĞĞ›Ğ˜Ğš", "ach_desc_shopaholic": "5 Ñ‚Ğ¾Ğ²Ğ°Ñ€Ğ¾Ğ²", "ach_collector": "ĞšĞĞ›Ğ›Ğ•ĞšĞ¦Ğ˜ĞĞĞ•Ğ ", "ach_desc_collector": "10 Ñ‚Ğ¾Ğ²Ğ°Ñ€Ğ¾Ğ²", "ach_score_5": "ĞŸĞ¯Ğ¢ĞĞ ĞšĞ", "ach_desc_score_5": "5 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_10": "ĞŸĞ•Ğ Ğ’Ğ«Ğ• 10", "ach_desc_score_10": "10 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_25": "ĞŸĞĞ”ĞªĞĞœ", "ach_desc_score_25": "25 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_50": "Ğ£ĞœĞ•Ğ›Ğ«Ğ™", "ach_desc_score_50": "50 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_75": "Ğ­Ğ›Ğ˜Ğ¢Ğ", "ach_desc_score_75": "75 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_100": "Ğ¡ĞĞ¢ĞĞ¯", "ach_desc_score_100": "100 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_150": "Ğ›Ğ•Ğ“Ğ•ĞĞ”Ğ", "ach_desc_score_150": "150 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_score_200": "Ğ‘ĞĞ“", "ach_desc_score_200": "200 Ğ¾Ñ‡ĞºĞ¾Ğ²", "ach_combo3": "Ğ¢Ğ ĞĞ™ĞĞ˜Ğš", "ach_desc_combo3": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 3x", "ach_combo5": "ĞœĞĞ¡Ğ¢Ğ•Ğ  ĞšĞĞœĞ‘Ğ", "ach_desc_combo5": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 5x", "ach_combo10": "Ğ ĞĞ—Ğ Ğ«Ğ’ĞĞ¢Ğ•Ğ›Ğ¬", "ach_desc_combo10": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 10x", "ach_combo15": "Ğ’Ğ˜Ğ¥Ğ Ğ¬", "ach_desc_combo15": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 15x", "ach_combo20": "Ğ¨Ğ¢ĞĞ Ğœ", "ach_desc_combo20": "ĞšĞ¾Ğ¼Ğ±Ğ¾ 20x", "ach_games3": "ĞĞĞ§Ğ˜ĞĞĞ®Ğ©Ğ˜Ğ™", "ach_desc_games3": "3 Ğ¸Ğ³Ñ€Ñ‹", "ach_games10": "ĞŸĞĞ¡Ğ¢ĞĞ¯ĞĞĞ«Ğ™", "ach_desc_games10": "10 Ğ¸Ğ³Ñ€", "ach_games25": "Ğ•Ğ–Ğ•ĞĞ•Ğ”Ğ•Ğ›Ğ¬ĞĞ«Ğ™", "ach_desc_games25": "25 Ğ¸Ğ³Ñ€", "ach_games50": "Ğ‘Ğ•Ğ“Ğ£Ğ", "ach_desc_games50": "50 Ğ¸Ğ³Ñ€", "ach_games100": "ĞšĞ£Ğ—ĞĞ•Ğ¦", "ach_desc_games100": "100 Ğ¸Ğ³Ñ€", "ach_games200": "ĞœĞĞ¨Ğ˜ĞĞ", "ach_desc_games200": "200 Ğ¸Ğ³Ñ€", "ach_perf5": "Ğ¢ĞĞ§ĞĞ«Ğ™", "ach_desc_perf5": "5 Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ñ…", "ach_perf10": "ĞĞ›ĞœĞĞ—ĞĞĞ¯ Ğ Ğ£ĞšĞ", "ach_desc_perf10": "10 Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ñ…", "ach_perf25": "Ğ’ĞĞ›Ğ¨Ğ•Ğ‘ĞĞ˜Ğš", "ach_desc_perf25": "25 Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ñ…", "ach_perf50": "Ğ§ĞĞ ĞĞ”Ğ•Ğ™", "ach_desc_perf50": "50 Ğ¸Ğ´ĞµĞ°Ğ»ÑŒĞ½Ñ‹Ñ…", "ach_no_miss": "Ğ‘Ğ•Ğ—Ğ£ĞŸĞ Ğ•Ğ§ĞĞ«Ğ™", "ach_desc_no_miss": "Ğ‘ĞµĞ· Ğ¿Ñ€Ğ¾Ğ¼Ğ°Ñ…Ğ¾Ğ²", "ach_gold_perfect": "Ğ—ĞĞ›ĞĞ¢Ğ Ğ˜Ğ”Ğ•ĞĞ›Ğ¬ĞĞ", "ach_desc_gold_perfect": "Ğ˜Ğ´ĞµĞ°Ğ»ÑŒĞ½Ğ¾ Ğ½Ğ° Ğ·Ğ¾Ğ»Ğ¾Ñ‚Ğµ", "ach_gold5": "Ğ—ĞĞ›ĞĞ¢ĞĞ¯ ĞšĞĞ›Ğ›Ğ•ĞšĞ¦Ğ˜Ğ¯", "ach_desc_gold5": "5 Ğ·Ğ¾Ğ»Ğ¾Ñ‚Ñ‹Ñ…", "ach_gold10": "Ğ—ĞĞ›ĞĞ¢ĞĞ¯ Ğ›Ğ•Ğ“Ğ•ĞĞ”Ğ", "ach_desc_gold10": "10 Ğ·Ğ¾Ğ»Ğ¾Ñ‚Ñ‹Ñ…", "ach_hardmode": "Ğ¢Ğ¯Ğ–ĞĞ›Ğ«Ğ™ ĞŸĞ£Ğ¢Ğ¬", "ach_desc_hardmode": "Ğ¡Ğ»Ğ¾Ğ¶Ğ½Ñ‹Ğ¹ Ñ€ĞµĞ¶Ğ¸Ğ¼", "ach_hard25": "Ğ¢ĞĞ Ğ“ĞĞ’Ğ•Ğ¦ Ğ¡ĞœĞ•Ğ Ğ¢Ğ¬Ğ®", "ach_desc_hard25": "25 Ğ½Ğ° ÑĞ»Ğ¾Ğ¶Ğ½Ğ¾Ğ¼", "ach_survival_s": "Ğ’Ğ«Ğ–Ğ˜Ğ’Ğ¨Ğ˜Ğ™", "ach_desc_survival_s": "20 Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ğ²Ñ‹Ğ¶Ğ¸Ğ²Ğ°Ğ½Ğ¸Ğµ", "ach_ghost_s": "ĞĞ¥ĞĞ¢ĞĞ˜Ğš ĞĞ ĞŸĞ Ğ˜Ğ—Ğ ĞĞšĞĞ’", "ach_desc_ghost_s": "10 Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ğ¿Ñ€Ğ¸Ğ·Ñ€Ğ°Ğº", "ach_chaos_s": "ĞšĞĞŸĞ˜Ğ¢ĞĞ Ğ¥ĞĞĞ¡Ğ", "ach_desc_chaos_s": "15 Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ñ…Ğ°Ğ¾Ñ", "ach_time_s": "Ğ¡Ğ’Ğ˜Ğ”Ğ•Ğ¢Ğ•Ğ›Ğ¬ Ğ’Ğ Ğ•ĞœĞ•ĞĞ˜", "ach_desc_time_s": "30 Ğ±Ğ»Ğ¾ĞºĞ¾Ğ² Ğ²Ñ€ĞµĞ¼Ñ", "ach_allmode": "Ğ’Ğ¡Ğ• Ğ Ğ•Ğ–Ğ˜ĞœĞ«", "ach_desc_allmode": "Ğ’ÑĞµ Ñ€ĞµĞ¶Ğ¸Ğ¼Ñ‹", "ach_level5": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬ 5", "ach_desc_level5": "Ğ£Ñ€Ğ¾Ğ²ĞµĞ½ÑŒ 5", "ach_level10": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬ 10", "ach_desc_level10": "Ğ£Ñ€Ğ¾Ğ²ĞµĞ½ÑŒ 10", "ach_level20": "Ğ£Ğ ĞĞ’Ğ•ĞĞ¬ 20", "ach_desc_level20": "Ğ£Ñ€Ğ¾Ğ²ĞµĞ½ÑŒ 20", "ach_xp1000": "Ğ¢Ğ«Ğ¡Ğ¯Ğ§Ğ XP", "ach_desc_xp1000": "1000 XP", "ach_night_owl": "ĞĞĞ§ĞĞĞ¯ Ğ¡ĞĞ’Ğ", "ach_desc_night_owl": "ĞĞ²Ñ€Ğ¾Ñ€Ğ° (85+)", "ach_powerup_use": "Ğ—ĞĞ› Ğ¡Ğ˜Ğ›Ğ«", "ach_desc_powerup_use": "Ğ˜ÑĞ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ÑŒ ÑƒÑĞ¸Ğ»ĞµĞ½Ğ¸Ğµ", "ach_powerup10": "Ğ¡ĞšĞ›ĞĞ”", "ach_desc_powerup10": "10 ÑƒÑĞ¸Ğ»ĞµĞ½Ğ¸Ğ¹", "ach_share_score": "Ğ”Ğ•Ğ›Ğ˜Ğ¢Ğ•Ğ›Ğ¬", "ach_desc_share_score": "ĞŸĞ¾Ğ´ĞµĞ»Ğ¸Ñ‚ÑŒÑÑ", "ach_long_game": "Ğ”ĞĞ›Ğ“ĞĞ• Ğ”Ğ«Ğ¥ĞĞĞ˜Ğ•", "ach_desc_long_game": "5 Ğ¼Ğ¸Ğ½", "ach_come_back": "Ğ’Ğ•Ğ ĞĞ£Ğ›Ğ¡Ğ¯", "ach_desc_come_back": "2+ Ğ¸Ğ³Ñ€Ñ‹", "ach_three_lives": "Ğ–Ğ•Ğ›Ğ•Ğ—ĞĞĞ¯ Ğ¡Ğ¢ĞĞ™ĞšĞ", "ach_desc_three_lives": "20 Ñ 3 Ğ¶Ğ¸Ğ·Ğ½ÑĞ¼Ğ¸"}};
 let currentLang=LS.get('stack_lang','tr');
 function T(k){const v=(LANGS[currentLang]||LANGS.tr)[k]||(LANGS.tr||{})[k];return v||null;}
 function applyLang(){
   if(typeof currentTheme==='undefined')return;
   // Mod butonlarÄ±
   document.querySelectorAll('.mode-btn').forEach(b=>{
-    const k=b.dataset.mode;if(k)b.textContent=T(k);
+    const k=b.dataset.mode;if(k)b.textContent=getModeLabel(k);
   });
   // Trail select options
   const ts=document.getElementById('trail-style');
   if(ts){Array.from(ts.options).forEach(o=>{
     const key='trail_'+o.value;const tr=T(key);
-    if(tr!==key)o.text=tr+(o.dataset.locked==='1'?' ğŸ”’':'');
+    if(tr!==key)o.text=tr+(o.dataset.locked==='1'?' ':'');
   });}
 
   // Profil level
@@ -588,7 +588,7 @@ let currentTheme=(()=>{const t=LS.get('stack_theme','neon');return THEMES[t]?t:'
 function applyTheme(name){currentTheme=THEMES[name]?name:'neon';LS.set('stack_theme',currentTheme);renderThemeRow();restartMusicForTheme();}
 function renderThemeRow(){const colors={neon:'#00ffe7',retro:'#ff6b35',minimal:'#dddddd',ghost:'#a29bfe'};document.getElementById('theme-row').innerHTML=Object.keys(THEMES).map(k=>`<button class="theme-btn${k===currentTheme?' active':''}" data-theme="${k}" style="background:${colors[k]}"></button>`).join('');}
 
-// â•â• TITLES â•â•
+//  TITLES 
 const TITLES=[
   // Skor unvanlarÄ±
   {id:'t_beginner',  label:'ACEMI',          color:'#aaa',    border:'rgba(180,180,180,.4)', c:()=>getBest()>=1},
@@ -642,7 +642,7 @@ function renderTitleBadge(){
   el.textContent=(settings.playerName||'OYUNCU')+' Â· '+t.label;
 }
 
-// â•â• STREAK â•â•
+//  STREAK 
 function getTodayStr(){return new Date().toISOString().slice(0,10);}
 function getStreak(){return LS.get('stack_streak_count',0);}
 function updateStreak(){
@@ -663,19 +663,19 @@ function renderStreakDisplay(){
   if(!el)return;
   const base='font-family:DM Mono,monospace;font-size:.8rem;letter-spacing:3px;text-align:center;padding:3px 12px;';
   if(streak>=2){
-    const flames=Array(Math.min(streak,5)+1).join('ğŸ”¥');
+    const flames=Array(Math.min(streak,5)+1).join('');
     el.innerHTML=`<span class="streak-flame">${flames}</span> SERÄ°: ${streak} GÃœN`;
     el.setAttribute('style',base+'color:#ff6b35;border:1px solid rgba(255,107,53,.4);text-shadow:0 0 10px rgba(255,107,53,.5);');
   } else {
-    el.textContent='ğŸ”¥ SERÄ°: '+streak+' GÃœN';
+    el.textContent='SERÄ°: '+streak+' GÃœN';
     el.setAttribute('style',base+'color:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.08);');
   }
 }
-// â•â• MODES â•â•
+//  MODES 
 const MODES={
-  classic:{icon:'ğŸ›',key:'classic'},
+  classic:{icon:'ğŸ›ï¸',key:'classic'},
   time:{icon:'â±',key:'time'},
-  survival:{icon:'ğŸ’€',key:'survival'},
+  survival:{icon:'ğŸ›¡ï¸',key:'survival'},
   chaos:{icon:'ğŸŒ€',key:'chaos'},
   ghost:{icon:'ğŸ‘»',key:'ghost'},
 };
@@ -684,28 +684,28 @@ function getModeDesc(k){return T(k+'_desc');}
 let currentMode=LS.get('stack_mode','classic');
 function renderModeRow(){document.getElementById('mode-row').innerHTML=Object.keys(MODES).map(k=>`<button class="mode-btn${k===currentMode?' active':''}" data-mode="${k}">${getModeLabel(k)}</button>`).join('');document.getElementById('mode-desc').textContent=getModeDesc(currentMode);}
 
-// â•â• SETTINGS â•â•
-let settings=LS.get('stack_settings',{playerName:'',avatar:'ğŸ§±',musicVol:55,sfxVol:100,haptic:true,swipe:false,trailStyle:'classic'});
+//  SETTINGS 
+let settings=LS.get('stack_settings',{playerName:'',avatar:'',musicVol:55,sfxVol:100,haptic:true,swipe:false,trailStyle:'classic'});
 function saveSettings(){LS.set('stack_settings',settings);}
 
-// â•â• SEASONAL EVENTS â•â•
+//  SEASONAL EVENTS 
 const SEASONS=[
   {name:'â„ï¸ KIÅ SEZONU',color:'#74b9ff',border:'rgba(116,185,255,.4)',weather:'snow',bonus:'Kar yaÄŸarken +10% XP'},
   {name:'ğŸŒ¸ BAHAR YARIÅMASI',color:'#fd79a8',border:'rgba(253,121,168,.4)',weather:'none',bonus:'Ã–zel Ã§iÃ§ek temasÄ±'},
-  {name:'ğŸ”¥ YAZ ATEÅI',color:'#ff6b35',border:'rgba(255,107,53,.4)',weather:'none',bonus:'AteÅŸ iz efekti Ã¼cretsiz'},
+  {name:'â˜€ï¸ YAZ ATEÅI',color:'#ff6b35',border:'rgba(255,107,53,.4)',weather:'none',bonus:'AteÅŸ iz efekti Ã¼cretsiz'},
   {name:'ğŸ‚ SONBAHAR KUPASÄ°',color:'#fdcb6e',border:'rgba(253,203,110,.4)',weather:'none',bonus:'Ã–zel sonbahar renkleri'},
 ];
 const currentSeason=SEASONS[Math.floor((new Date().getMonth()/12)*4)];
 
-// â•â• WEATHER SYSTEM â•â•
+//  WEATHER SYSTEM 
 const WEATHER_STAGES=[
   {min:0,max:9,type:'clear',sky:'rgba(0,0,0,0)',label:''},
-  {min:10,max:19,type:'dusk',sky:'rgba(255,100,50,0.06)',label:'ğŸŒ…'},
-  {min:20,max:29,type:'night',sky:'rgba(0,20,60,0.15)',label:'ğŸŒ™'},
-  {min:30,max:44,type:'storm',sky:'rgba(30,0,60,0.2)',label:'â›ˆ'},
-  {min:45,max:64,type:'rain',sky:'rgba(0,10,30,0.18)',label:'ğŸŒ§'},
-  {min:65,max:84,type:'snow',sky:'rgba(200,230,255,0.08)',label:'â„ï¸'},
-  {min:85,max:999,type:'aurora',sky:'rgba(0,60,20,0.15)',label:'ğŸŒŒ'},
+  {min:10,max:19,type:'dusk',sky:'rgba(255,100,50,0.06)',label:''},
+  {min:20,max:29,type:'night',sky:'rgba(0,20,60,0.15)',label:''},
+  {min:30,max:44,type:'storm',sky:'rgba(30,0,60,0.2)',label:''},
+  {min:45,max:64,type:'rain',sky:'rgba(0,10,30,0.18)',label:''},
+  {min:65,max:84,type:'snow',sky:'rgba(200,230,255,0.08)',label:''},
+  {min:85,max:999,type:'aurora',sky:'rgba(0,60,20,0.15)',label:''},
 ];
 function getWeatherStage(s){return WEATHER_STAGES.find(w=>s>=w.min&&s<=w.max)||WEATHER_STAGES[0];}
 let activeWeather='clear';
@@ -733,7 +733,7 @@ function spawnWeatherParticle(type){
   document.getElementById('weather-wrap').appendChild(el);
 }
 
-// â•â• PARALLAX STARS â•â•
+//  PARALLAX STARS 
 function buildParallax(){
   const wrap=document.getElementById('parallax-wrap');wrap.innerHTML='';
   for(let i=0;i<80;i++){
@@ -744,7 +744,7 @@ function buildParallax(){
   }
 }
 
-// â•â• AUDIO â•â•
+//  AUDIO 
 let audioCtx=null,muted=false,musicPlaying=false,musicGain=null;
 function getAC(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
 function tone(f,d,type='sine',vol=0.25){if(muted)return;const v=vol*(settings.sfxVol/100);if(v<=0)return;try{const ac=getAC(),o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+d);o.start();o.stop(ac.currentTime+d);}catch(e){}}
@@ -756,7 +756,7 @@ function sfxPowerup(){tone(800,0.05,'sine',0.2);setTimeout(()=>tone(1000,0.05,'s
 function sfxGold(){tone(880,0.05,'sine',0.2);setTimeout(()=>tone(1100,0.05,'sine',0.22),60);setTimeout(()=>tone(1320,0.08,'sine',0.25),120);setTimeout(()=>tone(1760,0.18,'sine',0.3),190);}
 function sfxLifeLost(){tone(220,0.2,'square',0.3);setTimeout(()=>tone(180,0.3,'square',0.25),200);}
 function sfxMilestone(){tone(440,0.05,'sine',.3);setTimeout(()=>tone(550,0.05,'sine',.3),60);setTimeout(()=>tone(660,0.05,'sine',.3),120);setTimeout(()=>tone(880,0.3,'sine',.35),180);}
-// â•â• MUSIC THEMES â•â•
+//  MUSIC THEMES 
 const MUSIC_THEMES={
   neon:{
     name:'SYNTHWAVE',
@@ -865,7 +865,7 @@ function restartMusicForTheme(){
 }
 function haptic(d=20){if(settings.haptic&&navigator.vibrate)navigator.vibrate(d);}
 
-// â•â• CANVAS â•â•
+//  CANVAS 
 const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
 let W=window.innerWidth;
 let H=window.innerHeight;
@@ -876,7 +876,7 @@ const DIFF_CFG={easy:{sb:1.4,si:0.04},normal:{sb:1.8,si:0.06},hard:{sb:2.8,si:0.
 let difficulty='normal',SPEED_BASE=1.8,SPEED_INC=0.06;
 const GROUND_SCR=H-40;
 
-// â•â• GAME STATE â•â•
+//  GAME STATE 
 let state='menu',blocks=[],mover=null,particles=[],trails=[],chunks=[];
 let score=0,combo=0,bestCombo=0,animId=null;
 let camTop=-GROUND_SCR,camTopTarget=-GROUND_SCR;
@@ -888,7 +888,7 @@ let leaderboard=LS.get('stack_lb',[]);
 let lives=3,specialBlockCounter=0,nextSpecialType='normal',gamePerfects=0;
 
 
-// â•â• XP & LEVEL â•â•
+//  XP & LEVEL 
 let xpData=(()=>{const d=LS.get('stack_xp',{xp:0,level:1});return {xp:Number(d.xp)||0, level:Number(d.level)||1};})();
 function xpForLevel(l){return l*100;}
 function triggerLevelUp(lv){
@@ -940,51 +940,51 @@ function renderXP(){
   if(fillEl)fillEl.style.width=(xpData.xp/xpForLevel(xpData.level)*100)+'%';
 }
 
-// â•â• SHOP â•â•
+//  SHOP 
 const SHOP_ITEMS=[
-  // â”€â”€ Ä°Z â”€â”€
+  //  Ä°Z 
   {id:'trail_fire',icon:'ğŸ”¥',name:'ATEÅ Ä°ZÄ°',desc:'Alev efekti',price:200,type:'trail',value:'fire',cat:'Ä°Z'},
   {id:'trail_rainbow',icon:'ğŸŒˆ',name:'GÃ–KKUÅAÄI',desc:'Rengarenk iz',price:300,type:'trail',value:'rainbow',cat:'Ä°Z'},
   {id:'trail_ghost',icon:'ğŸ‘»',name:'HAYALET',desc:'DalgalÄ± hayalet',price:250,type:'trail',value:'ghost',cat:'Ä°Z'},
   {id:'trail_pixel',icon:'ğŸ®',name:'PÄ°KSEL',desc:'Retro piksel',price:150,type:'trail',value:'pixel',cat:'Ä°Z'},
-  {id:'trail_neon',icon:'ğŸ’¡',name:'NEON',desc:'Parlayan neon',price:180,type:'trail',value:'neon',cat:'Ä°Z'},
-  {id:'trail_ice',icon:'â„ï¸',name:'BUZUL',desc:'Buz mavisi iz',price:220,type:'trail',value:'ice',cat:'Ä°Z'},
+  {id:'trail_neon',icon:'âš¡',name:'NEON',desc:'Parlayan neon',price:180,type:'trail',value:'neon',cat:'Ä°Z'},
+  {id:'trail_ice',icon:'ğŸ§Š',name:'BUZUL',desc:'Buz mavisi iz',price:220,type:'trail',value:'ice',cat:'Ä°Z'},
   {id:'trail_dark',icon:'ğŸŒ‘',name:'KARANLIK',desc:'GÃ¶lge izi',price:120,type:'trail',value:'dark',cat:'Ä°Z'},
-  {id:'trail_gold',icon:'âœ¨',name:'ALTIN Ä°Z',desc:'AltÄ±n pÄ±rÄ±ltÄ±lar',price:400,type:'trail',value:'gold',cat:'Ä°Z'},
+  {id:'trail_gold',icon:'â­',name:'ALTIN Ä°Z',desc:'AltÄ±n pÄ±rÄ±ltÄ±lar',price:400,type:'trail',value:'gold',cat:'Ä°Z'},
   {id:'trail_matrix',icon:'ğŸ’š',name:'MATRÄ°X',desc:'YeÅŸil kod yaÄŸmuru',price:350,type:'trail',value:'matrix',cat:'Ä°Z'},
   {id:'trail_blood',icon:'ğŸ©¸',name:'KAN',desc:'KÄ±rmÄ±zÄ± damla',price:280,type:'trail',value:'blood',cat:'Ä°Z'},
-  // â”€â”€ AVATAR â”€â”€
-  {id:'avatar_dragon',icon:'ğŸ‰',name:'EJDERHA',desc:'GÃ¼Ã§lÃ¼ avatar',price:400,type:'avatarUnlock',value:'ğŸ‰',cat:'AVATAR'},
-  {id:'avatar_alien',icon:'ğŸ‘½',name:'UZAYLI',desc:'Gizemli avatar',price:350,type:'avatarUnlock',value:'ğŸ‘½',cat:'AVATAR'},
-  {id:'avatar_robot',icon:'ğŸ¤–',name:'ROBOT',desc:'Makine avatar',price:300,type:'avatarUnlock',value:'ğŸ¤–',cat:'AVATAR'},
-  {id:'avatar_crown',icon:'ğŸ‘‘',name:'KRAL',desc:'Kraliyet avatarÄ±',price:500,type:'avatarUnlock',value:'ğŸ‘‘',cat:'AVATAR'},
-  {id:'avatar_ninja',icon:'ğŸ¥·',name:'NÄ°NJA',desc:'Gizli avatar',price:280,type:'avatarUnlock',value:'ğŸ¥·',cat:'AVATAR'},
-  {id:'avatar_skull',icon:'ğŸ’€',name:'KAFATASI',desc:'Sert avatar',price:320,type:'avatarUnlock',value:'ğŸ’€',cat:'AVATAR'},
-  {id:'avatar_cat',icon:'ğŸ±',name:'KEDÄ°',desc:'Sevimli avatar',price:180,type:'avatarUnlock',value:'ğŸ±',cat:'AVATAR'},
-  {id:'avatar_fox',icon:'ğŸ¦Š',name:'TÄ°LKÄ°',desc:'Kurnaz avatar',price:200,type:'avatarUnlock',value:'ğŸ¦Š',cat:'AVATAR'},
-  {id:'avatar_wolf',icon:'ğŸº',name:'KURT',desc:'GÃ¼Ã§lÃ¼ avatar',price:260,type:'avatarUnlock',value:'ğŸº',cat:'AVATAR'},
-  {id:'avatar_ghost2',icon:'ğŸ‘¾',name:'UZAY GOST',desc:'Retro uzay avatar',price:220,type:'avatarUnlock',value:'ğŸ‘¾',cat:'AVATAR'},
-  {id:'avatar_devil',icon:'ğŸ˜ˆ',name:'ÅEYTAN',desc:'Åeytani avatar',price:380,type:'avatarUnlock',value:'ğŸ˜ˆ',cat:'AVATAR'},
-  {id:'avatar_angel',icon:'ğŸ˜‡',name:'MELEK',desc:'Kutsal avatar',price:380,type:'avatarUnlock',value:'ğŸ˜‡',cat:'AVATAR'},
-  {id:'avatar_fire2',icon:'ğŸ”¥',name:'ATEÅ',desc:'YakÄ±cÄ± avatar',price:230,type:'avatarUnlock',value:'ğŸ”¥',cat:'AVATAR'},
-  {id:'avatar_star',icon:'â­',name:'YILDIZ',desc:'Parlak avatar',price:190,type:'avatarUnlock',value:'â­',cat:'AVATAR'},
-  // â”€â”€ GÃœÃ‡LENDIRME â”€â”€
+  //  AVATAR 
+  {id:'avatar_dragon',icon:'ğŸ‰',name:'EJDERHA',desc:'GÃ¼Ã§lÃ¼ avatar',price:400,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_alien',icon:'ğŸ‘¾',name:'UZAYLI',desc:'Gizemli avatar',price:350,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_robot',icon:'ğŸ¤–',name:'ROBOT',desc:'Makine avatar',price:300,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_crown',icon:'ğŸ‘‘',name:'KRAL',desc:'Kraliyet avatarÄ±',price:500,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_ninja',icon:'ğŸ¥·',name:'NÄ°NJA',desc:'Gizli avatar',price:280,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_skull',icon:'ğŸ’€',name:'KAFATASI',desc:'Sert avatar',price:320,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_cat',icon:'ğŸ±',name:'KEDÄ°',desc:'Sevimli avatar',price:180,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_fox',icon:'ğŸ¦Š',name:'TÄ°LKÄ°',desc:'Kurnaz avatar',price:200,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_wolf',icon:'ğŸº',name:'KURT',desc:'GÃ¼Ã§lÃ¼ avatar',price:260,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_ghost2',icon:'ğŸ‘½',name:'UZAY GOST',desc:'Retro uzay avatar',price:220,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_devil',icon:'ğŸ˜ˆ',name:'ÅEYTAN',desc:'Åeytani avatar',price:380,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_angel',icon:'ğŸ˜‡',name:'MELEK',desc:'Kutsal avatar',price:380,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_fire2',icon:'ğŸ”¥',name:'ATEÅ',desc:'YakÄ±cÄ± avatar',price:230,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  {id:'avatar_star',icon:'â­',name:'YILDIZ',desc:'Parlak avatar',price:190,type:'avatarUnlock',value:'',cat:'AVATAR'},
+  //  GÃœÃ‡LENDIRME 
   {id:'life_boost',icon:'â¤ï¸',name:'4 CAN',desc:'BaÅŸlangÄ±Ã§ta 4 can',price:600,type:'perk',value:'lives4',cat:'GÃœÃ‡LENDIRME'},
   {id:'speed_down',icon:'ğŸ¢',name:'YAVAÅ BAÅLA',desc:'BaÅŸlangÄ±Ã§ hÄ±zÄ± %30 dÃ¼ÅŸÃ¼k',price:250,type:'perk',value:'slowstart',cat:'GÃœÃ‡LENDIRME'},
-  {id:'perk_wide',icon:'â†”ï¸',name:'GENÄ°Å BAÅLA',desc:'Ä°lk blok +30px geniÅŸ',price:350,type:'perk',value:'widestart',cat:'GÃœÃ‡LENDIRME'},
+  {id:'perk_wide',icon:'â†”',name:'GENÄ°Å BAÅLA',desc:'Ä°lk blok +30px geniÅŸ',price:350,type:'perk',value:'widestart',cat:'GÃœÃ‡LENDIRME'},
   {id:'perk_xp2',icon:'âš¡',name:'2Ã— XP',desc:'TÃ¼m XP kazancÄ± 2 katÄ±',price:800,type:'perk',value:'xp2',cat:'GÃœÃ‡LENDIRME'},
   {id:'perk_perfect',icon:'ğŸ¯',name:'PERFECT ZONE',desc:'MÃ¼kemmel alanÄ± 2Ã— geniÅŸ',price:450,type:'perk',value:'perfectwide',cat:'GÃœÃ‡LENDIRME'},
   {id:'perk_magnet',icon:'ğŸ§²',name:'MANYETIK',desc:'Blok merkeze %15 Ã§ekilir',price:550,type:'perk',value:'magnet',cat:'GÃœÃ‡LENDIRME'},
   {id:'perk_combo',icon:'ğŸ”—',name:'COMBO KORUMA',desc:'Ä°lk kaÃ§Ä±rmada combo sÄ±fÄ±rlanmaz',price:480,type:'perk',value:'comboprotect',cat:'GÃœÃ‡LENDIRME'},
   {id:'perk_gold2',icon:'ğŸ¥‡',name:'ALTIN AVCI',desc:'AltÄ±n blok 2Ã— daha sÄ±k',price:520,type:'perk',value:'goldboost',cat:'GÃœÃ‡LENDIRME'},
-  // â”€â”€ KOZMETÄ°K â”€â”€
-  {id:'cosmetic_dark',   icon:'ğŸŒš',name:'KARANLIK MOD',    desc:'Canvas tam siyah arka plan',     price:100, type:'cosmetic',value:'darkbg',      cat:'KOZMETÄ°K'},
-  {id:'cosmetic_grid',   icon:'ğŸ“',name:'IZGARA',           desc:'Bloklarda Ä±zgara Ã§izgisi',       price:150, type:'cosmetic',value:'grid',        cat:'KOZMETÄ°K'},
-  {id:'cosmetic_shadow', icon:'ğŸŒ«ï¸',name:'DERÄ°N GÃ–LGE',     desc:'Bloklarda gÃ¼Ã§lÃ¼ glow efekti',    price:200, type:'cosmetic',value:'deepshadow',  cat:'KOZMETÄ°K'},
-  {id:'cosmetic_flash',  icon:'ğŸ’¥',name:'PERFECT FLASH',    desc:'MÃ¼kemmelde ekran parlar',        price:250, type:'cosmetic',value:'perfectflash', cat:'KOZMETÄ°K'},
+  //  KOZMETÄ°K 
+  {id:'cosmetic_dark',   icon:'ğŸŒ‘',name:'KARANLIK MOD',    desc:'Canvas tam siyah arka plan',     price:100, type:'cosmetic',value:'darkbg',      cat:'KOZMETÄ°K'},
+  {id:'cosmetic_grid',   icon:'#ï¸âƒ£',name:'IZGARA',           desc:'Bloklarda Ä±zgara Ã§izgisi',       price:150, type:'cosmetic',value:'grid',        cat:'KOZMETÄ°K'},
+  {id:'cosmetic_shadow', icon:'ğŸŒ’',name:'DERÄ°N GÃ–LGE',     desc:'Bloklarda gÃ¼Ã§lÃ¼ glow efekti',    price:200, type:'cosmetic',value:'deepshadow',  cat:'KOZMETÄ°K'},
+  {id:'cosmetic_flash',  icon:'âš¡',name:'PERFECT FLASH',    desc:'MÃ¼kemmelde ekran parlar',        price:250, type:'cosmetic',value:'perfectflash', cat:'KOZMETÄ°K'},
   {id:'cosmetic_scanline',icon:'ğŸ“º',name:'SCANLINE',        desc:'Retro CRT tarama Ã§izgileri',     price:180, type:'cosmetic',value:'scanline',    cat:'KOZMETÄ°K'},
-  {id:'cosmetic_blur',   icon:'ğŸŒŠ',name:'MOTION BLUR',      desc:'DÃ¼ÅŸen blokta blur efekti',       price:220, type:'cosmetic',value:'motionblur',  cat:'KOZMETÄ°K'},
-  {id:'cosmetic_outline',icon:'ğŸ–Šï¸',name:'KENAR Ã‡Ä°ZGÄ°SÄ°',  desc:'Bloklarda parlak outline',       price:160, type:'cosmetic',value:'outline',     cat:'KOZMETÄ°K'},
+  {id:'cosmetic_blur',   icon:'ğŸ’¨',name:'MOTION BLUR',      desc:'DÃ¼ÅŸen blokta blur efekti',       price:220, type:'cosmetic',value:'motionblur',  cat:'KOZMETÄ°K'},
+  {id:'cosmetic_outline',icon:'ğŸ”²',name:'KENAR Ã‡Ä°ZGÄ°SÄ°',  desc:'Bloklarda parlak outline',       price:160, type:'cosmetic',value:'outline',     cat:'KOZMETÄ°K'},
   {id:'cosmetic_rainbow_bg',icon:'ğŸŒˆ',name:'GÃ–KKUÅAÄI ZEMIN',desc:'Arka plan renk dÃ¶ngÃ¼sÃ¼',       price:300, type:'cosmetic',value:'rainbowbg',   cat:'KOZMETÄ°K'},
 ];
 let shopOwned=LS.get('stack_shop_owned',[]);
@@ -998,13 +998,13 @@ function toggleCosmetic(id){
   renderShop();
   // Update HUD
   const ach=document.getElementById('active-cos-hud');
-  if(ach){const names=[...activeCosmetics].map(id=>id.replace('cosmetic_',''));ach.textContent=names.length?'âœ¦ '+names.join(' Â· '):'';} 
+  if(ach){const names=[...activeCosmetics].map(id=>id.replace('cosmetic_',''));ach.textContent=names.length?' '+names.join(' Â· '):'';} 
 }
 // Total XP as currency
 function getTotalXP(){return xpData.level*100+xpData.xp+(xpData.level-1)*100;}
 function buyItem(id){
   const item=SHOP_ITEMS.find(i=>i.id===id);if(!item||shopOwned.includes(id))return;
-  const total=getTotalXP();if(total<item.price){showToast('âŒ YETERLÄ° XP YOK');return;}
+  const total=getTotalXP();if(total<item.price){showToast(' YETERLÄ° XP YOK');return;}
   // Deduct from xpData
   let debt=item.price;
   while(debt>0){
@@ -1016,7 +1016,7 @@ function buyItem(id){
   if(item.type==='trail'){shopEquipped.trail=item.value;settings.trailStyle=item.value;saveSettings();}
   else if(item.type==='avatarUnlock'){settings.avatar=item.value;saveSettings();}
   LS.set('stack_shop_equipped',shopEquipped);
-  if(item.type==='cosmetic'){showToast('âœ… ALINDI â€” AktifleÅŸtirmek iÃ§in tekrar tÄ±kla');}else{showToast('âœ… SATIN ALINDI: '+item.name);}renderShop();
+  if(item.type==='cosmetic'){showToast('âœ“ ALINDI â€” AktifleÅŸtirmek iÃ§in tekrar tÄ±kla');}else{showToast('âœ… SATIN ALINDI: '+item.name);}renderShop();
 }
 function renderShop(){
   document.getElementById('shop-xp-val').textContent=getTotalXP();
@@ -1030,7 +1030,7 @@ function renderShop(){
       const owned=shopOwned.includes(item.id);
       const equipped=shopEquipped.trail===item.value;
       const cosActive=item.type==='cosmetic'&&isCosmeticActive(item.id);
-      let label=owned?(item.type==='trail'?(equipped?T('equipped'):T('equip')):item.type==='cosmetic'?(cosActive?T('active'):T('inactive')):T('owned')):'ğŸ’« '+item.price+' XP';
+      let label=owned?(item.type==='trail'?(equipped?T('equipped'):T('equip')):item.type==='cosmetic'?(cosActive?T('active'):T('inactive')):T('owned')):''+item.price+' XP';
       let clickFn;
       if(!owned) clickFn=`buyItem('${item.id}')`;
       else if(item.type==='trail') clickFn=`equipTrail('${item.value}')`;
@@ -1045,11 +1045,11 @@ function renderShop(){
     }).join('');
   }).join('');
 }
-function equipTrail(val){shopEquipped.trail=val;settings.trailStyle=val;saveSettings();LS.set('stack_shop_equipped',shopEquipped);renderShop();showToast('âœ… '+val.toUpperCase()+' Ä°ZÄ° TAKILDI');}
+function equipTrail(val){shopEquipped.trail=val;settings.trailStyle=val;saveSettings();LS.set('stack_shop_equipped',shopEquipped);renderShop();showToast(' '+val.toUpperCase()+' Ä°ZÄ° TAKILDI');}
 
-// â•â• ONLINE LB (Claude AI SimÃ¼le) â•â•
+//  ONLINE LB (Claude AI SimÃ¼le) 
 let onlineLB=LS.get('stack_online_lb',null);
-// â•â• TOURNAMENT â•â•
+//  TOURNAMENT 
 const T_GOALS_FALLBACK=[
   {mode:'ghost',    metric:'score',   target:35,  label:'HAYALET MODDA 35 SKOR',    unit:'puan'},
   {mode:'hard',     metric:'score',   target:30,  label:'ZOR MODDA 30 SKOR',        unit:'puan'},
@@ -1097,7 +1097,7 @@ async function fetchTournamentLB(){
   const goal=getTournamentGoal();
   const myScore=getTournamentMyScore();
   const myName=settings.playerName||'SEN';
-  document.getElementById('t-status').textContent='ğŸ¤– Claude AI turnuva tablosu Ã¼retiyor...';
+  document.getElementById('t-status').textContent='Claude AI turnuva tablosu Ã¼retiyor...';
   try{
     const resp=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
@@ -1110,7 +1110,7 @@ This week's goal: ${goal.label} (metric: ${goal.metric}, target: ${goal.target})
 Player "${myName}" has achieved: ${myScore} ${goal.unit}.
 Generate 10 realistic leaderboard entries including this player. Mix Turkish and international names.
 Scores should be realistic around the target (range: ${Math.floor(goal.target*0.4)}-${Math.floor(goal.target*1.4)}).
-Return ONLY a JSON array: [{"name":"AYÅE","score":18,"country":"ğŸ‡¹ğŸ‡·"},{"name":"STACKER_X","score":15,"country":"ğŸ‡ºğŸ‡¸"},...].
+Return ONLY a JSON array: [{"name":"AYÅE","score":18,"country":""},{"name":"STACKER_X","score":15,"country":""},...].
 Include the player at their appropriate position. No markdown, only JSON.`}]
       })
     });
@@ -1118,22 +1118,22 @@ Include the player at their appropriate position. No markdown, only JSON.`}]
     const arr=JSON.parse(data.content[0].text);
     // Insert player
     let found=arr.find(e=>e.name.toUpperCase()===myName.toUpperCase());
-    if(!found){arr.push({name:myName,score:myScore,country:'ğŸ‡¹ğŸ‡·',isMe:true,avatar:settings.avatar||'ğŸ§±'});}
-    else{found.isMe=true;found.avatar=settings.avatar||'ğŸ§±';found.score=Math.max(found.score,myScore);}
+    if(!found){arr.push({name:myName,score:myScore,country:'',isMe:true,avatar:settings.avatar||''});}
+    else{found.isMe=true;found.avatar=settings.avatar||'';found.score=Math.max(found.score,myScore);}
     arr.sort((a,b)=>b.score-a.score);
     tournamentLB=arr;LS.set('stack_t_lb_v2_'+getWeekKey(),arr);
     renderTournamentScreen();
-    document.getElementById('t-status').textContent='âœ… CanlÄ± turnuva tablosu';
+    document.getElementById('t-status').textContent=' CanlÄ± turnuva tablosu';
   }catch(e){
     // Fallback
     const names=['AHMET','ZEYNEP','EMRE','SELIN','MURAT','DEFNE','KEREM','ALPER','TOKYO99','BLOCKGOD'];
     const tgt=goal.target;
-    const arr=names.map(n=>({name:n,score:Math.floor(tgt*(0.4+Math.random()*1.0)),country:Math.random()>.4?'ğŸ‡¹ğŸ‡·':['ğŸ‡ºğŸ‡¸','ğŸ‡¯ğŸ‡µ','ğŸ‡©ğŸ‡ª','ğŸ‡§ğŸ‡·'][Math.floor(Math.random()*4)]}));
-    arr.push({name:myName,score:myScore,country:'ğŸ‡¹ğŸ‡·',isMe:true,avatar:settings.avatar||'ğŸ§±'});
+    const arr=names.map(n=>({name:n,score:Math.floor(tgt*(0.4+Math.random()*1.0)),country:Math.random()>.4?'':['','','',''][Math.floor(Math.random()*4)]}));
+    arr.push({name:myName,score:myScore,country:'',isMe:true,avatar:settings.avatar||''});
     arr.sort((a,b)=>b.score-a.score);
     tournamentLB=arr;LS.set('stack_t_lb_v2_'+getWeekKey(),arr);
     renderTournamentScreen();
-    document.getElementById('t-status').textContent='ğŸ“¡ Ã‡evrimdÄ±ÅŸÄ± mod';
+    document.getElementById('t-status').textContent=' Ã‡evrimdÄ±ÅŸÄ± mod';
   }
 }
 function renderTournamentBanner(){} // banner removed from menu
@@ -1153,20 +1153,20 @@ function renderTournamentScreen(){
   // Winner badge
   const won=myScore>=goal.target;
   const ww=document.getElementById('t-winner-wrap');
-  if(won){ww.style.display='block';document.getElementById('t-winner-badge').textContent='ğŸ† BU HAFTAYI TAMAMLADIN! +200 XP';}
+  if(won){ww.style.display='block';document.getElementById('t-winner-badge').textContent=' BU HAFTAYI TAMAMLADIN! +200 XP';}
   else{ww.style.display='none';}
   // LB
   if(!tournamentLB){fetchTournamentLB();return;}
   const myName=(settings.playerName||'SEN').toUpperCase();
   document.getElementById('t-lb-body').innerHTML=tournamentLB.map((e,i)=>{
     const isMe=e.isMe||(e.name&&e.name.toUpperCase()===myName);
-    const rank=i===0?'ğŸ¥‡':i===1?'ğŸ¥ˆ':i===2?'ğŸ¥‰':(i+1)+'.';
+    const rank=i===0?'':i===1?'':i===2?'':(i+1)+'.';
     return `<tr${isMe?' class="me"':''}><td>${rank}</td><td>${e.avatar||''}</td><td>${e.country||''} ${e.name}</td><td style="color:#ffd32a">${e.score}</td></tr>`;
   }).join('');
 }
 
 async function fetchOnlineLB(){
-  document.getElementById('online-status').textContent='ğŸ¤– Claude AI skorlar Ã¼retiyor...';
+  document.getElementById('online-status').textContent='Claude AI skorlar Ã¼retiyor...';
   const myName=settings.playerName||'SEN';
   const myScore=leaderboard.length?leaderboard[0].score:0;
   try{
@@ -1176,7 +1176,7 @@ async function fetchOnlineLB(){
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
         max_tokens:600,
-        messages:[{role:'user',content:`Generate a realistic online leaderboard for a block stacking game called STACK. The player "${myName}" has a score of ${myScore}. Create 10 total entries including the player. Mix Turkish and international names. Vary scores realistically (10-120 range). Return ONLY a JSON array like: [{"rank":1,"name":"AYÅE","score":98,"country":"ğŸ‡¹ğŸ‡·"},{"rank":2,...},...]. Include the player at their appropriate rank. No markdown, no text, only the JSON array.`}]
+        messages:[{role:'user',content:`Generate a realistic online leaderboard for a block stacking game called STACK. The player "${myName}" has a score of ${myScore}. Create 10 total entries including the player. Mix Turkish and international names. Vary scores realistically (10-120 range). Return ONLY a JSON array like: [{"rank":1,"name":"AYÅE","score":98,"country":""},{"rank":2,...},...]. Include the player at their appropriate rank. No markdown, no text, only the JSON array.`}]
       })
     });
     const data=await resp.json();
@@ -1184,17 +1184,17 @@ async function fetchOnlineLB(){
     const arr=JSON.parse(text);
     onlineLB=arr;LS.set('stack_online_lb',arr);
     renderOnlineLB(myName);
-    document.getElementById('online-status').textContent='âœ… '+arr.length+' oyuncu Â· az Ã¶nce gÃ¼ncellendi';
+    document.getElementById('online-status').textContent=' '+arr.length+' oyuncu Â· az Ã¶nce gÃ¼ncellendi';
   }catch(e){
     // Fallback: generate locally
     const names=['AHMET','ZEYNEP','EMRE','SELIN','MURAT','DEFNE','KEREM','YAÄMUR','ALPER','CEREN','TOKYO99','STACKER_X','BLOCKGOD','CUBEMAN','NEON_KID'];
-    const entries=names.slice(0,9).map(n=>({name:n,score:Math.floor(Math.random()*100)+10,country:Math.random()>.5?'ğŸ‡¹ğŸ‡·':['ğŸ‡ºğŸ‡¸','ğŸ‡¯ğŸ‡µ','ğŸ‡©ğŸ‡ª','ğŸ‡§ğŸ‡·'][Math.floor(Math.random()*4)]}));
-    entries.push({name:myName,score:myScore,country:'ğŸ‡¹ğŸ‡·',isMe:true,avatar:settings.avatar||'ğŸ§±'});
+    const entries=names.slice(0,9).map(n=>({name:n,score:Math.floor(Math.random()*100)+10,country:Math.random()>.5?'':['','','',''][Math.floor(Math.random()*4)]}));
+    entries.push({name:myName,score:myScore,country:'',isMe:true,avatar:settings.avatar||''});
     entries.sort((a,b)=>b.score-a.score);
     entries.forEach((e,i)=>e.rank=i+1);
     onlineLB=entries;LS.set('stack_online_lb',entries);
     renderOnlineLB(myName);
-    document.getElementById('online-status').textContent='ğŸ“¡ Ã‡evrimdÄ±ÅŸÄ± mod Â· yerel simÃ¼lasyon';
+    document.getElementById('online-status').textContent=' Ã‡evrimdÄ±ÅŸÄ± mod Â· yerel simÃ¼lasyon';
   }
 }
 function renderOnlineLB(myName){
@@ -1202,8 +1202,8 @@ function renderOnlineLB(myName){
   const myN=(myName||'SEN').toUpperCase();
   document.getElementById('online-lb-body').innerHTML=onlineLB.map((e,i)=>{
     const isMe=e.isMe||(e.name&&e.name.toUpperCase()===myN);
-    const rankIcon=i===0?'ğŸ¥‡':i===1?'ğŸ¥ˆ':i===2?'ğŸ¥‰':(i+1)+'.';
-    const av=isMe?(settings.avatar||'ğŸ§±'):(e.avatar||'');return `<tr${isMe?' class="me"':''}><td>${rankIcon}</td><td>${av}</td><td${isMe?' class="online-name"':''}>${e.country||''} ${e.name}</td><td class="sc">${e.score}</td></tr>`;
+    const rankIcon=i===0?'':i===1?'':i===2?'':(i+1)+'.';
+    const av=isMe?(settings.avatar||''):(e.avatar||'');return `<tr${isMe?' class="me"':''}><td>${rankIcon}</td><td>${av}</td><td${isMe?' class="online-name"':''}>${e.country||''} ${e.name}</td><td class="sc">${e.score}</td></tr>`;
   }).join('');
 }
 
@@ -1216,69 +1216,69 @@ function vsBar(label,n1,v1,n2,v2,max){
   </div>`;
 }
 
-// â•â• ACHIEVEMENTS â•â•
+//  ACHIEVEMENTS 
 const ACHS=[
   {id:'first_game',    icon:'ğŸ®', name:'Ä°LK ADIM',           desc:'Ä°lk oyunu oyna',                      c:()=>stats.totalGames>=1},
   {id:'first_perfect', icon:'âœ¨', name:'Ä°LK MÃœKEMMEL',       desc:'Ä°lk mÃ¼kemmel bloÄŸu koy',              c:()=>(stats.totalPerfects||0)>=1},
   {id:'shop_buy',      icon:'ğŸ›’', name:'ALIÅVERÄ°Å',          desc:'MaÄŸazadan bir ÅŸey al',                c:()=>shopOwned.length>=1},
   {id:'daily1',        icon:'ğŸ“…', name:'GÃœNLÃœK OYUNCU',      desc:'Bir gÃ¼nlÃ¼k gÃ¶revi tamamla',            c:()=>dailyTasks.some(t=>t.completed)},
   {id:'daily_all',     icon:'ğŸŒŸ', name:'TAM TAKIM',          desc:'TÃ¼m gÃ¼nlÃ¼k gÃ¶revleri bitir',           c:()=>dailyTasks.length>0&&dailyTasks.every(t=>t.completed)},
-  {id:'shopaholic',    icon:'ğŸ’³', name:'ALIÅVERÄ°Å KRALI',    desc:'5 maÄŸaza Ã¼rÃ¼nÃ¼ al',                   c:()=>shopOwned.length>=5},
+  {id:'shopaholic',    icon:'ğŸ›ï¸', name:'ALIÅVERÄ°Å KRALI',    desc:'5 maÄŸaza Ã¼rÃ¼nÃ¼ al',                   c:()=>shopOwned.length>=5},
   {id:'collector',     icon:'ğŸº', name:'KOLEKSÄ°YONCU',       desc:'10 maÄŸaza Ã¼rÃ¼nÃ¼ al',                  c:()=>shopOwned.length>=10},
-  {id:'score_5',       icon:'5ï¸âƒ£', name:'BEÅLÄ°K',            desc:'5 puana ulaÅŸ',                        c:()=>leaderboard.some(e=>e.score>=5)},
+  {id:'score_5',       icon:'5âƒ£', name:'BEÅLÄ°K',            desc:'5 puana ulaÅŸ',                        c:()=>leaderboard.some(e=>e.score>=5)},
   {id:'score_10',      icon:'ğŸ”Ÿ', name:'Ä°LK 10',             desc:'10 puana ulaÅŸ',                       c:()=>leaderboard.some(e=>e.score>=10)},
-  {id:'score_25',      icon:'â­', name:'YÃœKSELÄ°Å',          desc:'25 puana ulaÅŸ',                       c:()=>leaderboard.some(e=>e.score>=25)},
-  {id:'score_50',      icon:'ğŸ’«', name:'USTA',               desc:'50 puana ulaÅŸ',                       c:()=>leaderboard.some(e=>e.score>=50)},
-  {id:'score_75',      icon:'ğŸ”¥', name:'ELÄ°T',               desc:'75 puana ulaÅŸ',                       c:()=>leaderboard.some(e=>e.score>=75)},
+  {id:'score_25',      icon:'ğŸ“ˆ', name:'YÃœKSELÄ°Å',          desc:'25 puana ulaÅŸ',                       c:()=>leaderboard.some(e=>e.score>=25)},
+  {id:'score_50',      icon:'â­', name:'USTA',               desc:'50 puana ulaÅŸ',                       c:()=>leaderboard.some(e=>e.score>=50)},
+  {id:'score_75',      icon:'ğŸ’«', name:'ELÄ°T',               desc:'75 puana ulaÅŸ',                       c:()=>leaderboard.some(e=>e.score>=75)},
   {id:'score_100',     icon:'ğŸ’¯', name:'YÃœZLÃœK',             desc:'100 puana ulaÅŸ',                      c:()=>leaderboard.some(e=>e.score>=100)},
-  {id:'score_150',     icon:'ğŸ†', name:'EFSANE',             desc:'150 puana ulaÅŸ',                      c:()=>leaderboard.some(e=>e.score>=150)},
-  {id:'score_200',     icon:'ğŸ‘‘', name:'TANRI',              desc:'200 puana ulaÅŸ',                      c:()=>leaderboard.some(e=>e.score>=200)},
-  {id:'combo3',        icon:'ğŸ”—', name:'ÃœÃ‡LEME',             desc:'3x kombo yap',                        c:()=>stats.bestCombo>=3},
-  {id:'combo5',        icon:'ğŸ”¥', name:'KOMBO USTASI',       desc:'5x kombo yap',                        c:()=>stats.bestCombo>=5},
-  {id:'combo10',       icon:'âš¡', name:'Ã‡IÄIR AÃ‡ICI',        desc:'10x kombo yap',                       c:()=>stats.bestCombo>=10},
+  {id:'score_150',     icon:'ğŸ”¥', name:'EFSANE',             desc:'150 puana ulaÅŸ',                      c:()=>leaderboard.some(e=>e.score>=150)},
+  {id:'score_200',     icon:'ğŸ†', name:'TANRI',              desc:'200 puana ulaÅŸ',                      c:()=>leaderboard.some(e=>e.score>=200)},
+  {id:'combo3',        icon:'3ï¸âƒ£', name:'ÃœÃ‡LEME',             desc:'3x kombo yap',                        c:()=>stats.bestCombo>=3},
+  {id:'combo5',        icon:'5ï¸âƒ£', name:'KOMBO USTASI',       desc:'5x kombo yap',                        c:()=>stats.bestCombo>=5},
+  {id:'combo10',       icon:'ğŸ”—', name:'Ã‡IÄIR AÃ‡ICI',        desc:'10x kombo yap',                       c:()=>stats.bestCombo>=10},
   {id:'combo15',       icon:'ğŸŒ€', name:'VÄ°HRAN',             desc:'15x kombo yap',                       c:()=>stats.bestCombo>=15},
-  {id:'combo20',       icon:'ğŸŒªï¸', name:'FIRTINA',           desc:'20x kombo yap',                       c:()=>stats.bestCombo>=20},
-  {id:'games3',        icon:'ğŸ•¹ï¸', name:'BAÅLANGIÃ‡',         desc:'3 oyun oyna',                         c:()=>stats.totalGames>=3},
-  {id:'games10',       icon:'ğŸ¯', name:'DÃœZENLÄ°',           desc:'10 oyun oyna',                        c:()=>stats.totalGames>=10},
-  {id:'games25',       icon:'ğŸ“…', name:'HAFTALIK',           desc:'25 oyun oyna',                        c:()=>stats.totalGames>=25},
+  {id:'combo20',       icon:'âš¡', name:'FIRTINA',           desc:'20x kombo yap',                       c:()=>stats.bestCombo>=20},
+  {id:'games3',        icon:'ğŸ¯', name:'BAÅLANGIÃ‡',         desc:'3 oyun oyna',                         c:()=>stats.totalGames>=3},
+  {id:'games10',       icon:'ğŸ²', name:'DÃœZENLÄ°',           desc:'10 oyun oyna',                        c:()=>stats.totalGames>=10},
+  {id:'games25',       icon:'ğŸ“†', name:'HAFTALIK',           desc:'25 oyun oyna',                        c:()=>stats.totalGames>=25},
   {id:'games50',       icon:'ğŸƒ', name:'KOÅUCU',             desc:'50 oyun oyna',                        c:()=>stats.totalGames>=50},
-  {id:'games100',      icon:'ğŸ’ª', name:'DEMÄ°RCÄ°',            desc:'100 oyun oyna',                       c:()=>stats.totalGames>=100},
+  {id:'games100',      icon:'âš’ï¸', name:'DEMÄ°RCÄ°',            desc:'100 oyun oyna',                       c:()=>stats.totalGames>=100},
   {id:'games200',      icon:'ğŸ¤–', name:'MAKÄ°NE',             desc:'200 oyun oyna',                       c:()=>stats.totalGames>=200},
   {id:'perf5',         icon:'ğŸ¯', name:'KESKÄ°N',             desc:'Tek oyunda 5 mÃ¼kemmel',               c:()=>(stats.bestPerfects||0)>=5},
   {id:'perf10',        icon:'ğŸ’', name:'ELMAS EL',           desc:'Tek oyunda 10 mÃ¼kemmel',              c:()=>(stats.bestPerfects||0)>=10},
   {id:'perf25',        icon:'ğŸª„', name:'SÄ°HÄ°RBAZ',           desc:'Tek oyunda 25 mÃ¼kemmel',              c:()=>(stats.bestPerfects||0)>=25},
   {id:'perf50',        icon:'ğŸ§™', name:'BÃœYÃœCÃœ',             desc:'Tek oyunda 50 mÃ¼kemmel',              c:()=>(stats.bestPerfects||0)>=50},
-  {id:'no_miss',       icon:'ğŸª', name:'HATASIZ',            desc:'HiÃ§ kaÃ§Ä±rmadan bitir',                c:()=>(stats.perfectGames||0)>=1},
+  {id:'no_miss',       icon:'ğŸ˜¶', name:'HATASIZ',            desc:'HiÃ§ kaÃ§Ä±rmadan bitir',                c:()=>(stats.perfectGames||0)>=1},
   {id:'gold_perfect',  icon:'ğŸ¥‡', name:'ALTIN MÃœKEMMEL',     desc:'Altin bloga mÃ¼kemmel bas',            c:()=>stats.goldPerfects>=1},
-  {id:'gold5',         icon:'ğŸ…', name:'ALTIN KOLEKSÄ°YON',   desc:'5 altin mÃ¼kemmel',                   c:()=>stats.goldPerfects>=5},
-  {id:'gold10',        icon:'ğŸŒ ', name:'ALTIN EFSANE',        desc:'10 altin mÃ¼kemmel',                  c:()=>stats.goldPerfects>=10},
+  {id:'gold5',         icon:'ğŸŒŸ', name:'ALTIN KOLEKSÄ°YON',   desc:'5 altin mÃ¼kemmel',                   c:()=>stats.goldPerfects>=5},
+  {id:'gold10',        icon:'ğŸ‘‘', name:'ALTIN EFSANE',        desc:'10 altin mÃ¼kemmel',                  c:()=>stats.goldPerfects>=10},
   {id:'hardmode',      icon:'ğŸ’€', name:'ZOR YOLCU',           desc:'Zor modda oyna',                     c:()=>leaderboard.some(e=>e.diff==='hard')},
   {id:'hard25',        icon:'â˜ ï¸', name:'Ã–LÃœM TACIRI',        desc:'Zor modda 25 skor',                  c:()=>leaderboard.some(e=>e.diff==='hard'&&e.score>=25)},
-  {id:'survival_s',    icon:'ğŸ§—', name:'HAYATTA KALAN',       desc:'Hayatta Kal modda 20 blok',          c:()=>leaderboard.some(e=>e.mode==='survival'&&e.score>=20)},
+  {id:'survival_s',    icon:'ğŸ›¡ï¸', name:'HAYATTA KALAN',       desc:'Hayatta Kal modda 20 blok',          c:()=>leaderboard.some(e=>e.mode==='survival'&&e.score>=20)},
   {id:'ghost_s',       icon:'ğŸ‘»', name:'HAYALET AVCISI',      desc:'Hayalet modda 10 blok',              c:()=>leaderboard.some(e=>e.mode==='ghost'&&e.score>=10)},
-  {id:'chaos_s',       icon:'ğŸŒ€', name:'KAOS KAPTAN',         desc:'Kaos modda 15 blok',                 c:()=>leaderboard.some(e=>e.mode==='chaos'&&e.score>=15)},
-  {id:'time_s',        icon:'â±ï¸', name:'ZAMAN TANIKLI',      desc:'Zaman modda 30 blok',                c:()=>leaderboard.some(e=>e.mode==='time'&&e.score>=30)},
-  {id:'allmode',       icon:'ğŸª', name:'Ã‡OKLU KÄ°ÅÄ°LÄ°K',      desc:'TÃ¼m modlarda en az 1 oyna',          c:()=>['classic','time','survival','chaos','ghost'].every(m=>leaderboard.some(e=>e.mode===m))},
-  {id:'level5',        icon:'ğŸ†™', name:'SEVÄ°YE 5',            desc:'5. seviyeye ulaÅŸ',                   c:()=>xpData.level>=5},
-  {id:'level10',       icon:'ğŸ–ï¸', name:'SEVÄ°YE 10',          desc:'10. seviyeye ulaÅŸ',                  c:()=>xpData.level>=10},
-  {id:'level20',       icon:'ğŸ…', name:'SEVÄ°YE 20',           desc:'20. seviyeye ulaÅŸ',                  c:()=>xpData.level>=20},
-  {id:'xp1000',        icon:'ğŸ’°', name:'BÄ°N XP',              desc:'Toplam 1000 XP kazan',               c:()=>xpData.level*100+xpData.xp>=1000},
+  {id:'chaos_s',       icon:'ğŸŒªï¸', name:'KAOS KAPTAN',         desc:'Kaos modda 15 blok',                 c:()=>leaderboard.some(e=>e.mode==='chaos'&&e.score>=15)},
+  {id:'time_s',        icon:'â±', name:'ZAMAN TANIKLI',      desc:'Zaman modda 30 blok',                c:()=>leaderboard.some(e=>e.mode==='time'&&e.score>=30)},
+  {id:'allmode',       icon:'ğŸ­', name:'Ã‡OKLU KÄ°ÅÄ°LÄ°K',      desc:'TÃ¼m modlarda en az 1 oyna',          c:()=>['classic','time','survival','chaos','ghost'].every(m=>leaderboard.some(e=>e.mode===m))},
+  {id:'level5',        icon:'5ï¸âƒ£', name:'SEVÄ°YE 5',            desc:'5. seviyeye ulaÅŸ',                   c:()=>xpData.level>=5},
+  {id:'level10',       icon:'ğŸ”Ÿ', name:'SEVÄ°YE 10',          desc:'10. seviyeye ulaÅŸ',                  c:()=>xpData.level>=10},
+  {id:'level20',       icon:'ğŸ’ª', name:'SEVÄ°YE 20',           desc:'20. seviyeye ulaÅŸ',                  c:()=>xpData.level>=20},
+  {id:'xp1000',        icon:'âš¡', name:'BÄ°N XP',              desc:'Toplam 1000 XP kazan',               c:()=>xpData.level*100+xpData.xp>=1000},
   {id:'night_owl',     icon:'ğŸ¦‰', name:'GECE BAYKUÅU',        desc:'Aurora moduna ulaÅŸ (85+ skor)',      c:()=>leaderboard.some(e=>e.score>=85)},
-  {id:'powerup_use',   icon:'âš¡', name:'GÃœÃ‡ ODASI',           desc:'Bir gÃ¼Ã§lendirme kullan',             c:()=>(stats.powerupsUsed||0)>=1},
+  {id:'powerup_use',   icon:'ğŸ’ª', name:'GÃœÃ‡ ODASI',           desc:'Bir gÃ¼Ã§lendirme kullan',             c:()=>(stats.powerupsUsed||0)>=1},
   {id:'powerup10',     icon:'ğŸ”‹', name:'ENERJÄ° DEPOSU',       desc:'10 gÃ¼Ã§lendirme kullan',              c:()=>(stats.powerupsUsed||0)>=10},
   {id:'share_score',   icon:'ğŸ“¤', name:'PAYLAÅIMCI',          desc:'Skoru paylaÅŸ',                       c:()=>(stats.shared||0)>=1},
   {id:'long_game',     icon:'âŒ›', name:'UZUN NEFES',          desc:'Tek oyunda 5 dk oyna',               c:()=>(stats.longestGame||0)>=300},
-  {id:'come_back',     icon:'ğŸ”„', name:'GERÄ° DÃ–NDÃœM',        desc:'2 veya daha fazla oyun oyna',         c:()=>stats.totalGames>=2},
+  {id:'come_back',     icon:'â†©ï¸', name:'GERÄ° DÃ–NDÃœM',        desc:'2 veya daha fazla oyun oyna',         c:()=>stats.totalGames>=2},
   {id:'three_lives',   icon:'â¤ï¸', name:'SAÄLAM DURUÅ',       desc:'3 canla 20 skora ulaÅŸ',              c:()=>(stats.full_lives_20||0)>=1},
 ];
 let unlockedAchs=LS.get('stack_achs',[]);
-function checkAchs(){let neu=[];for(const a of ACHS)if(!unlockedAchs.includes(a.id)&&a.c()){unlockedAchs.push(a.id);neu.push(a);}if(neu.length){LS.set('stack_achs',unlockedAchs);let i=0;function nx(){if(i>=neu.length)return;showToast('ğŸ… '+neu[i].name);i++;setTimeout(nx,2400);}nx();addXP(neu.length*30);}}
-function renderAchs(){document.getElementById('ach-grid').innerHTML=ACHS.map(a=>{const d=unlockedAchs.includes(a.id);return `<div class="ach-card${d?' unlocked':''}"><span class="ach-icon">${d?a.icon:'ğŸ”’'}</span><span class="ach-name">${T('ach_'+a.id)||a.name}</span><span class="ach-desc">${T('ach_desc_'+a.id)||a.desc}</span></div>`;}).join('');}
+function checkAchs(){let neu=[];for(const a of ACHS)if(!unlockedAchs.includes(a.id)&&a.c()){unlockedAchs.push(a.id);neu.push(a);}if(neu.length){LS.set('stack_achs',unlockedAchs);let i=0;function nx(){if(i>=neu.length)return;showToast(' '+neu[i].name);i++;setTimeout(nx,2400);}nx();addXP(neu.length*30);}}
+function renderAchs(){document.getElementById('ach-grid').innerHTML=ACHS.map(a=>{const d=unlockedAchs.includes(a.id);return `<div class="ach-card${d?' unlocked':''}"><span class="ach-icon">${d?a.icon:''}</span><span class="ach-name">${T('ach_'+a.id)||a.name}</span><span class="ach-desc">${T('ach_desc_'+a.id)||a.desc}</span></div>`;}).join('');}
 
 let _tt=null;
 function showToast(m){const t=document.getElementById('achievement-toast');t.textContent=m;t.classList.add('show');if(_tt)clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2200);}
 
-// â•â• MILESTONE FLASH â•â•
+//  MILESTONE FLASH 
 const MILESTONES=[10,25,50,75,100,150,200];
 let lastMilestone=0;
 function checkMilestone(s){
@@ -1296,7 +1296,7 @@ function triggerMilestone(m){
   const accent=THEMES[currentTheme].accent;
   flash.style.background=accent;
   flash.classList.remove('show');void flash.offsetWidth;flash.classList.add('show');
-  text.textContent=m+' BLOK! ğŸ†';
+  text.textContent=m+' BLOK! ';
   text.style.color=accent;
   text.style.textShadow=`0 0 40px ${accent},0 0 80px ${accent}`;
   text.classList.remove('show');void text.offsetWidth;text.classList.add('show');
@@ -1306,7 +1306,7 @@ function triggerMilestone(m){
   }
 }
 
-// â•â• DAILY TASKS â•â•
+//  DAILY TASKS 
 const TASK_DEFS=[
   {id:'play3',target:3,key:'gamesPlayed'},
   {id:'perf5',target:5,key:'perfects'},
@@ -1316,29 +1316,29 @@ const TASK_DEFS=[
 let dailyTasks=[];
 function initDailyTasks(){const k='stack_daily_'+new Date().toISOString().slice(0,10);let s=LS.get(k,null);if(!s){s=[...TASK_DEFS].sort(()=>Math.random()-.5).slice(0,3).map(t=>({...t,progress:0,completed:false}));LS.set(k,s);}dailyTasks=s;}
 function saveDailyTasks(){LS.set('stack_daily_'+new Date().toISOString().slice(0,10),dailyTasks);}
-function updateDailyTasks(gs,gp,gc){let anyNew=false;for(const t of dailyTasks){if(t.completed)continue;if(t.key==='gamesPlayed')t.progress=Math.min(t.progress+1,t.target);else if(t.key==='perfects')t.progress=Math.min(t.progress+gp,t.target);else if(t.key==='maxScore')t.progress=Math.max(t.progress,gs);else if(t.key==='maxCombo')t.progress=Math.max(t.progress,gc);if(!t.completed&&t.progress>=t.target){t.completed=true;anyNew=true;showToast('âœ… GÃ–REV: '+t.label);addXP(50);}}saveDailyTasks();if(anyNew)checkAchs();renderDailyTasks();}
+function updateDailyTasks(gs,gp,gc){let anyNew=false;for(const t of dailyTasks){if(t.completed)continue;if(t.key==='gamesPlayed')t.progress=Math.min(t.progress+1,t.target);else if(t.key==='perfects')t.progress=Math.min(t.progress+gp,t.target);else if(t.key==='maxScore')t.progress=Math.max(t.progress,gs);else if(t.key==='maxCombo')t.progress=Math.max(t.progress,gc);if(!t.completed&&t.progress>=t.target){t.completed=true;anyNew=true;showToast(' GÃ–REV: '+t.label);addXP(50);}}saveDailyTasks();if(anyNew)checkAchs();renderDailyTasks();}
 function renderDailyTasks(){
   const w=document.getElementById('daily-tasks-wrap');
   if(!w)return;
-  w.innerHTML=dailyTasks.map(t=>`<div class="task-row"><span>${t.completed?'âœ… ':''} ${T(t.id)}</span><span class="${t.completed?'task-done':'task-prog'}">${t.progress}/${t.target}</span></div>`).join('');
+  w.innerHTML=dailyTasks.map(t=>`<div class="task-row"><span>${t.completed?' ':''} ${T(t.id)}</span><span class="${t.completed?'task-done':'task-prog'}">${t.progress}/${t.target}</span></div>`).join('');
 }
 
 function getBest(){return leaderboard.length?leaderboard[0].score:0;}
 function getTodayKey(){return 'daily_'+new Date().toISOString().slice(0,10);}
 function getDailyBest(){return LS.get(getTodayKey(),0);}
 function setDailyBest(s){if(s>getDailyBest())LS.set(getTodayKey(),s);}
-function saveLB(s,d,m){const n=settings.playerName||'ANONIM';const av=settings.avatar||'ğŸ§±';leaderboard.push({score:s,diff:d,mode:m,date:new Date().toLocaleDateString('tr'),name:n,avatar:av});leaderboard.sort((a,b)=>b.score-a.score);leaderboard=leaderboard.slice(0,5);LS.set('stack_lb',leaderboard);}
+function saveLB(s,d,m){const n=settings.playerName||'ANONIM';const av=settings.avatar||'';leaderboard.push({score:s,diff:d,mode:m,date:new Date().toLocaleDateString('tr'),name:n,avatar:av});leaderboard.sort((a,b)=>b.score-a.score);leaderboard=leaderboard.slice(0,5);LS.set('stack_lb',leaderboard);}
 function getColor(i){const th=THEMES[currentTheme]||THEMES['neon'];return th.block(i);}
 const BG_COLORS=[[10,10,15],[5,15,25],[15,5,20],[5,20,15],[20,10,5],[10,5,25],[25,5,10]];
 function updateBgColor(s){}
 function toSY(wy){return wy-camTop;}
 
-// â•â• PARTICLES â•â•
+//  PARTICLES 
 function spawnParts(x,y,w,color,n=12){for(let i=0;i<n;i++)particles.push({x:x+Math.random()*w,y,vx:(Math.random()-.5)*5,vy:-(Math.random()*4+1),life:1,decay:.028+Math.random()*.028,r:2+Math.random()*3,color});}
 function updateParts(){particles=particles.filter(p=>p.life>0);for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vy+=.15;p.life-=p.decay;}}
 function drawParts(){for(const p of particles){ctx.globalAlpha=p.life;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;}
 
-// â•â• TRAILS (multiple styles) â•â•
+//  TRAILS (multiple styles) 
 let trailTick=0;
 function addTrail(){
   if(!mover||!mover.falling)return;
@@ -1426,14 +1426,14 @@ function spawnChunks(){chunks=[];for(const b of blocks){const sy=toSY(b.wy);if(s
 function updateChunks(){for(const c of chunks){c.x+=c.vx;c.y+=c.vy;c.vy+=.4;c.rot+=c.rotV;c.life-=.014;}chunks=chunks.filter(c=>c.life>0&&c.y<H+100);}
 function drawChunks(){for(const c of chunks){ctx.save();ctx.globalAlpha=c.life;ctx.translate(c.x+c.w/2,c.y+BH/2);ctx.rotate(c.rot);ctx.fillStyle=c.color;ctx.shadowColor=c.color;ctx.shadowBlur=8;ctx.fillRect(-c.w/2,-BH/2,c.w,BH);ctx.shadowBlur=0;ctx.restore();}ctx.globalAlpha=1;}
 
-function awardPowerup(){const keys=Object.keys(powerups);const k=keys[Math.floor(Math.random()*keys.length)];powerups[k]=Math.min(powerups[k]+1,3);updatePuUI();setMsg('âš¡ '+k.toUpperCase()+' KAZANILDI!','powerup');}
+function awardPowerup(){const keys=Object.keys(powerups);const k=keys[Math.floor(Math.random()*keys.length)];powerups[k]=Math.min(powerups[k]+1,3);updatePuUI();setMsg(' '+k.toUpperCase()+' KAZANILDI!','powerup');}
 function updatePuUI(){for(const k of Object.keys(powerups)){document.getElementById('pu-'+k+'-count').textContent=powerups[k];document.getElementById('pu-'+k).classList.toggle('ready',powerups[k]>0);}}
 function usePowerup(k){if(state!=='playing'||powerups[k]<=0)return;powerups[k]--;updatePuUI();sfxPowerup();haptic(30);stats.powerupsUsed=(stats.powerupsUsed||0)+1;LS.set('stack_stats',stats);if(k==='freeze'){frozen=true;frozenTimer=120;setMsg(T('msg_frozen'),'powerup');}else if(k==='wide'){if(mover)mover.w=Math.min(mover.w+30,INIT_W);setMsg(T('msg_wide'),'powerup');}else if(k==='auto'){if(mover&&!mover.falling){const top=blocks[blocks.length-1];mover.wx=top.wx;mover.falling=true;setMsg(T('msg_auto'),'powerup');}}}
 function renderLives(){document.getElementById('lives-display').textContent='â¤ï¸'.repeat(lives)+'ğŸ–¤'.repeat(3-lives);}
 
 function rollSpecial(){specialBlockCounter++;const goldFreq=shopOwned.includes('perk_goldboost')?4:8;if(specialBlockCounter%goldFreq===0)nextSpecialType='gold';else nextSpecialType='normal';}
 
-// â•â• INIT â•â•
+//  INIT 
 function initGame(){
   cancelAnimationFrame(animId);clearInterval(timerInterval);
   blocks=[];combo=0;bestCombo=0;score=0;gamePerfects=0;
@@ -1444,7 +1444,7 @@ function initGame(){
   lastMilestone=0;
   const hasPerk4lives=shopOwned.includes('life_boost');
   lives=hasPerk4lives?4:3;renderLives();
-  if(hasPerk4lives)document.getElementById('lives-display').textContent='â¤ï¸â¤ï¸â¤ï¸â¤ï¸';
+  if(hasPerk4lives)document.getElementById('lives-display').textContent='';
   specialBlockCounter=0;nextSpecialType='normal';
   SPEED_BASE=DIFF_CFG[difficulty].sb;SPEED_INC=DIFF_CFG[difficulty].si;
   if(shopOwned.includes('speed_down'))SPEED_BASE*=0.7;
@@ -1477,7 +1477,7 @@ function initGame(){
   // Show music theme name in HUD
   const mtheme=MUSIC_THEMES[currentTheme];
   const mhud=document.getElementById('music-theme-hud');
-  if(mhud&&mtheme)mhud.textContent='â™ª '+mtheme.name;
+  if(mhud&&mtheme)mhud.textContent=' '+mtheme.name;
   state='playing';startMusic();tick();
 }
 
@@ -1492,7 +1492,7 @@ function spawnMover(){
   mover={wx:spd>0?-top.w:W,wy:top.wy-SLIDE_GAP,w:top.w,xSpeed:spd,falling:false,color,stype:st};
   ghostVisible=true;ghostTimer=0;
   const hint=document.getElementById('special-hint');
-  if(st==='gold'){hint.style.color='#ffd32a';hint.textContent='â­ ALTIN BLOK! MÃœKEMMEL = 2X PUAN';hint.style.opacity='1';setTimeout(()=>hint.style.opacity='0',2200);stats.goldSeen=(stats.goldSeen||0)+1;}
+  if(st==='gold'){hint.style.color='#ffd32a';hint.textContent=' ALTIN BLOK! MÃœKEMMEL = 2X PUAN';hint.style.opacity='1';setTimeout(()=>hint.style.opacity='0',2200);stats.goldSeen=(stats.goldSeen||0)+1;}
   else hint.style.opacity='0';
 }
 
@@ -1579,7 +1579,7 @@ function gameOver(){
   const tKey='stack_t_rewarded_v2_'+getWeekKey();
   if(tScore>=tGoal.target&&!LS.get(tKey,false)){
     LS.set(tKey,true);addXP(200);
-    setTimeout(()=>showToast('ğŸ† TURNUVA TAMAMLANDI! +200 XP'),1500);
+    setTimeout(()=>showToast('TURNUVA TAMAMLANDI! +200 XP'),1500);
   }
   renderTournamentBanner();
   const isNewBest=score>0&&leaderboard[0]&&score>=leaderboard[0].score;
@@ -1589,7 +1589,7 @@ function gameOver(){
   document.getElementById('final-stats').innerHTML=nm+T('stat_height')+': '+Math.round(score*.5*10)/10+'m &nbsp;|&nbsp; '+T('stat_bestcombo')+': '+bestCombo+'<br>'+T('stat_perfect_go')+': '+gamePerfects+' &nbsp;|&nbsp; '+T('stat_level')+': '+xpData.level;
   renderGoLb();
   const ct=dailyTasks.filter(t=>t.completed).length;
-  document.getElementById('go-daily-task').textContent=ct>0?'âœ… '+ct+'/'+dailyTasks.length+' '+T('daily_done'):'';
+  document.getElementById('go-daily-task').textContent=ct>0?' '+ct+'/'+dailyTasks.length+' '+T('daily_done'):'';
   const gt=getEquippedTitle();
   const goTitle=document.getElementById('go-title');
   if(gt&&goTitle){goTitle.textContent=gt.label;goTitle.setAttribute('style','font-size:.7rem;letter-spacing:3px;text-align:center;margin-top:2px;padding:2px 10px;color:'+gt.color+';border:1px solid '+gt.border+';text-shadow:0 0 8px '+gt.color);}
@@ -1598,7 +1598,7 @@ function gameOver(){
   animDeath();
 }
 
-// â•â• DRAW â•â•
+//  DRAW 
 function drawBg(){
   ctx.clearRect(0,0,W,H);
   const darkBg=isCosmeticActive('cosmetic_dark');
@@ -1634,7 +1634,7 @@ function drawBlock(wx,wy,w,color,alpha=1,st='normal',idx=0){
     ctx.shadowBlur=0;ctx.fillStyle='rgba(255,255,200,.4)';ctx.fillRect(wx,sy,w,6);
     // Gold sparkle face
     ctx.globalAlpha=alpha*.7;ctx.fillStyle='#fff';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText('â˜…',wx+w/2,sy+BH/2);ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    ctx.fillText('',wx+w/2,sy+BH/2);ctx.textAlign='left';ctx.textBaseline='alphabetic';
   } else {
     const shadowBlur=isCosmeticActive('cosmetic_shadow')?40:10;
     ctx.shadowColor=color;ctx.shadowBlur=shadowBlur;ctx.fillStyle=color;
@@ -1728,7 +1728,7 @@ function tick(){
   camTop+=(camTopTarget-camTop)*0.1;draw();animId=requestAnimationFrame(tick);
 }
 
-// â•â• SCREENS â•â•
+//  SCREENS 
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
   document.getElementById('game-ui').style.display='none';
@@ -1757,7 +1757,7 @@ function renderMenuLb(){}
 function renderProfile(){
   const accent=THEMES[currentTheme].accent;
   // Avatar & name
-  document.getElementById('prof-avatar').textContent=settings.avatar||'ğŸ§±';
+  document.getElementById('prof-avatar').textContent=settings.avatar||'';
   document.getElementById('prof-avatar').style.color=accent;
   const name=settings.playerName||'OYUNCU';
   document.getElementById('player-name-input').value=settings.playerName||'';
@@ -1769,7 +1769,7 @@ function renderProfile(){
   // Streak
   const streak=getStreak();
   const sf=document.getElementById('prof-streak');
-  sf.textContent=streak>=2?'ğŸ”¥'.repeat(Math.min(streak,7))+' '+streak+' GÃœNLÃœK SERÄ°':'';
+  sf.textContent=streak>=2?''.repeat(Math.min(streak,7))+' '+streak+' GÃœNLÃœK SERÄ°':'';
   // XP bar
   const lvl=xpData.level,xp=xpData.xp,needed=xpForLevel(lvl);
   document.getElementById('prof-level').textContent=T('prof_level')+' '+lvl+' Â· '+xp+'/'+needed+' XP';
@@ -1811,8 +1811,8 @@ function renderTitlesScreen(){
     const unlocked=t.c();
     const isEq=equippedTitle===t.id||(equippedTitle===''&&eq&&eq.id===t.id);
     return `<div onclick="equipTitle('${t.id}')" style="background:rgba(255,255,255,.03);border:1px solid ${unlocked?t.border:'rgba(255,255,255,.06)'};padding:8px 10px;cursor:pointer;transition:all .2s;opacity:${unlocked?1:.35};">
-      <div style="font-family:'DM Mono','Courier New',Courier,monospace;font-size:.65rem;color:${unlocked?t.color:'rgba(255,255,255,.3)'};letter-spacing:2px;">${unlocked?(T(t.id)||t.label):'ğŸ”’ ???'}</div>
-      <div style="font-family:'DM Mono','Courier New',Courier,monospace;font-size:.55rem;color:rgba(255,255,255,.3);letter-spacing:1px;margin-top:3px;">${isEq&&unlocked?'âœ… TAKILDI':''}</div>
+      <div style="font-family:'DM Mono','Courier New',Courier,monospace;font-size:.65rem;color:${unlocked?t.color:'rgba(255,255,255,.3)'};letter-spacing:2px;">${unlocked?(T(t.id)||t.label):' ???'}</div>
+      <div style="font-family:'DM Mono','Courier New',Courier,monospace;font-size:.55rem;color:rgba(255,255,255,.3);letter-spacing:1px;margin-top:3px;">${isEq&&unlocked?' TAKILDI':''}</div>
     </div>`;
   }).join('');
 }
@@ -1820,21 +1820,21 @@ function equipTitle(id){
   const t=TITLES.find(t=>t.id===id);
   if(!t||!t.c())return;
   equippedTitle=id;LS.set('stack_title',id);
-  showToast('ğŸ·ï¸ UNVAN: '+t.label);
+  showToast(' UNVAN: '+t.label);
   renderTitlesScreen();renderTitleBadge();
 }
 function renderGoLb(){document.getElementById('go-lb').innerHTML=renderLbRows(leaderboard);}
 function setMsg(t,c){const m=document.getElementById('msg-display');m.textContent=t;m.className=c;}
 
-// â•â• SHARE & QR â•â•
+//  SHARE & QR 
 function shareScore(){stats.shared=(stats.shared||0)+1;LS.set('stack_stats',stats);
   const n=settings.playerName?settings.playerName+' ':'';
-  const txt='ğŸ® STACK oyununda '+n+score+' blok yÄ±ÄŸdÄ±m! Sen geÃ§ebilir misin? ğŸ†';
+  const txt=' STACK oyununda '+n+score+' blok yÄ±ÄŸdÄ±m! Sen geÃ§ebilir misin? ';
   if(navigator.share){navigator.share({title:'STACK',text:txt}).catch(()=>{copyToClipboard(txt);});}
   else{copyToClipboard(txt);}
 }
-function copyToClipboard(txt){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>showToast('ğŸ“‹ KOPYALANDI!')).catch(()=>fallbackCopy(txt));}else{fallbackCopy(txt);}}
-function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');showToast('ğŸ“‹ KOPYALANDI!');}catch{showToast('ğŸ® '+txt);}document.body.removeChild(ta);}
+function copyToClipboard(txt){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>showToast(' KOPYALANDI!')).catch(()=>fallbackCopy(txt));}else{fallbackCopy(txt);}}
+function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');showToast(' KOPYALANDI!');}catch{showToast(' '+txt);}document.body.removeChild(ta);}
 function showQR(){
   const qc=document.getElementById('qr-canvas'),qx=qc.getContext('2d');
   const size=200;qc.width=size;qc.height=size;
@@ -1847,10 +1847,10 @@ function showQR(){
   document.getElementById('qr-modal').classList.add('show');
 }
 
-// â•â• SETTINGS UI â•â•
-const FREE_AVATARS=['ğŸ§±','ğŸš€','âš¡','ğŸ®','ğŸ”¥','ğŸ’','ğŸŒ€','ğŸ¦Š'];
-const LOCKED_AVATARS=['ğŸ‰','ğŸ‘½','ğŸ¤–','ğŸ‘‘','ğŸ¥·','ğŸ’€','ğŸ±','ğŸ¦Š','ğŸº','ğŸ‘¾','ğŸ˜ˆ','ğŸ˜‡','ğŸ”¥','â­'];
-const AVATAR_SHOP_ID={'ğŸ‰':'avatar_dragon','ğŸ‘½':'avatar_alien','ğŸ¤–':'avatar_robot','ğŸ‘‘':'avatar_crown','ğŸ¥·':'avatar_ninja','ğŸ’€':'avatar_skull','ğŸ±':'avatar_cat','ğŸ¦Š':'avatar_fox','ğŸº':'avatar_wolf','ğŸ‘¾':'avatar_ghost2','ğŸ˜ˆ':'avatar_devil','ğŸ˜‡':'avatar_angel','ğŸ”¥':'avatar_fire2','â­':'avatar_star'};
+//  SETTINGS UI 
+const FREE_AVATARS=['ğŸ˜','ğŸ®','ğŸ”¥','ğŸ’','ğŸŒŸ','âš¡','ğŸ¯','ğŸ†'];
+const LOCKED_AVATARS=['ğŸ‰','ğŸ‘¾','ğŸ¤–','ğŸ‘‘','ğŸ¥·','ğŸ’€','ğŸ±','ğŸ¦Š','ğŸº','ğŸ‘½','ğŸ˜ˆ','ğŸ˜‡','ğŸ”¥','â­'];
+const AVATAR_SHOP_ID={'ğŸ‰':'avatar_dragon','ğŸ‘¾':'avatar_alien','ğŸ¤–':'avatar_robot','ğŸ‘‘':'avatar_crown','ğŸ¥·':'avatar_ninja','ğŸ’€':'avatar_skull','ğŸ±':'avatar_cat','ğŸ¦Š':'avatar_fox','ğŸº':'avatar_wolf','ğŸ‘½':'avatar_ghost2','ğŸ˜ˆ':'avatar_devil','ğŸ˜‡':'avatar_angel','ğŸ”¥':'avatar_fire2','â­':'avatar_star'};
 const TRAIL_SHOP_ID={fire:'trail_fire',rainbow:'trail_rainbow',ghost:'trail_ghost',pixel:'trail_pixel',neon:'trail_neon',ice:'trail_ice',dark:'trail_dark'};
 function loadSettingsUI(){
   const ls=document.getElementById('lang-select');
@@ -1860,18 +1860,18 @@ function loadSettingsUI(){
   // Trail select with lock
   const trailSel=document.getElementById('trail-style');
   const trailDefs=[
-    {v:'classic',label:'ğŸŒŸ KLAÅÄ°K',free:true},
-    {v:'fire',label:'ğŸ”¥ ATEÅ',id:'trail_fire'},
-    {v:'rainbow',label:'ğŸŒˆ GÃ–KKUÅAÄI',id:'trail_rainbow'},
-    {v:'ghost',label:'ğŸ‘» HAYALET',id:'trail_ghost'},
-    {v:'pixel',label:'ğŸ® PÄ°KSEL',id:'trail_pixel'},
-    {v:'neon',label:'ğŸ’¡ NEON',id:'trail_neon'},
-    {v:'ice',label:'â„ï¸ BUZUL',id:'trail_ice'},
-    {v:'dark',label:'ğŸŒ‘ KARANLIK',id:'trail_dark'},
+    {v:'classic',label:' KLAÅÄ°K',free:true},
+    {v:'fire',label:' ATEÅ',id:'trail_fire'},
+    {v:'rainbow',label:' GÃ–KKUÅAÄI',id:'trail_rainbow'},
+    {v:'ghost',label:' HAYALET',id:'trail_ghost'},
+    {v:'pixel',label:' PÄ°KSEL',id:'trail_pixel'},
+    {v:'neon',label:' NEON',id:'trail_neon'},
+    {v:'ice',label:'BUZUL',id:'trail_ice'},
+    {v:'dark',label:' KARANLIK',id:'trail_dark'},
   ];
   trailSel.innerHTML=trailDefs.map(t=>{
     const owned=t.free||shopOwned.includes(t.id);
-    return `<option value="${t.v}"${!owned?' disabled style="color:#555"':''}>${owned?t.label:'ğŸ”’ '+t.label.split(' ').slice(1).join(' ')+' (MaÄŸaza)'}</option>`;
+    return `<option value="${t.v}"${!owned?' disabled style="color:#555"':''}>${owned?t.label:' '+t.label.split(' ').slice(1).join(' ')+' (MaÄŸaza)'}</option>`;
   }).join('');
   const curTrail=settings.trailStyle||'classic';
   const trailOwned=curTrail==='classic'||shopOwned.includes(TRAIL_SHOP_ID[curTrail]);
@@ -1895,14 +1895,14 @@ function loadSettingsUI(){
     const shopId=AVATAR_SHOP_ID[a];
     const owned=!shopId||shopOwned.includes(shopId);
     if(!owned){
-      return `<button class="avatar-btn" style="opacity:.35;position:relative;cursor:pointer;" onclick="event.stopPropagation();showScreen('shop')" title="MaÄŸazadan aÃ§">${a}<span style="position:absolute;top:-3px;right:-3px;font-size:.5rem">ğŸ”’</span></button>`;
+      return `<button class="avatar-btn" style="opacity:.35;position:relative;cursor:pointer;" onclick="event.stopPropagation();showScreen('shop')" title="MaÄŸazadan aÃ§">${a}<span style="position:absolute;top:-3px;right:-3px;font-size:.5rem"></span></button>`;
     }
     return `<button class="avatar-btn${settings.avatar===a?' active':''}" data-av="${a}">${a}</button>`;
   }).join('');
   ar.querySelectorAll('.avatar-btn[data-av]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();settings.avatar=b.dataset.av;saveSettings();ar.querySelectorAll('.avatar-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
 }
 
-// â•â• SWIPE â•â•
+//  SWIPE 
 let swipeStartY=null;
 document.addEventListener('touchstart',e=>{if(!settings.swipe)return;swipeStartY=e.touches[0].clientY;},{passive:true});
 document.addEventListener('touchend',e=>{
@@ -1914,7 +1914,7 @@ document.addEventListener('touchend',e=>{
 },{passive:true});
 
 
-// â•â• EVENTS â•â•
+//  EVENTS 
 document.querySelectorAll('.diff-btn').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.diff-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');difficulty=b.dataset.diff;}));
 document.getElementById('mode-row').addEventListener('click',e=>{const b=e.target.closest('.mode-btn');if(!b)return;e.stopPropagation();document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentMode=b.dataset.mode;LS.set('stack_mode',currentMode);document.getElementById('mode-desc').textContent=getModeDesc(currentMode);});
 document.getElementById('theme-row').addEventListener('click',e=>{const b=e.target.closest('.theme-btn');if(!b)return;e.stopPropagation();applyTheme(b.dataset.theme);});
@@ -1924,7 +1924,7 @@ document.getElementById('resume-btn').addEventListener('click',e=>{e.stopPropaga
 document.getElementById('pause-menu-btn').addEventListener('click',e=>{e.stopPropagation();state='menu';cancelAnimationFrame(animId);clearInterval(timerInterval);stopMusic();applyLang();showScreen('menu');});
 document.getElementById('retry-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('game');initGame();});
 document.getElementById('go-menu-btn').addEventListener('click',e=>{e.stopPropagation();state='menu';applyLang();showScreen('menu');});
-document.getElementById('mute-btn').addEventListener('click',e=>{e.stopPropagation();muted=!muted;e.target.textContent=muted?'ğŸ”‡':'ğŸ”Š';if(muted)stopMusic();else if(state==='playing')startMusic();});
+document.getElementById('mute-btn').addEventListener('click',e=>{e.stopPropagation();muted=!muted;e.target.textContent=muted?'':'';if(muted)stopMusic();else if(state==='playing')startMusic();});
 document.getElementById('share-btn').addEventListener('click',e=>{e.stopPropagation();shareScore();});
 document.getElementById('qr-btn').addEventListener('click',e=>{e.stopPropagation();showQR();});
 document.getElementById('qr-close').addEventListener('click',e=>{e.stopPropagation();document.getElementById('qr-modal').classList.remove('show');});
@@ -1981,7 +1981,7 @@ function handleResize(){
 }
 window.addEventListener('resize',handleResize);handleResize();
 
-// â•â• BOOT â•â•
+//  BOOT 
 // Clear legacy/broken localStorage keys from old versions
 (()=>{
   const legacyKeys=['stack_shop_equipped'];
