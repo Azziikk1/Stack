@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>STACK</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ffe7">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;max-height:100vh;overflow:hidden;font-family:'Bebas Neue',sans-serif;user-select:none;cursor:pointer;-webkit-overflow-scrolling:touch;}
+#bg-grid{display:none;}
+/* PARALLAX LAYERS */
+#parallax-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.p-star{position:absolute;border-radius:50%;background:#fff;animation:twinkle linear infinite;}
+@keyframes twinkle{0%,100%{opacity:.05}50%{opacity:.4}}
+#sky-overlay{position:fixed;inset:0;pointer-events:none;z-index:0;}
+/* WEATHER */
+#weather-wrap{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden;}
+.raindrop{position:absolute;width:1px;background:linear-gradient(transparent,rgba(120,180,255,.6));animation:rain linear infinite;}
+@keyframes rain{from{transform:translateY(-20px)}to{transform:translateY(110vh)}}
+.snowflake{position:absolute;color:rgba(255,255,255,.6);animation:snow linear infinite;}
+@keyframes snow{from{transform:translateY(-20px) rotate(0deg)}to{transform:translateY(110vh) rotate(360deg)}}
+/* SCREENS */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;z-index:50;transition:opacity .35s;overflow-y:auto;overflow-x:hidden;padding:12px 0 20px;pointer-events:all;-webkit-overflow-scrolling:touch;}
+.screen.hidden{opacity:0;pointer-events:none;visibility:hidden;}
+.screen::-webkit-scrollbar{width:4px;}
+.screen::-webkit-scrollbar-thumb{background:rgba(0,255,231,.3);}
+#menu{gap:8px;background:rgba(10,10,15,.96);}
+#menu h1{font-size:5.5rem;color:#00ffe7;text-shadow:0 0 40px rgba(0,255,231,.6);letter-spacing:6px;line-height:1;}
+#menu-sub{font-family:'DM Mono',monospace;color:rgba(255,255,255,.35);letter-spacing:3px;font-size:.75rem;}
+#streak-display{font-family:'DM Mono',monospace;font-size:.8rem;letter-spacing:3px;text-align:center;padding:3px 12px;border-radius:2px;}
+#streak-display.active{color:#ff6b35;border:1px solid rgba(255,107,53,.4);text-shadow:0 0 10px rgba(255,107,53,.5);}
+#streak-display.cold{color:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.08);}
+#go-title{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:3px;text-align:center;margin-top:2px;}
+#profile-screen{background:rgba(5,5,12,.99);gap:0;padding:16px 0;}
+.prof-avatar{font-size:4rem;filter:drop-shadow(0 0 16px currentColor);}
+.prof-name-input{font-family:'DM Mono',monospace;font-size:.8rem;letter-spacing:3px;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.3);color:#fff;padding:2px 8px;text-align:left;width:140px;outline:none;}
+.prof-title-badge{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:2px;padding:2px 8px;border:1px solid;display:inline-block;margin:3px 0;}
+.prof-streak-row{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;color:#ff6b35;}
+.prof-level{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.7);letter-spacing:2px;margin:8px 0 4px;text-align:center;}
+.prof-xp-bar{width:90%;max-width:300px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin-bottom:12px;}
+.prof-xp-fill{height:100%;border-radius:2px;transition:width .6s;}
+.prof-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;width:90%;max-width:320px;margin-bottom:10px;}
+.prof-stat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);padding:7px 4px;text-align:center;border-radius:3px;}
+.prof-stat-val{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#fff;}
+.prof-stat-lbl{font-family:'DM Mono',monospace;font-size:.42rem;color:rgba(255,255,255,.45);letter-spacing:1px;margin-top:1px;}
+.prof-section{font-family:'DM Mono',monospace;font-size:.52rem;color:rgba(255,255,255,.25);letter-spacing:4px;margin:8px 0 5px;text-align:center;width:100%;}
+.prof-mode-row{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;width:90%;max-width:320px;margin-bottom:10px;}
+.prof-mode-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);padding:5px 3px;text-align:center;border-radius:3px;}
+.prof-mode-card .pmc-val{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#fff;}
+.prof-mode-card .pmc-lbl{font-family:'DM Mono',monospace;font-size:.38rem;color:rgba(255,255,255,.4);}
+#prof-inner{width:100%;max-width:380px;height:100%;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:16px 12px 24px;box-sizing:border-box;-webkit-overflow-scrolling:touch;}
+#prof-header{display:flex;align-items:center;gap:14px;width:90%;max-width:320px;margin-bottom:6px;}
+#prof-header-right{display:flex;flex-direction:column;align-items:flex-start;gap:2px;}
+#prof-btns{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap;justify-content:center;}
+#prof-achs-corner,#prof-titles-btn{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.5);letter-spacing:2px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:6px 14px;cursor:pointer;}
+.streak-flame{animation:flicker .6s ease-in-out infinite alternate;}
+@keyframes flicker{0%{opacity:1;transform:scale(1)}100%{opacity:.7;transform:scale(1.1)}}
+.section-title{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.25);letter-spacing:4px;text-align:center;margin-top:4px;}
+.diff-row{display:flex;gap:10px;}
+.diff-btn{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;padding:8px 20px;border:2px solid;background:transparent;cursor:pointer;transition:all .2s;}
+.diff-btn.easy{color:#7bed9f;border-color:#7bed9f;}.diff-btn.normal{color:#00ffe7;border-color:#00ffe7;}.diff-btn.hard{color:#ff4757;border-color:#ff4757;}
+.diff-btn.active.easy{background:#7bed9f;color:#0a0a0f;}.diff-btn.active.normal{background:#00ffe7;color:#0a0a0f;}.diff-btn.active.hard{background:#ff4757;color:#0a0a0f;}
+.mode-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.mode-btn{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;padding:6px 14px;border:2px solid rgba(255,255,255,.25);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;}
+.mode-btn.active{border-color:#00ffe7;color:#00ffe7;background:rgba(0,255,231,.08);}
+.mode-desc{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:2px;text-align:center;min-height:.9rem;}
+.theme-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.theme-btn{width:32px;height:32px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:all .2s;}
+.theme-btn.active{border-color:white;transform:scale(1.2);}
+.start-btn{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:4px;padding:12px 48px;border:2px solid #00ffe7;background:transparent;color:#00ffe7;cursor:pointer;transition:all .2s;margin-top:4px;}
+.start-btn:hover{background:#00ffe7;color:#0a0a0f;}
+.lb-table{width:290px;border-collapse:collapse;}
+.lb-table td{font-family:'DM Mono',monospace;font-size:.68rem;padding:3px 4px;color:rgba(255,255,255,.5);letter-spacing:1px;}
+.lb-table td:first-child{color:rgba(255,255,255,.25);width:18px;}
+.lb-table td.sc{color:#ffd32a;}
+.lb-table td.online-name{color:#00ffe7;}
+.txt-btn{font-family:'DM Mono',monospace;font-size:.75rem;color:rgba(255,255,255,.3);letter-spacing:3px;background:none;border:none;cursor:pointer;text-decoration:underline;}
+/* GAME UI */
+#game-ui{position:fixed;inset:0;pointer-events:none;z-index:20;display:none;}
+#hud-top{position:absolute;top:10px;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;padding:0 14px;pointer-events:all;}
+#score-wrap{text-align:left;}
+#score-display{font-size:4rem;color:#00ffe7;letter-spacing:3px;line-height:1;text-shadow:0 0 25px rgba(0,255,231,.5);}
+#score-display.pop{animation:pop .18s ease;}
+@keyframes pop{50%{transform:scale(1.2)}}
+#score-label{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:3px;}
+#lives-display{font-size:1rem;letter-spacing:1px;margin-top:2px;}
+#center-hud{text-align:center;}
+#height-display{font-size:1.4rem;color:rgba(255,255,255,.6);letter-spacing:2px;}
+#height-label{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.2);letter-spacing:2px;}
+#timer-display{font-size:1.4rem;color:#ff4757;letter-spacing:2px;display:none;}
+#weather-hud{font-size:.8rem;letter-spacing:2px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;}
+#right-hud{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+.hud-btn{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;padding:5px 12px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:rgba(255,255,255,.6);cursor:pointer;}
+#powerup-bar{position:absolute;bottom:60px;left:0;right:0;display:flex;justify-content:center;gap:10px;pointer-events:all;}
+.pu-btn{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:1px;padding:5px 12px;border:2px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;position:relative;}
+.pu-btn.ready{border-color:#ffd32a;color:#ffd32a;box-shadow:0 0 10px rgba(255,211,42,.3);}
+.pu-btn .pu-count{position:absolute;top:-6px;right:-6px;background:#ffd32a;color:#0a0a0f;font-size:.6rem;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+#hud-bottom{position:absolute;bottom:16px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:3px;pointer-events:none;}
+#combo-display{font-size:1rem;font-family:'DM Mono',monospace;color:#ffd32a;letter-spacing:3px;min-height:1.2rem;opacity:0;transition:opacity .3s;text-shadow:0 0 12px #ffd32a;}
+#combo-display.show{opacity:1;}
+#msg-display{font-size:1rem;font-family:'DM Mono',monospace;letter-spacing:3px;min-height:1.2rem;text-align:center;}
+#msg-display.perfect{color:#ffd32a;text-shadow:0 0 16px #ffd32a;}
+#msg-display.expand{color:#7bed9f;text-shadow:0 0 16px #7bed9f;}
+#msg-display.powerup{color:#a29bfe;text-shadow:0 0 16px #a29bfe;}
+#msg-display.gold{color:#ffd32a;text-shadow:0 0 22px #ffd32a;}
+#msg-display.life-lost{color:#ff6b81;text-shadow:0 0 16px #ff6b81;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#special-hint{position:absolute;bottom:100px;left:0;right:0;text-align:center;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:3px;pointer-events:none;opacity:0;transition:opacity .4s;}
+#avatar-display{position:absolute;bottom:70px;right:16px;font-size:2rem;pointer-events:none;opacity:.7;}
+/* MILESTONE FLASH */
+#milestone-flash{position:fixed;inset:0;pointer-events:none;z-index:100;opacity:0;transition:opacity .1s;}
+@keyframes lvlup-in{0%{transform:scale(0.4) translateY(30px);opacity:0}60%{transform:scale(1.15) translateY(-8px);opacity:1}100%{transform:scale(1) translateY(0);opacity:1}}
+@keyframes lvlup-out{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.3) translateY(-40px)}}
+@keyframes ray-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+#levelup-num{animation:none;}
+#levelup-num.show{animation:lvlup-in .5s cubic-bezier(.17,.67,.35,1.3) forwards;}
+#levelup-num.hide{animation:lvlup-out .6s ease-in forwards;}
+#milestone-flash.show{opacity:1;animation:mflash .6s forwards;}
+@keyframes mflash{0%{opacity:.7}100%{opacity:0}}
+#milestone-text{position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);font-size:3rem;letter-spacing:6px;color:#ffd32a;text-shadow:0 0 40px #ffd32a,0 0 80px #ffd32a;pointer-events:none;z-index:101;opacity:0;transition:opacity .1s;white-space:nowrap;}
+#milestone-text.show{opacity:1;animation:mtext .9s forwards;}
+@keyframes mtext{0%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.8)}}
+/* PAUSE */
+#pause-screen{background:rgba(10,10,15,.95);gap:18px;}
+#pause-screen h2{font-size:3rem;color:#00ffe7;letter-spacing:4px;}
+.menu-btn{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:3px;padding:10px 32px;border:2px solid rgba(255,255,255,.25);background:transparent;color:rgba(255,255,255,.7);cursor:pointer;transition:all .2s;}
+.menu-btn:hover{border-color:#00ffe7;color:#00ffe7;}
+/* GAME OVER */
+#gameover-screen{background:rgba(10,10,15,.97);gap:9px;}
+#gameover-screen h2{font-size:3rem;color:#ff4757;letter-spacing:4px;text-shadow:0 0 30px rgba(255,71,87,.5);}
+#final-score{font-size:4.5rem;color:#00ffe7;letter-spacing:4px;line-height:1;text-shadow:0 0 30px rgba(0,255,231,.5);}
+#final-label{font-family:'DM Mono',monospace;font-size:.75rem;color:rgba(255,255,255,.3);letter-spacing:3px;}
+#final-stats{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:2px;text-align:center;line-height:1.8;}
+#new-best-badge{font-family:'DM Mono',monospace;font-size:.95rem;color:#ffd32a;letter-spacing:3px;text-shadow:0 0 12px #ffd32a;min-height:1.2rem;}
+.go-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+#share-btn{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;padding:8px 24px;border:2px solid #7bed9f;background:transparent;color:#7bed9f;cursor:pointer;transition:all .2s;}
+#share-btn:hover{background:#7bed9f;color:#0a0a0f;}
+#qr-btn{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;padding:8px 18px;border:2px solid rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;}
+#qr-btn:hover{border-color:#a29bfe;color:#a29bfe;}
+/* STATS */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:280px;}
+.stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:10px 14px;}
+.stat-val{font-size:2rem;color:#00ffe7;letter-spacing:2px;}
+.stat-key{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:2px;margin-top:2px;}
+#chart-wrap{width:280px;height:80px;}
+/* ACHIEVEMENTS */
+#achievements-screen{background:rgba(10,10,15,.97);gap:12px;}
+#achievements-screen h2{font-size:2.5rem;color:#00ffe7;letter-spacing:4px;}
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:300px;max-height:55vh;overflow-y:auto;padding-right:4px;}
+.ach-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:8px 10px;}
+.ach-card.unlocked{border-color:rgba(255,211,42,.4);background:rgba(255,211,42,.05);}
+.ach-icon{font-size:1.6rem;display:block;margin-bottom:2px;}
+.ach-name{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.5);letter-spacing:1px;display:block;}
+.ach-desc{font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:1px;display:block;margin-top:2px;}
+.ach-card.unlocked .ach-name{color:#ffd32a;}
+.ach-card.unlocked .ach-desc{color:rgba(255,211,42,.5);}
+/* SETTINGS */
+#settings-screen{background:rgba(10,10,15,.97);gap:12px;}
+#settings-screen h2{font-size:2.5rem;color:#00ffe7;letter-spacing:4px;}
+.settings-row{display:flex;align-items:center;justify-content:space-between;width:290px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.settings-label{font-family:'DM Mono',monospace;font-size:.75rem;color:rgba(255,255,255,.5);letter-spacing:2px;}
+.vol-slider{width:110px;accent-color:#00ffe7;cursor:pointer;}
+.toggle-btn{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;padding:4px 14px;border:2px solid rgba(255,255,255,.25);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;min-width:60px;}
+.toggle-btn.on{border-color:#00ffe7;color:#00ffe7;background:rgba(0,255,231,.08);}
+.shape-btn{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:1px;padding:4px 9px;border:2px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;}
+.shape-btn.active{border-color:#a29bfe;color:#a29bfe;background:rgba(162,155,254,.08);}
+.name-input{font-family:'DM Mono',monospace;font-size:.85rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 10px;width:130px;letter-spacing:2px;text-align:center;}
+#lang-select{background:#1a1a2e;color:#fff;border:1px solid rgba(255,255,255,.3);font-family:'DM Mono',monospace;font-size:.8rem;letter-spacing:2px;padding:6px 10px;cursor:pointer;width:160px;}
+#lang-select option{background:#1a1a2e;color:#fff;}
+.name-input:focus{outline:none;border-color:#00ffe7;}
+.avatar-row{display:flex;gap:6px;flex-wrap:wrap;}
+.avatar-btn{font-size:1.4rem;padding:4px 7px;border:2px solid transparent;background:transparent;cursor:pointer;transition:all .2s;border-radius:4px;}
+.avatar-btn.active{border-color:#00ffe7;}
+/* SHOP */
+#shop-screen{background:rgba(10,10,15,.97);gap:10px;}
+#shop-screen h2{font-size:2.5rem;color:#ffd32a;letter-spacing:4px;}
+#shop-xp{font-family:'DM Mono',monospace;font-size:.8rem;color:#ffd32a;letter-spacing:3px;}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:300px;max-height:52vh;overflow-y:auto;}
+.shop-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);padding:10px;cursor:pointer;transition:all .2s;text-align:center;}
+.shop-item.owned{border-color:rgba(0,255,231,.3);background:rgba(0,255,231,.04);}
+.shop-item.equipped{border-color:#ffd32a;background:rgba(255,211,42,.08);}
+.shop-item:hover:not(.owned){border-color:rgba(255,255,255,.3);}
+.shop-icon{font-size:2rem;display:block;margin-bottom:4px;}
+.shop-name{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.6);letter-spacing:1px;display:block;}
+.shop-price{font-family:'DM Mono',monospace;font-size:.6rem;color:#ffd32a;letter-spacing:1px;display:block;margin-top:3px;}
+.shop-item.owned .shop-price{color:#00ffe7;}
+.shop-item.equipped .shop-price{color:#ffd32a;}
+/* ONLINE LB */
+#online-screen{background:rgba(5,5,12,.99);gap:12px;}
+#online-screen h2{font-size:2.5rem;color:#00ffe7;letter-spacing:4px;}
+#online-status{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.5);letter-spacing:2px;text-align:center;background:rgba(0,255,231,.06);border:1px solid rgba(0,255,231,.15);padding:4px 12px;}
+.online-lb-table{width:300px;border-collapse:collapse;background:rgba(0,0,0,.6);}
+.online-lb-table td{font-family:'DM Mono',monospace;font-size:.72rem;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.07);letter-spacing:1px;color:rgba(255,255,255,.75);}
+.online-lb-table tr:hover td{background:rgba(255,255,255,.05);}
+.online-lb-table tr.me td{background:rgba(0,255,231,.12);color:#00ffe7;font-weight:bold;}
+.rank-gold{color:#ffd32a;font-size:.85rem;}.rank-silver{color:#ccc;}.rank-bronze{color:#cd7f32;}
+/* REPLAY */
+/* FRIEND COMPARE */
+#friend-screen h2{font-size:2.5rem;color:#a29bfe;letter-spacing:4px;}
+.fc-name{font-size:1.4rem;letter-spacing:3px;color:#a29bfe;}
+.fc-stats{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:2px;margin-top:6px;line-height:2;}
+.vs-bar-wrap{width:290px;margin-top:6px;}
+.vs-label{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:2px;display:flex;justify-content:space-between;}
+.vs-bar-me{background:#00ffe7;transition:width .8s;}
+.vs-bar-friend{background:#a29bfe;transition:width .8s;}
+/* SEASONAL */
+#season-banner{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;padding:4px 10px;border:1px solid;text-align:center;}
+@keyframes tb-blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+#tournament-screen{background:rgba(5,5,12,.99);gap:10px;}
+#tournament-screen h2{font-size:2.2rem;color:#ffd32a;letter-spacing:4px;}
+.t-card{background:rgba(255,211,42,.04);border:1px solid rgba(255,211,42,.2);padding:12px 16px;width:290px;text-align:center;}
+.t-card .tc-label{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:3px;margin-bottom:4px;}
+.t-card .tc-val{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:#ffd32a;letter-spacing:3px;}
+.t-card .tc-sub{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.4);letter-spacing:2px;margin-top:2px;}
+.t-lb-table{width:300px;border-collapse:collapse;}
+.t-lb-table td{font-family:'DM Mono',monospace;font-size:.68rem;padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.7);}
+.t-lb-table tr.me td{background:rgba(255,211,42,.1);color:#ffd32a;font-weight:bold;}
+.t-winner-badge{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:3px;padding:4px 14px;border:1px solid rgba(255,211,42,.5);color:#ffd32a;text-align:center;background:rgba(255,211,42,.06);}
+/* XP */
+#xp-bar-wrap{width:240px;}
+#xp-label{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:2px;text-align:center;margin-bottom:3px;}
+#xp-bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
+#xp-fill{height:100%;background:#a29bfe;border-radius:3px;transition:width .5s;box-shadow:0 0 8px #a29bfe;}
+#daily-tasks-wrap{width:280px;}
+.task-row{display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.4);letter-spacing:1px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.task-prog{color:#7bed9f;}.task-done{color:#ffd32a;}
+/* TOAST & QR */
+#achievement-toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:rgba(10,10,15,.95);border:2px solid #ffd32a;color:#ffd32a;font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:2px;padding:8px 18px;z-index:400;opacity:0;transition:opacity .4s;pointer-events:none;text-align:center;white-space:nowrap;}
+#achievement-toast.show{opacity:1;}
+#qr-modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .3s;}
+#qr-modal.show{opacity:1;pointer-events:all;}
+#qr-canvas{border:3px solid rgba(255,255,255,.15);}
+#qr-close{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;padding:8px 24px;border:2px solid rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;}
+#qr-text{font-family:'DM Mono',monospace;font-size:.8rem;color:rgba(255,255,255,.5);letter-spacing:3px;}
+/* COLORBLIND */
+canvas#canvas{display:block;position:fixed;top:0;left:0;z-index:5;touch-action:none;}
+/* TRAIL STYLES */
+.trail-fire{filter:blur(1px);}
+</style>
+</head>
+<body>
+<div id="bg-grid"></div>
+<div id="parallax-wrap"></div>
+<div id="sky-overlay"></div>
+<div id="weather-wrap"></div>
+<div id="achievement-toast"></div>
+<div id="milestone-flash"></div>
+<div id="milestone-text"></div>
+<div id="levelup-overlay" style="position:fixed;inset:0;pointer-events:none;z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;">
+  <div id="levelup-rays" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
+  <div id="levelup-num"  style="font-size:6rem;color:#a29bfe;text-shadow:0 0 60px #a29bfe,0 0 120px #a29bfe;letter-spacing:6px;position:relative;z-index:1;"></div>
+  <div id="levelup-txt"  style="font-family:'DM Mono',monospace;font-size:1.1rem;letter-spacing:6px;color:rgba(255,255,255,.7);position:relative;z-index:1;margin-top:8px;"></div>
+</div>
+
+<div id="qr-modal">
+  <div id="qr-text">SKOR QR KODU</div>
+  <canvas id="qr-canvas" width="200" height="200"></canvas>
+  <button id="qr-close">✕ KAPAT</button>
+</div>
+
+<!-- MENU -->
+<div class="screen" id="menu" style="position:relative;">
+  <button id="settings-btn" style="position:absolute;top:14px;right:14px;font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:2px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);padding:6px 10px;cursor:pointer;z-index:10;">⚙️</button>
+  <h1 style="margin:4px 0 0;">STACK</h1>
+  <div id="menu-sub">BLOK DÜŞÜR — KULE YÜKSELT</div>
+  <div id="streak-display" class="cold">🔥 SERİ: 0 GÜN</div>
+  <div id="season-banner"></div>
+
+  <div class="section-title" data-lang="theme">— TEMA —</div>
+  <div class="theme-row" id="theme-row"></div>
+  <div class="section-title" data-lang="difficulty">— ZORLUK —</div>
+  <div class="diff-row">
+    <button class="diff-btn easy" data-diff="easy">KOLAY</button>
+    <button class="diff-btn normal active" data-diff="normal">NORMAL</button>
+    <button class="diff-btn hard" data-diff="hard">ZOR</button>
+  </div>
+  <div class="section-title" data-lang="mode">— MOD —</div>
+  <div class="mode-row" id="mode-row"></div>
+  <div class="mode-desc" id="mode-desc"></div>
+  <button class="start-btn" id="start-btn">▶ OYNA</button>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px;">
+    <button class="txt-btn" id="profile-btn">👤 PROFİL</button>
+    <button class="txt-btn" id="shop-btn">🛒 MAĞAZA</button>
+    <button class="txt-btn" id="online-btn">🌍 ONLINE LB</button>
+    <button class="txt-btn" id="tournament-menu-btn">🏆 TURNUVA</button>
+  </div>
+  <div class="section-title" data-lang="daily_section" style="margin-top:4px;">— GÜNLÜK GÖREVLER —</div>
+  <div id="daily-tasks-wrap"></div>
+</div>
+
+<!-- GAME UI -->
+<div id="game-ui">
+  <div id="hud-top">
+    <div id="score-wrap">
+      <div id="score-display">0</div>
+      <div id="score-label" data-lang="score_lbl">SKOR</div>
+      <div id="lives-display">❤️❤️❤️</div>
+    </div>
+    <div id="center-hud">
+      <div id="height-display">0m</div>
+      <div id="height-label" data-lang="height_lbl">YÜKSEKLİK</div>
+      <div id="timer-display">60</div>
+      <div id="timer-label" style="font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,71,87,.6);letter-spacing:2px;display:none;">SÜRE</div>
+      <div id="weather-hud"></div>
+      <div id="music-theme-hud" style="font-family:'DM Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.22);letter-spacing:2px;"></div>
+      <div id="active-cos-hud" style="font-family:'DM Mono',monospace;font-size:.45rem;color:rgba(255,255,255,.18);letter-spacing:1px;"></div>
+    </div>
+    <div id="right-hud">
+      <button class="hud-btn" id="pause-btn">⏸</button>
+      <button class="hud-btn" id="mute-btn">🔊</button>
+    </div>
+  </div>
+  <div id="special-hint"></div>
+  <div id="powerup-bar">
+    <button class="pu-btn" id="pu-freeze">❄️ <span data-lang='pu_freeze'>DONDUR</span><span class="pu-count" id="pu-freeze-count">0</span></button>
+    <button class="pu-btn" id="pu-wide">🔍 <span data-lang="pu_wide">GENİŞLET</span><span class="pu-count" id="pu-wide-count">0</span></button>
+    <button class="pu-btn" id="pu-auto">💫 <span data-lang="pu_auto">OTO</span><span class="pu-count" id="pu-auto-count">0</span></button>
+  </div>
+  <div id="hud-bottom">
+    <div id="combo-display"></div>
+    <div id="msg-display"></div>
+  </div>
+  <div id="avatar-display"></div>
+</div>
+
+<!-- PAUSE -->
+<div class="screen hidden" id="pause-screen">
+  <h2>⏸ DURAKLATILDI</h2>
+  <button class="menu-btn" id="resume-btn">▶ DEVAM ET</button>
+  <button class="menu-btn" id="pause-menu-btn">🏠 ANA MENÜ</button>
+</div>
+
+<!-- GAME OVER -->
+<div class="screen hidden" id="gameover-screen">
+  <h2 data-lang="gameover_title">OYUN BİTTİ</h2>
+  <div id="final-score">0</div>
+  <div id="final-label" data-lang="final_label">SKOR</div>
+  <div id="new-best-badge"></div>
+  <div id="final-stats"></div>
+  <table class="lb-table" id="go-lb" style="margin:4px 0;"></table>
+  <div class="go-btns">
+    <button class="menu-btn" id="retry-btn" data-lang="retry">🔄 TEKRAR</button>
+    <button class="menu-btn" id="go-menu-btn" data-lang="go_menu">🏠 MENÜ</button>
+  </div>
+  <div class="go-btns" style="margin-top:4px;">
+    <button id="share-btn" data-lang="share_btn">📤 PAYLAŞ</button>
+    <button id="qr-btn" data-lang="qr_btn">📱 QR KOD</button>
+  </div>
+  <div id="go-daily-task" style="font-family:'DM Mono',monospace;font-size:.7rem;color:#7bed9f;letter-spacing:2px;margin-top:6px;"></div>
+  <div id="go-title"></div>
+</div>
+
+<!-- STATS -->
+<!-- ACHIEVEMENTS -->
+<div class="screen hidden" id="achievements-screen" style="justify-content:flex-start;padding-top:16px;">
+  <h2 data-lang="ach_title">BAŞARIMLAR</h2>
+  <div class="ach-grid" id="ach-grid"></div>
+  <button class="menu-btn" id="ach-back" style="margin-top:12px;">← GERİ</button>
+</div>
+
+<!-- SHOP -->
+<div class="screen hidden" id="shop-screen" style="justify-content:flex-start;padding-top:16px;">
+  <h2 data-lang="shop_title">🛒 MAĞAZA</h2>
+  <div id="shop-xp">💫 XP: <span id="shop-xp-val">0</span></div>
+  <div class="shop-grid" id="shop-grid"></div>
+  <button class="menu-btn" id="shop-back" style="margin-top:10px;">← GERİ</button>
+</div>
+
+<!-- ONLINE LB -->
+<div class="screen hidden" id="online-screen" style="justify-content:flex-start;padding-top:16px;">
+  <h2 data-lang="online_title">🌍 ONLINE SKOR</h2>
+  <div id="online-status">Claude AI ile simüle ediliyor...</div>
+  <table class="online-lb-table" id="online-lb-table">
+    <tbody id="online-lb-body"></tbody>
+  </table>
+  <button class="menu-btn" id="online-back" style="margin-top:12px;">← GERİ</button>
+</div>
+
+<!-- PROFILE -->
+<div class="screen hidden" id="profile-screen">
+  <div id="prof-inner">
+    <!-- Üst: Avatar + İsim + Unvan -->
+    <div id="prof-header">
+      <div class="prof-avatar" id="prof-avatar">🧱</div>
+      <div id="prof-header-right">
+        <input type="text" id="player-name-input" class="prof-name-input" maxlength="12" placeholder="ADINİZİ GİRİN">
+        <div class="prof-title-badge" id="prof-title-badge"></div>
+        <div class="prof-streak-row" id="prof-streak"></div>
+      </div>
+    </div>
+    <!-- Seviye -->
+    <div class="prof-level" id="prof-level">SEVİYE 1</div>
+    <div class="prof-xp-bar"><div class="prof-xp-fill" id="prof-xp-fill"></div></div>
+    <!-- İstatistikler 3x2 grid -->
+    <div class="prof-stats-grid">
+      <div class="prof-stat"><div class="prof-stat-val" id="pst-best">0</div><div class="prof-stat-lbl" data-lang="stat_best">EN İYİ</div></div>
+      <div class="prof-stat"><div class="prof-stat-val" id="pst-games">0</div><div class="prof-stat-lbl" data-lang="stat_games">OYUN</div></div>
+      <div class="prof-stat"><div class="prof-stat-val" id="pst-combo">0</div><div class="prof-stat-lbl" data-lang="stat_combo">KOMBO</div></div>
+      <div class="prof-stat"><div class="prof-stat-val" id="pst-perf">0</div><div class="prof-stat-lbl" data-lang="stat_perfect">MÜKEMMEL</div></div>
+      <div class="prof-stat"><div class="prof-stat-val" id="pst-blocks">0</div><div class="prof-stat-lbl" data-lang="stat_blocks">BLOK</div></div>
+      <div class="prof-stat"><div class="prof-stat-val" id="pst-achs">0</div><div class="prof-stat-lbl" data-lang="stat_achs">BAŞARIM</div></div>
+    </div>
+    <!-- Mod en iyileri -->
+    <div class="prof-section" data-lang="modBests">— MOD EN İYİLERİ —</div>
+    <div class="prof-mode-row" id="prof-mode-row"></div>
+    <!-- Alt butonlar -->
+    <div id="prof-btns">
+      <button id="prof-achs-corner" onclick="showScreen('achievements')">🏅 BAŞARIMLAR</button>
+      <button id="prof-titles-btn" onclick="showScreen('titles')">🏷️ UNVANLAR</button>
+      <button class="menu-btn" id="prof-back-btn">← GERİ</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOURNAMENT -->
+<div class="screen hidden" id="tournament-screen" style="justify-content:flex-start;padding-top:16px;">
+  <h2 data-lang="tournament_title">🏆 TURNUVA</h2>
+  <div id="t-week-label" style="font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:3px;"></div>
+  <div class="t-card" id="t-goal-card">
+    <div class="tc-label">BU HAFTANIN HEDEFİ</div>
+    <div class="tc-val" id="t-goal-val">—</div>
+    <div class="tc-sub" id="t-goal-sub"></div>
+  </div>
+  <div class="t-card">
+    <div class="tc-label">SENİN SKORUN</div>
+    <div class="tc-val" id="t-my-score">0</div>
+    <div class="tc-sub" id="t-my-progress"></div>
+    <div class="tb-progress" style="margin-top:8px;"><div class="tb-progress-fill" id="t-prog-fill" style="width:0%"></div></div>
+  </div>
+  <div id="t-winner-wrap" style="display:none;">
+    <div class="t-winner-badge" id="t-winner-badge"></div>
+  </div>
+  <div id="t-status" style="font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.25);letter-spacing:2px;text-align:center;"></div>
+  <table class="t-lb-table" id="t-lb-table"><tbody id="t-lb-body"></tbody></table>
+  <button class="menu-btn" id="t-back-btn" style="margin-top:8px;">← GERİ</button>
+</div>
+
+<!-- TITLES -->
+<div class="screen hidden" id="titles-screen" style="background:rgba(5,5,12,.99);gap:10px;">
+  <h2 data-lang="titles_title" style="font-size:2.5rem;letter-spacing:4px;color:#ffd32a;">🏷️ UNVANLAR</h2>
+  <div id="titles-equipped" style="font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:2px;text-align:center;"></div>
+  <div id="titles-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:300px;max-height:56vh;overflow-y:auto;padding-right:4px;"></div>
+  <button class="menu-btn" id="titles-back" style="margin-top:10px;">← GERİ</button>
+</div>
+
+<!-- SETTINGS -->
+<div class="screen hidden" id="settings-screen">
+  <h2>AYARLAR</h2>
+  <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:6px;">
+    <span class="settings-label" data-lang="avatar">AVATAR</span>
+    <div class="avatar-row" id="avatar-row"></div>
+  </div>
+  <div class="settings-row">
+    <span class="settings-label" data-lang="trail">İZ STİLİ</span>
+    <select id="trail-style" style="font-family:'DM Mono',monospace;font-size:.72rem;background:rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.25);color:#fff;padding:5px 8px;cursor:pointer;letter-spacing:1px;">
+      <option value="classic">🌟 KLASİK</option>
+      <option value="fire">🔥 ATEŞ</option>
+      <option value="rainbow">🌈 GÖKKUŞAĞI</option>
+      <option value="ghost">👻 HAYALET</option>
+      <option value="pixel">🎮 PİKSEL</option>
+      <option value="neon">💡 NEON</option>
+      <option value="ice">❄️ BUZUL</option>
+      <option value="dark">🌑 KARANLIK</option>
+      <option value="gold">✨ ALTIN</option>
+      <option value="matrix">💚 MATRİX</option>
+      <option value="blood">🩸 KAN</option>
+    </select>
+  </div>
+  <div class="settings-row">
+    <span class="settings-label">🎵 TEMA</span>
+    <div id="music-theme-row" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;"></div>
+    <span class="settings-label" data-lang="music">MÜZİK SES</span>
+    <input type="range" class="vol-slider" id="music-vol" min="0" max="100" value="55">
+  </div>
+  <div class="settings-row">
+    <span class="settings-label" data-lang="sfx">SES EFEKTLERİ</span>
+    <input type="range" class="vol-slider" id="sfx-vol" min="0" max="100" value="100">
+  </div>
+  <div class="settings-row">
+    <span class="settings-label" data-lang="haptic">TİTREŞİM</span>
+    <button class="toggle-btn on" id="haptic-toggle">AÇIK</button>
+  </div>
+  <div class="settings-row">
+    <span class="settings-label" data-lang="swipe">SWIPE KONTROL</span>
+    <button class="toggle-btn" id="swipe-toggle">KAPALI</button>
+  </div>
+  <div class="settings-row">
+    <span class="settings-label" data-lang="language">DİL / LANGUAGE</span>
+    <select id="lang-select" class="name-input" style="width:140px;cursor:pointer;">
+      <option value="tr">🇹🇷 Türkçe</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="de">🇩🇪 Deutsch</option>
+      <option value="es">🇪🇸 Español</option>
+      <option value="ru">🇷🇺 Русский</option>
+    </select>
+  </div>
+  <button class="menu-btn" id="settings-back" style="margin-top:12px;">← GERİ</button>
+</div>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const LS={get:(k,d)=>{try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch{return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}};
+
+const LANGS={"tr": {"play": "▶ OYNA", "theme": "— TEMA —", "difficulty": "— ZORLUK —", "mode": "— MOD —", "easy": "KOLAY", "normal": "NORMAL", "hard": "ZOR", "settings": "⚙️", "back": "← GERİ", "profile": "👤 PROFİL", "shop": "🛒 MAĞAZA", "online": "🌍 ONLINE LB", "tournament": "🏆 TURNUVA", "achievements": "🏅 BAŞARIMLAR", "titles": "🏷️ UNVANLAR", "daily": "— GÜNLÜK GÖREVLER —", "level": "SEVİYE", "streak": "GÜNLÜK SERİ", "best": "EN İYİ", "games": "OYUN", "combo": "KOMBO", "perfect": "MÜKEMMEL", "blocks": "BLOK", "achievement": "BAŞARIM", "modBests": "— MOD EN İYİLERİ —", "name_placeholder": "ADINİZİ GİRİN", "settings_title": "AYARLAR", "music": "MÜZİK", "sfx": "SES EFEKTİ", "haptic": "TİTREŞİM", "swipe": "SWIPE KONTROL", "trail": "İZ EFEKTI", "avatar": "AVATAR", "language": "DİL", "gameover": "OYUN BİTTİ", "score": "SKOR", "newbest": "🏆 YENİ REKOR!", "resume": "▶ DEVAM", "restart": "↺ YENİDEN", "menu": "☰ MENÜ", "paused": "— DURAKLADI —", "classic": "KLASİK", "time": "ZAMAN", "survival": "HAYATTA KAL", "chaos": "KAOS", "ghost": "HAYALET", "trail_classic": "🌟 KLAŞİK", "trail_fire": "ATEŞ İZİ", "trail_rainbow": "GÖKKUŞAĞI", "trail_ghost": "HAYALET", "trail_pixel": "PİKSEL", "trail_neon": "NEON", "trail_sparkle": "IŞILTILI", "trail_comet": "KUYRUKLU YILDIZ", "trail_matrix": "MATRİX", "trail_minimal": "MİNİMAL", "prof_level": "SEVİYE", "prof_streak": "GÜNLÜK SERİ", "prof_modBests": "— MOD EN İYİLERİ —", "stat_best": "EN İYİ", "stat_games": "OYUN", "stat_combo": "KOMBO", "stat_perfect": "MÜKEMMEL", "stat_blocks": "BLOK", "stat_achs": "BAŞARIM", "task_score": "Yüksek skor yap", "task_perfect": "Mükemmel yerleştir", "task_games": "Oyun oyna", "task_combo": "Kombo yap", "online_lb": "🌍 ONLINE LB", "no_trail": "Kilit", "locked": "KİLİTLİ", "active": "🟢 AKTİF", "inactive": "⭕ KAPALI", "mute": "🔇", "unmute": "🔊", "share": "📤 PAYLAŞ", "qr": "📱 QR KOD", "classic_desc": "Klasik sonsuz mod", "time_desc": "60 saniyede kaç blok?", "survival_desc": "Blok her seferinde daralır", "chaos_desc": "Hız rastgele değişir", "ghost_desc": "Blok ara ara görünmez olur", "play3": "3 OYUN OYNA", "perf5": "5 MÜKEMMEL YAP", "score15": "15 PUANA ULAŞ", "combo3": "3X KOMBO YAP", "t_beginner": "ACEMI", "t_builder": "İNŞAATÇI", "t_stacker": "YIĞICI", "t_pro": "USTA", "t_master": "UZMAN", "t_legend": "EFSANE", "t_god": "TANRI", "t_survivor": "HAYATTA KALAN", "t_survivor2": "EFSANEVİ HAYATTA KALAN", "t_perfectionist": "MÜKEMMELİYETÇİ", "t_combo_king": "KOMBO KRALI", "t_collector": "KOLEKSİYONCU", "t_allmode": "TÜM MODLAR", "t_daily": "GÜNDELİK", "t_weekly": "HAFTALIK", "t_timeking": "ZAMAN KRALI", "t_ghost_s": "HAYALET KATILI", "t_scholar": "ALİM", "t_veteran": "VETERANq", "t_champion": "ŞAMPİYON", "t_diamond": "ELMASq", "trail_ice": "BUZUL", "trail_dark": "KARANLIK", "trail_gold": "ALTIN İZ", "trail_blood": "KAN", "ach_title": "BAŞARIMLAR", "titles_title": "🏷️ UNVANLAR", "shop_title": "🛒 MAĞAZA", "tournament_title": "🏆 TURNUVA", "online_title": "🌍 ONLINE SKOR", "daily_section": "— GÜNLÜK GÖREVLER —", "settings_back": "← GERİ", "equipped": "✅ TAKILDI", "equip": "⚡ TAK", "owned": "✓ ALINDI", "cat_iz": "İZ", "cat_kozmetik": "KOZMETİK", "cat_guc": "GÜÇLENDIRME", "cat_avatar": "AVATAR", "shop_xp": "TOPLAM XP", "equipped_title": "✅ AKTİF UNVAN", "equip_title": "TAK", "pu_freeze": "DONDUR", "pu_wide": "GENİŞLET", "pu_auto": "OTO", "height": "YÜKSEKLİK", "msg_miss": "💔 DİKKAT!", "msg_perfect": "✨ MÜKEMMEL!", "msg_combo": "🔥 KOMBO!", "msg_gameover": "OYUN BİTTİ", "title_active": "✅ AKTİF", "title_equip": "TAK", "msg_frozen": "❄️ DONDURULDU!", "msg_wide": "🔍 BLOK GENİŞLEDİ!", "msg_auto": "💫 OTOMATİK!", "msg_life_lost": "💔 DİKKAT!", "msg_expand": "⬆ BLOK GENİŞLEDİ!", "msg_gold_perfect": "⭐ ALTIN MÜKEMMEL! 2×", "msg_perfect_txt": "✦ MÜKEMMEL ✦", "height_lbl": "YÜKSEKLİK", "score_lbl": "SKOR", "combo_lbl": "KOMBO", "levelup_lbl": "SEVİYE", "gameover_title": "OYUN BİTTİ", "final_label": "SKOR", "stat_height": "YÜKSEKLİK", "stat_bestcombo": "EN İYİ KOMBO", "stat_perfect_go": "MÜKEMMEL", "stat_level": "SEVİYE", "daily_done": "GÜNLÜK GÖREV TAMAM", "diff_easy": "kolay", "diff_normal": "normal", "diff_hard": "zor", "retry": "🔄 TEKRAR", "go_menu": "🏠 MENÜ", "share_btn": "📤 PAYLAŞ", "qr_btn": "📱 QR KOD", "new_best": "🏆 YENİ REKOR!", "ach_first_game": "İLK ADIM", "ach_desc_first_game": "İlk oyunu oyna", "ach_first_perfect": "İLK MÜKEMMEL", "ach_desc_first_perfect": "İlk mükemmel bloğu koy", "ach_shop_buy": "ALIŞVERİŞ", "ach_desc_shop_buy": "Mağazadan bir şey al", "ach_daily1": "GÜNLÜK OYUNCU", "ach_desc_daily1": "Bir günlük görevi tamamla", "ach_daily_all": "TAM TAKIM", "ach_desc_daily_all": "Tüm günlük görevleri bitir", "ach_shopaholic": "ALIŞVERİŞ KRALI", "ach_desc_shopaholic": "5 mağaza ürünü al", "ach_collector": "KOLEKSİYONCU", "ach_desc_collector": "10 mağaza ürünü al", "ach_score_5": "BEŞLİK", "ach_desc_score_5": "5 puana ulaş", "ach_score_10": "İLK 10", "ach_desc_score_10": "10 puana ulaş", "ach_score_25": "YÜKSELİŞ", "ach_desc_score_25": "25 puana ulaş", "ach_score_50": "USTA", "ach_desc_score_50": "50 puana ulaş", "ach_score_75": "ELİT", "ach_desc_score_75": "75 puana ulaş", "ach_score_100": "YÜZLÜK", "ach_desc_score_100": "100 puana ulaş", "ach_score_150": "EFSANE", "ach_desc_score_150": "150 puana ulaş", "ach_score_200": "TANRI", "ach_desc_score_200": "200 puana ulaş", "ach_combo3": "ÜÇLEME", "ach_desc_combo3": "3x kombo yap", "ach_combo5": "KOMBO USTASI", "ach_desc_combo5": "5x kombo yap", "ach_combo10": "ÇIĞIR AÇICI", "ach_desc_combo10": "10x kombo yap", "ach_combo15": "VİHRAN", "ach_desc_combo15": "15x kombo yap", "ach_combo20": "FIRTINA", "ach_desc_combo20": "20x kombo yap", "ach_games3": "BAŞLANGIÇ", "ach_desc_games3": "3 oyun oyna", "ach_games10": "DÜZENLİ", "ach_desc_games10": "10 oyun oyna", "ach_games25": "HAFTALIK", "ach_desc_games25": "25 oyun oyna", "ach_games50": "KOŞUCU", "ach_desc_games50": "50 oyun oyna", "ach_games100": "DEMİRCİ", "ach_desc_games100": "100 oyun oyna", "ach_games200": "MAKİNE", "ach_desc_games200": "200 oyun oyna", "ach_perf5": "KESKİN", "ach_desc_perf5": "Tek oyunda 5 mükemmel", "ach_perf10": "ELMAS EL", "ach_desc_perf10": "Tek oyunda 10 mükemmel", "ach_perf25": "SİHİRBAZ", "ach_desc_perf25": "Tek oyunda 25 mükemmel", "ach_perf50": "BÜYÜCÜ", "ach_desc_perf50": "Tek oyunda 50 mükemmel", "ach_no_miss": "HATASIZ", "ach_desc_no_miss": "Hiç kaçırmadan bitir", "ach_gold_perfect": "ALTIN MÜKEMMEL", "ach_desc_gold_perfect": "Altın bloğa mükemmel bas", "ach_gold5": "ALTIN KOLEKSİYON", "ach_desc_gold5": "5 altın mükemmel", "ach_gold10": "ALTIN EFSANE", "ach_desc_gold10": "10 altın mükemmel", "ach_hardmode": "ZOR YOLCU", "ach_desc_hardmode": "Zor modda oyna", "ach_hard25": "ÖLÜM TACIRI", "ach_desc_hard25": "Zor modda 25 skor", "ach_survival_s": "HAYATTA KALAN", "ach_desc_survival_s": "Hayatta Kal modda 20 blok", "ach_ghost_s": "HAYALET AVCISI", "ach_desc_ghost_s": "Hayalet modda 10 blok", "ach_chaos_s": "KAOS KAPTAN", "ach_desc_chaos_s": "Kaos modda 15 blok", "ach_time_s": "ZAMAN TANIKLI", "ach_desc_time_s": "Zaman modda 30 blok", "ach_allmode": "ÇOKLU KİŞİLİK", "ach_desc_allmode": "Tüm modlarda en az 1 oyna", "ach_level5": "SEVİYE 5", "ach_desc_level5": "5. seviyeye ulaş", "ach_level10": "SEVİYE 10", "ach_desc_level10": "10. seviyeye ulaş", "ach_level20": "SEVİYE 20", "ach_desc_level20": "20. seviyeye ulaş", "ach_xp1000": "BİN XP", "ach_desc_xp1000": "Toplam 1000 XP kazan", "ach_night_owl": "GECE BAYKUŞU", "ach_desc_night_owl": "Aurora moduna ulaş (85+)", "ach_powerup_use": "GÜÇ ODASI", "ach_desc_powerup_use": "Bir güçlendirme kullan", "ach_powerup10": "ENERJİ DEPOSU", "ach_desc_powerup10": "10 güçlendirme kullan", "ach_share_score": "PAYLAŞIMCI", "ach_desc_share_score": "Skoru paylaş", "ach_long_game": "UZUN NEFES", "ach_desc_long_game": "Tek oyunda 5 dk oyna", "ach_come_back": "GERİ DÖNDÜM", "ach_desc_come_back": "2+ oyun oyna", "ach_three_lives": "SAĞLAM DURUŞ", "ach_desc_three_lives": "3 canla 20 skora ulaş"}, "en": {"play": "▶ PLAY", "theme": "— THEME —", "difficulty": "— DIFFICULTY —", "mode": "— MODE —", "easy": "EASY", "normal": "NORMAL", "hard": "HARD", "settings": "⚙️", "back": "← BACK", "profile": "👤 PROFILE", "shop": "🛒 SHOP", "online": "🌍 ONLINE LB", "tournament": "🏆 TOURNAMENT", "achievements": "🏅 ACHIEVEMENTS", "titles": "🏷️ TITLES", "daily": "— DAILY TASKS —", "level": "LEVEL", "streak": "DAY STREAK", "best": "BEST", "games": "GAMES", "combo": "COMBO", "perfect": "PERFECT", "blocks": "BLOCKS", "achievement": "ACHIEVEMENT", "modBests": "— MODE BESTS —", "name_placeholder": "ENTER YOUR NAME", "settings_title": "SETTINGS", "music": "MUSIC", "sfx": "SFX", "haptic": "HAPTIC", "swipe": "SWIPE CONTROL", "trail": "TRAIL EFFECT", "avatar": "AVATAR", "language": "LANGUAGE", "gameover": "GAME OVER", "score": "SCORE", "newbest": "🏆 NEW BEST!", "resume": "▶ RESUME", "restart": "↺ RESTART", "menu": "☰ MENU", "paused": "— PAUSED —", "classic": "CLASSIC", "time": "TIME", "survival": "SURVIVAL", "chaos": "CHAOS", "ghost": "GHOST", "trail_classic": "🌟 CLASSIC", "trail_fire": "FIRE TRAIL", "trail_rainbow": "RAINBOW", "trail_ghost": "GHOST", "trail_pixel": "PIXEL", "trail_neon": "NEON", "trail_sparkle": "SPARKLE", "trail_comet": "COMET", "trail_matrix": "MATRIX", "trail_minimal": "MINIMAL", "prof_level": "LEVEL", "prof_streak": "DAY STREAK", "prof_modBests": "— MODE BESTS —", "stat_best": "BEST", "stat_games": "GAMES", "stat_combo": "COMBO", "stat_perfect": "PERFECT", "stat_blocks": "BLOCKS", "stat_achs": "ACHIEV.", "task_score": "High score", "task_perfect": "Perfect place", "task_games": "Play games", "task_combo": "Get combo", "online_lb": "🌍 ONLINE LB", "no_trail": "Locked", "locked": "LOCKED", "active": "🟢 ACTIVE", "inactive": "⭕ OFF", "mute": "🔇", "unmute": "🔊", "share": "📤 SHARE", "qr": "📱 QR CODE", "classic_desc": "Classic endless mode", "time_desc": "How many blocks in 60s?", "survival_desc": "Block shrinks each turn", "chaos_desc": "Speed changes randomly", "ghost_desc": "Block disappears at times", "play3": "PLAY 3 GAMES", "perf5": "5 PERFECT DROPS", "score15": "REACH 15 POINTS", "combo3": "3X COMBO", "t_beginner": "BEGINNER", "t_builder": "BUILDER", "t_stacker": "STACKER", "t_pro": "PRO", "t_master": "MASTER", "t_legend": "LEGEND", "t_god": "GOD", "t_survivor": "SURVIVOR", "t_survivor2": "LEGENDARY SURVIVOR", "t_perfectionist": "PERFECTIONIST", "t_combo_king": "COMBO KING", "t_collector": "COLLECTOR", "t_allmode": "ALL MODES", "t_daily": "DAILY", "t_weekly": "WEEKLY", "t_timeking": "TIME KING", "t_ghost_s": "GHOST SLAYER", "t_scholar": "SCHOLAR", "t_veteran": "VETERAN", "t_champion": "CHAMPION", "t_diamond": "DIAMOND", "trail_ice": "ICE", "trail_dark": "DARK", "trail_gold": "GOLD TRAIL", "trail_blood": "BLOOD", "ach_title": "ACHIEVEMENTS", "titles_title": "🏷️ TITLES", "shop_title": "🛒 SHOP", "tournament_title": "🏆 TOURNAMENT", "online_title": "🌍 ONLINE SCORES", "daily_section": "— DAILY TASKS —", "settings_back": "← BACK", "equipped": "✅ EQUIPPED", "equip": "⚡ EQUIP", "owned": "✓ OWNED", "cat_iz": "TRAIL", "cat_kozmetik": "COSMETIC", "cat_guc": "PERK", "cat_avatar": "AVATAR", "shop_xp": "TOTAL XP", "equipped_title": "✅ ACTIVE TITLE", "equip_title": "EQUIP", "pu_freeze": "FREEZE", "pu_wide": "WIDEN", "pu_auto": "AUTO", "height": "HEIGHT", "msg_miss": "💔 MISS!", "msg_perfect": "✨ PERFECT!", "msg_combo": "🔥 COMBO!", "msg_gameover": "GAME OVER", "title_active": "✅ ACTIVE", "title_equip": "EQUIP", "msg_frozen": "❄️ FROZEN!", "msg_wide": "🔍 BLOCK WIDENED!", "msg_auto": "💫 AUTO DROP!", "msg_life_lost": "💔 CAREFUL!", "msg_expand": "⬆ BLOCK EXPANDED!", "msg_gold_perfect": "⭐ GOLD PERFECT! 2×", "msg_perfect_txt": "✦ PERFECT ✦", "height_lbl": "HEIGHT", "score_lbl": "SCORE", "combo_lbl": "COMBO", "levelup_lbl": "LEVEL", "gameover_title": "GAME OVER", "final_label": "SCORE", "stat_height": "HEIGHT", "stat_bestcombo": "BEST COMBO", "stat_perfect_go": "PERFECT", "stat_level": "LEVEL", "daily_done": "DAILY TASKS DONE", "diff_easy": "easy", "diff_normal": "normal", "diff_hard": "hard", "retry": "🔄 RETRY", "go_menu": "🏠 MENU", "share_btn": "📤 SHARE", "qr_btn": "📱 QR CODE", "new_best": "🏆 NEW BEST!", "ach_first_game": "FIRST STEP", "ach_desc_first_game": "Play first game", "ach_first_perfect": "FIRST PERFECT", "ach_desc_first_perfect": "Place first perfect block", "ach_shop_buy": "SHOPPING", "ach_desc_shop_buy": "Buy something from shop", "ach_daily1": "DAILY PLAYER", "ach_desc_daily1": "Complete a daily task", "ach_daily_all": "FULL TEAM", "ach_desc_daily_all": "Complete all daily tasks", "ach_shopaholic": "SHOPAHOLIC", "ach_desc_shopaholic": "Buy 5 shop items", "ach_collector": "COLLECTOR", "ach_desc_collector": "Buy 10 shop items", "ach_score_5": "FIVER", "ach_desc_score_5": "Reach 5 points", "ach_score_10": "FIRST TEN", "ach_desc_score_10": "Reach 10 points", "ach_score_25": "RISING", "ach_desc_score_25": "Reach 25 points", "ach_score_50": "SKILLED", "ach_desc_score_50": "Reach 50 points", "ach_score_75": "ELITE", "ach_desc_score_75": "Reach 75 points", "ach_score_100": "CENTURY", "ach_desc_score_100": "Reach 100 points", "ach_score_150": "LEGEND", "ach_desc_score_150": "Reach 150 points", "ach_score_200": "GOD", "ach_desc_score_200": "Reach 200 points", "ach_combo3": "TRIPLE", "ach_desc_combo3": "3x combo", "ach_combo5": "COMBO MASTER", "ach_desc_combo5": "5x combo", "ach_combo10": "CHAIN BREAKER", "ach_desc_combo10": "10x combo", "ach_combo15": "VORTEX", "ach_desc_combo15": "15x combo", "ach_combo20": "STORM", "ach_desc_combo20": "20x combo", "ach_games3": "BEGINNER", "ach_desc_games3": "Play 3 games", "ach_games10": "REGULAR", "ach_desc_games10": "Play 10 games", "ach_games25": "WEEKLY", "ach_desc_games25": "Play 25 games", "ach_games50": "RUNNER", "ach_desc_games50": "Play 50 games", "ach_games100": "SMITH", "ach_desc_games100": "Play 100 games", "ach_games200": "MACHINE", "ach_desc_games200": "Play 200 games", "ach_perf5": "SHARP", "ach_desc_perf5": "5 perfects in one game", "ach_perf10": "DIAMOND HAND", "ach_desc_perf10": "10 perfects in one game", "ach_perf25": "WIZARD", "ach_desc_perf25": "25 perfects in one game", "ach_perf50": "SORCERER", "ach_desc_perf50": "50 perfects in one game", "ach_no_miss": "FLAWLESS", "ach_desc_no_miss": "Finish without missing", "ach_gold_perfect": "GOLD PERFECT", "ach_desc_gold_perfect": "Perfect on gold block", "ach_gold5": "GOLD COLLECTION", "ach_desc_gold5": "5 gold perfects", "ach_gold10": "GOLD LEGEND", "ach_desc_gold10": "10 gold perfects", "ach_hardmode": "HARD ROAD", "ach_desc_hardmode": "Play on hard mode", "ach_hard25": "DEATH DEALER", "ach_desc_hard25": "25 score on hard", "ach_survival_s": "SURVIVOR", "ach_desc_survival_s": "20 blocks in survival", "ach_ghost_s": "GHOST HUNTER", "ach_desc_ghost_s": "10 blocks in ghost mode", "ach_chaos_s": "CHAOS CAPTAIN", "ach_desc_chaos_s": "15 blocks in chaos", "ach_time_s": "TIME WITNESS", "ach_desc_time_s": "30 blocks in time mode", "ach_allmode": "ALL MODES", "ach_desc_allmode": "Play all modes at least once", "ach_level5": "LEVEL 5", "ach_desc_level5": "Reach level 5", "ach_level10": "LEVEL 10", "ach_desc_level10": "Reach level 10", "ach_level20": "LEVEL 20", "ach_desc_level20": "Reach level 20", "ach_xp1000": "THOUSAND XP", "ach_desc_xp1000": "Earn 1000 total XP", "ach_night_owl": "NIGHT OWL", "ach_desc_night_owl": "Aurora mode (85+ score)", "ach_powerup_use": "POWER ROOM", "ach_desc_powerup_use": "Use a power-up", "ach_powerup10": "ENERGY DEPOT", "ach_desc_powerup10": "Use 10 power-ups", "ach_share_score": "SHARER", "ach_desc_share_score": "Share your score", "ach_long_game": "LONG BREATH", "ach_desc_long_game": "Play 5 min in one game", "ach_come_back": "CAME BACK", "ach_desc_come_back": "Play 2+ games", "ach_three_lives": "IRON STANCE", "ach_desc_three_lives": "Reach 20 with 3 lives"}, "de": {"play": "▶ SPIELEN", "theme": "— THEMA —", "difficulty": "— SCHWIERIGKEIT —", "mode": "— MODUS —", "easy": "LEICHT", "normal": "NORMAL", "hard": "SCHWER", "settings": "⚙️", "back": "← ZURÜCK", "profile": "👤 PROFIL", "shop": "🛒 SHOP", "online": "🌍 ONLINE LB", "tournament": "🏆 TURNIER", "achievements": "🏅 ERFOLGE", "titles": "🏷️ TITEL", "daily": "— TÄGLICHE AUFGABEN —", "level": "STUFE", "streak": "TAGES-SERIE", "best": "BESTES", "games": "SPIELE", "combo": "KOMBO", "perfect": "PERFEKT", "blocks": "BLÖCKE", "achievement": "ERFOLG", "modBests": "— MODUS BESTLEISTUNGEN —", "name_placeholder": "NAMEN EINGEBEN", "settings_title": "EINSTELLUNGEN", "music": "MUSIK", "sfx": "SFX", "haptic": "VIBRATION", "swipe": "SWIPE-STEUERUNG", "trail": "SPUREFFEKT", "avatar": "AVATAR", "language": "SPRACHE", "gameover": "SPIEL VORBEI", "score": "PUNKTE", "newbest": "🏆 NEUER REKORD!", "resume": "▶ WEITER", "restart": "↺ NEU STARTEN", "menu": "☰ MENÜ", "paused": "— PAUSIERT —", "classic": "KLASSISCH", "time": "ZEIT", "survival": "ÜBERLEBEN", "chaos": "CHAOS", "ghost": "GEIST", "trail_classic": "🌟 KLASSISCH", "trail_fire": "FEUERSPUR", "trail_rainbow": "REGENBOGEN", "trail_ghost": "GEIST", "trail_pixel": "PIXEL", "trail_neon": "NEON", "trail_sparkle": "FUNKEN", "trail_comet": "KOMET", "trail_matrix": "MATRIX", "trail_minimal": "MINIMAL", "prof_level": "STUFE", "prof_streak": "TAGES-SERIE", "prof_modBests": "— MODUS BESTLEISTUNGEN —", "stat_best": "BESTES", "stat_games": "SPIELE", "stat_combo": "KOMBO", "stat_perfect": "PERFEKT", "stat_blocks": "BLÖCKE", "stat_achs": "ERFOLGE", "task_score": "Hohe Punktzahl", "task_perfect": "Perfekt platzieren", "task_games": "Spiele spielen", "task_combo": "Kombo machen", "online_lb": "🌍 ONLINE LB", "no_trail": "Gesperrt", "locked": "GESPERRT", "active": "🟢 AKTIV", "inactive": "⭕ AUS", "mute": "🔇", "unmute": "🔊", "share": "📤 TEILEN", "qr": "📱 QR CODE", "classic_desc": "Klassischer Endlosmodus", "time_desc": "Wieviele Blöcke in 60s?", "survival_desc": "Block schrumpft jede Runde", "chaos_desc": "Geschwindigkeit wechselt", "ghost_desc": "Block wird unsichtbar", "play3": "3 SPIELE SPIELEN", "perf5": "5 PERFEKT SETZEN", "score15": "15 PUNKTE ERREICHEN", "combo3": "3X KOMBO", "t_beginner": "ANFÄNGER", "t_builder": "ERBAUER", "t_stacker": "STAPLER", "t_pro": "PROFI", "t_master": "MEISTER", "t_legend": "LEGENDE", "t_god": "GOTT", "t_survivor": "ÜBERLEBENDER", "t_survivor2": "LEGENDÄRER ÜBERLEBENDER", "t_perfectionist": "PERFEKTIONIST", "t_combo_king": "KOMBO-KÖNIG", "t_collector": "SAMMLER", "t_allmode": "ALLE MODI", "t_daily": "TÄGLICH", "t_weekly": "WÖCHENTLICH", "t_timeking": "ZEITKÖNIG", "t_ghost_s": "GEISTJÄGER", "t_scholar": "GELEHRTER", "t_veteran": "VETERAN", "t_champion": "CHAMPION", "t_diamond": "DIAMANT", "trail_ice": "EIS", "trail_dark": "DUNKEL", "trail_gold": "GOLDSPUR", "trail_blood": "BLUT", "ach_title": "ERFOLGE", "titles_title": "🏷️ TITEL", "shop_title": "🛒 SHOP", "tournament_title": "🏆 TURNIER", "online_title": "🌍 ONLINE PUNKTE", "daily_section": "— TÄGLICHE AUFGABEN —", "settings_back": "← ZURÜCK", "equipped": "✅ AUSGERÜSTET", "equip": "⚡ AUSRÜSTEN", "owned": "✓ BESESSEN", "cat_iz": "SPUR", "cat_kozmetik": "KOSMETIK", "cat_guc": "VERSTÄRKER", "cat_avatar": "AVATAR", "shop_xp": "GESAMT XP", "equipped_title": "✅ AKTIVER TITEL", "equip_title": "AUSRÜSTEN", "pu_freeze": "EINFRIEREN", "pu_wide": "ERWEITERN", "pu_auto": "AUTO", "height": "HÖHE", "msg_miss": "💔 DANEBEN!", "msg_perfect": "✨ PERFEKT!", "msg_combo": "🔥 KOMBO!", "msg_gameover": "SPIEL VORBEI", "title_active": "✅ AKTIV", "title_equip": "AUSRÜSTEN", "msg_frozen": "❄️ EINGEFROREN!", "msg_wide": "🔍 BLOCK ERWEITERT!", "msg_auto": "💫 AUTOMATISCH!", "msg_life_lost": "💔 VORSICHT!", "msg_expand": "⬆ BLOCK ERWEITERT!", "msg_gold_perfect": "⭐ GOLD PERFEKT! 2×", "msg_perfect_txt": "✦ PERFEKT ✦", "height_lbl": "HÖHE", "score_lbl": "PUNKTE", "combo_lbl": "KOMBO", "levelup_lbl": "STUFE", "gameover_title": "SPIEL VORBEI", "final_label": "PUNKTE", "stat_height": "HÖHE", "stat_bestcombo": "BESTE KOMBO", "stat_perfect_go": "PERFEKT", "stat_level": "STUFE", "daily_done": "TÄGLICHE AUFGABEN ERLEDIGT", "diff_easy": "leicht", "diff_normal": "normal", "diff_hard": "schwer", "retry": "🔄 NOCHMAL", "go_menu": "🏠 MENÜ", "share_btn": "📤 TEILEN", "qr_btn": "📱 QR CODE", "new_best": "🏆 NEUER REKORD!", "ach_first_game": "ERSTER SCHRITT", "ach_desc_first_game": "Erstes Spiel spielen", "ach_first_perfect": "ERSTES PERFEKT", "ach_desc_first_perfect": "Ersten perfekten Block", "ach_shop_buy": "EINKAUFEN", "ach_desc_shop_buy": "Im Shop kaufen", "ach_daily1": "TAGESSPIELER", "ach_desc_daily1": "Eine Tagesaufgabe", "ach_daily_all": "VOLLES TEAM", "ach_desc_daily_all": "Alle Tagesaufgaben", "ach_shopaholic": "KAUFSÜCHTIG", "ach_desc_shopaholic": "5 Shop-Artikel", "ach_collector": "SAMMLER", "ach_desc_collector": "10 Shop-Artikel", "ach_score_5": "FÜNFER", "ach_desc_score_5": "5 Punkte erreichen", "ach_score_10": "ERSTE 10", "ach_desc_score_10": "10 Punkte erreichen", "ach_score_25": "AUFSTIEG", "ach_desc_score_25": "25 Punkte erreichen", "ach_score_50": "KÖNNER", "ach_desc_score_50": "50 Punkte erreichen", "ach_score_75": "ELITE", "ach_desc_score_75": "75 Punkte erreichen", "ach_score_100": "JAHRHUNDERT", "ach_desc_score_100": "100 Punkte erreichen", "ach_score_150": "LEGENDE", "ach_desc_score_150": "150 Punkte", "ach_score_200": "GOTT", "ach_desc_score_200": "200 Punkte erreichen", "ach_combo3": "DREIERPACK", "ach_desc_combo3": "3x Kombo", "ach_combo5": "KOMBO-MEISTER", "ach_desc_combo5": "5x Kombo", "ach_combo10": "KETTENBRECHER", "ach_desc_combo10": "10x Kombo", "ach_combo15": "STRUDEL", "ach_desc_combo15": "15x Kombo", "ach_combo20": "STURM", "ach_desc_combo20": "20x Kombo", "ach_games3": "ANFÄNGER", "ach_desc_games3": "3 Spiele spielen", "ach_games10": "REGELMÄSSIG", "ach_desc_games10": "10 Spiele", "ach_games25": "WÖCHENTLICH", "ach_desc_games25": "25 Spiele", "ach_games50": "LÄUFER", "ach_desc_games50": "50 Spiele", "ach_games100": "SCHMIED", "ach_desc_games100": "100 Spiele", "ach_games200": "MASCHINE", "ach_desc_games200": "200 Spiele", "ach_perf5": "SCHARF", "ach_desc_perf5": "5 Perfekt in einem Spiel", "ach_perf10": "DIAMANTHAND", "ach_desc_perf10": "10 Perfekt", "ach_perf25": "ZAUBERER", "ach_desc_perf25": "25 Perfekt", "ach_perf50": "HEXER", "ach_desc_perf50": "50 Perfekt", "ach_no_miss": "MAKELLOS", "ach_desc_no_miss": "Ohne Fehler beenden", "ach_gold_perfect": "GOLDPERFEKT", "ach_desc_gold_perfect": "Perfekt auf Goldblock", "ach_gold5": "GOLDSAMMLUNG", "ach_desc_gold5": "5 Goldperfekt", "ach_gold10": "GOLDLEGENDE", "ach_desc_gold10": "10 Goldperfekt", "ach_hardmode": "HARTER WEG", "ach_desc_hardmode": "Im Schwer-Modus spielen", "ach_hard25": "TODESBOTE", "ach_desc_hard25": "25 Punkte schwer", "ach_survival_s": "ÜBERLEBENDER", "ach_desc_survival_s": "20 Blöcke Überleben", "ach_ghost_s": "GEISTJÄGER", "ach_desc_ghost_s": "10 Blöcke Geist", "ach_chaos_s": "CHAOSKAPITÄN", "ach_desc_chaos_s": "15 Blöcke Chaos", "ach_time_s": "ZEITZEUGE", "ach_desc_time_s": "30 Blöcke Zeit", "ach_allmode": "ALLE MODI", "ach_desc_allmode": "Alle Modi einmal spielen", "ach_level5": "STUFE 5", "ach_desc_level5": "Stufe 5 erreichen", "ach_level10": "STUFE 10", "ach_desc_level10": "Stufe 10 erreichen", "ach_level20": "STUFE 20", "ach_desc_level20": "Stufe 20 erreichen", "ach_xp1000": "TAUSEND XP", "ach_desc_xp1000": "1000 Gesamt-XP", "ach_night_owl": "NACHTEULE", "ach_desc_night_owl": "Aurora-Modus (85+)", "ach_powerup_use": "KRAFTRAUM", "ach_desc_powerup_use": "Ein Upgrade verwenden", "ach_powerup10": "ENERGIEDEPOT", "ach_desc_powerup10": "10 Upgrades", "ach_share_score": "TEILER", "ach_desc_share_score": "Punktzahl teilen", "ach_long_game": "LANGER ATEM", "ach_desc_long_game": "5 Min spielen", "ach_come_back": "ZURÜCKGEKEHRT", "ach_desc_come_back": "2+ Spiele spielen", "ach_three_lives": "EISERNE HALTUNG", "ach_desc_three_lives": "20 Punkte mit 3 Leben"}, "es": {"play": "▶ JUGAR", "theme": "— TEMA —", "difficulty": "— DIFICULTAD —", "mode": "— MODO —", "easy": "FÁCIL", "normal": "NORMAL", "hard": "DIFÍCIL", "settings": "⚙️", "back": "← ATRÁS", "profile": "👤 PERFIL", "shop": "🛒 TIENDA", "online": "🌍 ONLINE LB", "tournament": "🏆 TORNEO", "achievements": "🏅 LOGROS", "titles": "🏷️ TÍTULOS", "daily": "— TAREAS DIARIAS —", "level": "NIVEL", "streak": "RACHA DIARIA", "best": "MEJOR", "games": "PARTIDAS", "combo": "COMBO", "perfect": "PERFECTO", "blocks": "BLOQUES", "achievement": "LOGRO", "modBests": "— MEJORES POR MODO —", "name_placeholder": "INGRESA TU NOMBRE", "settings_title": "AJUSTES", "music": "MÚSICA", "sfx": "EFECTOS", "haptic": "VIBRACIÓN", "swipe": "CONTROL SWIPE", "trail": "EFECTO RASTRO", "avatar": "AVATAR", "language": "IDIOMA", "gameover": "FIN DEL JUEGO", "score": "PUNTOS", "newbest": "🏆 ¡NUEVO RÉCORD!", "resume": "▶ CONTINUAR", "restart": "↺ REINICIAR", "menu": "☰ MENÚ", "paused": "— PAUSADO —", "classic": "CLÁSICO", "time": "TIEMPO", "survival": "SUPERVIVENCIA", "chaos": "CAOS", "ghost": "FANTASMA", "trail_classic": "🌟 CLÁSICO", "trail_fire": "RASTRO FUEGO", "trail_rainbow": "ARCOÍRIS", "trail_ghost": "FANTASMA", "trail_pixel": "PÍXEL", "trail_neon": "NEÓN", "trail_sparkle": "DESTELLOS", "trail_comet": "COMETA", "trail_matrix": "MATRIX", "trail_minimal": "MÍNIMO", "prof_level": "NIVEL", "prof_streak": "RACHA DIARIA", "prof_modBests": "— MEJORES POR MODO —", "stat_best": "MEJOR", "stat_games": "PARTIDAS", "stat_combo": "COMBO", "stat_perfect": "PERFECTO", "stat_blocks": "BLOQUES", "stat_achs": "LOGROS", "task_score": "Puntuación alta", "task_perfect": "Colocar perfecto", "task_games": "Jugar partidas", "task_combo": "Hacer combo", "online_lb": "🌍 ONLINE LB", "no_trail": "Bloqueado", "locked": "BLOQUEADO", "active": "🟢 ACTIVO", "inactive": "⭕ APAGADO", "mute": "🔇", "unmute": "🔊", "share": "📤 COMPARTIR", "qr": "📱 CÓDIGO QR", "classic_desc": "Modo clásico sin fin", "time_desc": "¿Cuántos bloques en 60s?", "survival_desc": "El bloque se encoge", "chaos_desc": "Velocidad cambia al azar", "ghost_desc": "El bloque desaparece", "play3": "JUGAR 3 PARTIDAS", "perf5": "5 COLOCACIONES PERFECTAS", "score15": "LLEGAR A 15 PUNTOS", "combo3": "COMBO 3X", "t_beginner": "PRINCIPIANTE", "t_builder": "CONSTRUCTOR", "t_stacker": "APILADOR", "t_pro": "PROFESIONAL", "t_master": "MAESTRO", "t_legend": "LEYENDA", "t_god": "DIOS", "t_survivor": "SUPERVIVIENTE", "t_survivor2": "SUPERVIVIENTE LEGENDARIO", "t_perfectionist": "PERFECCIONISTA", "t_combo_king": "REY DEL COMBO", "t_collector": "COLECCIONISTA", "t_allmode": "TODOS LOS MODOS", "t_daily": "DIARIO", "t_weekly": "SEMANAL", "t_timeking": "REY DEL TIEMPO", "t_ghost_s": "CAZAFANTASMAS", "t_scholar": "ERUDITO", "t_veteran": "VETERANO", "t_champion": "CAMPEÓN", "t_diamond": "DIAMANTE", "trail_ice": "HIELO", "trail_dark": "OSCURO", "trail_gold": "RASTRO ORO", "trail_blood": "SANGRE", "ach_title": "LOGROS", "titles_title": "🏷️ TÍTULOS", "shop_title": "🛒 TIENDA", "tournament_title": "🏆 TORNEO", "online_title": "🌍 PUNTUACIÓN ONLINE", "daily_section": "— TAREAS DIARIAS —", "settings_back": "← ATRÁS", "equipped": "✅ EQUIPADO", "equip": "⚡ EQUIPAR", "owned": "✓ COMPRADO", "cat_iz": "RASTRO", "cat_kozmetik": "COSMÉTICO", "cat_guc": "MEJORA", "cat_avatar": "AVATAR", "shop_xp": "XP TOTAL", "equipped_title": "✅ TÍTULO ACTIVO", "equip_title": "EQUIPAR", "pu_freeze": "CONGELAR", "pu_wide": "AMPLIAR", "pu_auto": "AUTO", "height": "ALTURA", "msg_miss": "💔 ¡FALLO!", "msg_perfect": "✨ ¡PERFECTO!", "msg_combo": "🔥 ¡COMBO!", "msg_gameover": "FIN DEL JUEGO", "title_active": "✅ ACTIVO", "title_equip": "EQUIPAR", "msg_frozen": "❄️ ¡CONGELADO!", "msg_wide": "🔍 ¡BLOQUE AMPLIADO!", "msg_auto": "💫 ¡AUTOMÁTICO!", "msg_life_lost": "💔 ¡CUIDADO!", "msg_expand": "⬆ ¡BLOQUE EXPANDIDO!", "msg_gold_perfect": "⭐ ORO PERFECTO! 2×", "msg_perfect_txt": "✦ PERFECTO ✦", "height_lbl": "ALTURA", "score_lbl": "PUNTOS", "combo_lbl": "COMBO", "levelup_lbl": "NIVEL", "gameover_title": "FIN DEL JUEGO", "final_label": "PUNTOS", "stat_height": "ALTURA", "stat_bestcombo": "MEJOR COMBO", "stat_perfect_go": "PERFECTO", "stat_level": "NIVEL", "daily_done": "TAREAS DIARIAS COMPLETADAS", "diff_easy": "fácil", "diff_normal": "normal", "diff_hard": "difícil", "retry": "🔄 REINTENTAR", "go_menu": "🏠 MENÚ", "share_btn": "📤 COMPARTIR", "qr_btn": "📱 CÓD. QR", "new_best": "🏆 ¡NUEVO RÉCORD!", "ach_first_game": "PRIMER PASO", "ach_desc_first_game": "Jugar primera partida", "ach_first_perfect": "PRIMER PERFECTO", "ach_desc_first_perfect": "Primer bloque perfecto", "ach_shop_buy": "COMPRAS", "ach_desc_shop_buy": "Comprar en tienda", "ach_daily1": "JUGADOR DIARIO", "ach_desc_daily1": "Completar tarea diaria", "ach_daily_all": "EQUIPO COMPLETO", "ach_desc_daily_all": "Completar todas las tareas", "ach_shopaholic": "COMPRADOR", "ach_desc_shopaholic": "5 artículos", "ach_collector": "COLECCIONISTA", "ach_desc_collector": "10 artículos", "ach_score_5": "CINCO", "ach_desc_score_5": "5 puntos", "ach_score_10": "PRIMEROS 10", "ach_desc_score_10": "10 puntos", "ach_score_25": "EN ASCENSO", "ach_desc_score_25": "25 puntos", "ach_score_50": "HÁBIL", "ach_desc_score_50": "50 puntos", "ach_score_75": "ÉLITE", "ach_desc_score_75": "75 puntos", "ach_score_100": "CENTENARIO", "ach_desc_score_100": "100 puntos", "ach_score_150": "LEYENDA", "ach_desc_score_150": "150 puntos", "ach_score_200": "DIOS", "ach_desc_score_200": "200 puntos", "ach_combo3": "TRIPLE", "ach_desc_combo3": "Combo 3x", "ach_combo5": "MAESTRO COMBO", "ach_desc_combo5": "Combo 5x", "ach_combo10": "ROMPECADENAS", "ach_desc_combo10": "Combo 10x", "ach_combo15": "VÓRTICE", "ach_desc_combo15": "Combo 15x", "ach_combo20": "TORMENTA", "ach_desc_combo20": "Combo 20x", "ach_games3": "PRINCIPIANTE", "ach_desc_games3": "3 partidas", "ach_games10": "REGULAR", "ach_desc_games10": "10 partidas", "ach_games25": "SEMANAL", "ach_desc_games25": "25 partidas", "ach_games50": "CORREDOR", "ach_desc_games50": "50 partidas", "ach_games100": "HERRERO", "ach_desc_games100": "100 partidas", "ach_games200": "MÁQUINA", "ach_desc_games200": "200 partidas", "ach_perf5": "PRECISO", "ach_desc_perf5": "5 perfectos en partida", "ach_perf10": "MANO DIAMANTE", "ach_desc_perf10": "10 perfectos", "ach_perf25": "MAGO", "ach_desc_perf25": "25 perfectos", "ach_perf50": "HECHICERO", "ach_desc_perf50": "50 perfectos", "ach_no_miss": "IMPECABLE", "ach_desc_no_miss": "Sin fallos", "ach_gold_perfect": "PERFECTO ORO", "ach_desc_gold_perfect": "Perfecto en oro", "ach_gold5": "COLECCIÓN ORO", "ach_desc_gold5": "5 perfectos dorados", "ach_gold10": "LEYENDA ORO", "ach_desc_gold10": "10 perfectos dorados", "ach_hardmode": "CAMINO DURO", "ach_desc_hardmode": "Modo difícil", "ach_hard25": "NEGOCIANTE", "ach_desc_hard25": "25 puntos difícil", "ach_survival_s": "SUPERVIVIENTE", "ach_desc_survival_s": "20 bloques supervivencia", "ach_ghost_s": "CAZAFANTASMAS", "ach_desc_ghost_s": "10 bloques fantasma", "ach_chaos_s": "CAPITÁN CAOS", "ach_desc_chaos_s": "15 bloques caos", "ach_time_s": "TESTIGO TIEMPO", "ach_desc_time_s": "30 bloques tiempo", "ach_allmode": "TODOS MODOS", "ach_desc_allmode": "Todos los modos", "ach_level5": "NIVEL 5", "ach_desc_level5": "Nivel 5", "ach_level10": "NIVEL 10", "ach_desc_level10": "Nivel 10", "ach_level20": "NIVEL 20", "ach_desc_level20": "Nivel 20", "ach_xp1000": "MIL XP", "ach_desc_xp1000": "1000 XP total", "ach_night_owl": "BÚHO NOCTURNO", "ach_desc_night_owl": "Aurora (85+)", "ach_powerup_use": "SALA PODER", "ach_desc_powerup_use": "Usar potenciador", "ach_powerup10": "DEPÓSITO", "ach_desc_powerup10": "10 potenciadores", "ach_share_score": "COMPARTIDOR", "ach_desc_share_score": "Compartir puntuación", "ach_long_game": "LARGA PARTIDA", "ach_desc_long_game": "5 min jugando", "ach_come_back": "REGRESÉ", "ach_desc_come_back": "2+ partidas", "ach_three_lives": "POSTURA FÉRREA", "ach_desc_three_lives": "20 con 3 vidas"}, "ru": {"play": "▶ ИГРАТЬ", "theme": "— ТЕМА —", "difficulty": "— СЛОЖНОСТЬ —", "mode": "— РЕЖИМ —", "easy": "ЛЕГКО", "normal": "НОРМАЛЬНО", "hard": "СЛОЖНО", "settings": "⚙️", "back": "← НАЗАД", "profile": "👤 ПРОФИЛЬ", "shop": "🛒 МАГАЗИН", "online": "🌍 ОНЛАЙН ТБ", "tournament": "🏆 ТУРНИР", "achievements": "🏅 ДОСТИЖЕНИЯ", "titles": "🏷️ ЗВАНИЯ", "daily": "— ЕЖЕДНЕВНЫЕ ЗАДАЧИ —", "level": "УРОВЕНЬ", "streak": "ДНЕЙ ПОДРЯД", "best": "ЛУЧШИЙ", "games": "ИГРЫ", "combo": "КОМБО", "perfect": "ИДЕАЛЬНО", "blocks": "БЛОКИ", "achievement": "ДОСТИЖЕНИЕ", "modBests": "— ЛУЧШЕЕ ПО РЕЖИМАМ —", "name_placeholder": "ВВЕДИТЕ ИМЯ", "settings_title": "НАСТРОЙКИ", "music": "МУЗЫКА", "sfx": "ЭФФЕКТЫ", "haptic": "ВИБРАЦИЯ", "swipe": "СВАЙП", "trail": "СЛЕД", "avatar": "АВАТАР", "language": "ЯЗЫК", "gameover": "ИГРА ОКОНЧЕНА", "score": "ОЧКИ", "newbest": "🏆 НОВЫЙ РЕКОРД!", "resume": "▶ ПРОДОЛЖИТЬ", "restart": "↺ ЗАНОВО", "menu": "☰ МЕНЮ", "paused": "— ПАУЗА —", "classic": "КЛАССИКА", "time": "ВРЕМЯ", "survival": "ВЫЖИВАНИЕ", "chaos": "ХАОС", "ghost": "ПРИЗРАК", "trail_classic": "🌟 КЛАССИКА", "trail_fire": "ОГНЕННЫЙ СЛЕД", "trail_rainbow": "РАДУГА", "trail_ghost": "ПРИЗРАК", "trail_pixel": "ПИКСЕЛЬ", "trail_neon": "НЕОН", "trail_sparkle": "ИСКРЫ", "trail_comet": "КОМЕТА", "trail_matrix": "МАТРИЦА", "trail_minimal": "МИНИМАЛ", "prof_level": "УРОВЕНЬ", "prof_streak": "ДНЕЙ ПОДРЯД", "prof_modBests": "— ЛУЧШЕЕ ПО РЕЖИМАМ —", "stat_best": "ЛУЧШИЙ", "stat_games": "ИГРЫ", "stat_combo": "КОМБО", "stat_perfect": "ИДЕАЛЬНО", "stat_blocks": "БЛОКИ", "stat_achs": "ДОСТИЖ.", "task_score": "Набрать очки", "task_perfect": "Идеально поставить", "task_games": "Сыграть игры", "task_combo": "Сделать комбо", "online_lb": "🌍 ОНЛАЙН ТБ", "no_trail": "Заблок.", "locked": "ЗАБЛОК.", "active": "🟢 АКТИВНО", "inactive": "⭕ ВЫКЛ", "mute": "🔇", "unmute": "🔊", "share": "📤 ПОДЕЛИТЬСЯ", "qr": "📱 QR КОД", "classic_desc": "Классический бесконечный", "time_desc": "Сколько блоков за 60с?", "survival_desc": "Блок сужается каждый ход", "chaos_desc": "Скорость меняется", "ghost_desc": "Блок иногда невидим", "play3": "СЫГРАТЬ 3 ИГРЫ", "perf5": "5 ИДЕАЛЬНЫХ ХОДОВ", "score15": "НАБРАТЬ 15 ОЧКОВ", "combo3": "КОМБО 3X", "t_beginner": "НОВИЧОК", "t_builder": "СТРОИТЕЛЬ", "t_stacker": "УКЛАДЧИК", "t_pro": "ПРО", "t_master": "МАСТЕР", "t_legend": "ЛЕГЕНДА", "t_god": "БОГ", "t_survivor": "ВЫЖИВШИЙ", "t_survivor2": "ЛЕГЕНДАРНЫЙ ВЫЖИВШИЙ", "t_perfectionist": "ПЕРФЕКЦИОНИСТ", "t_combo_king": "КОРОЛЬ КОМБО", "t_collector": "КОЛЛЕКЦИОНЕР", "t_allmode": "ВСЕ РЕЖИМЫ", "t_daily": "ЕЖЕДНЕВНЫЙ", "t_weekly": "ЕЖЕНЕДЕЛЬНЫЙ", "t_timeking": "КОРОЛЬ ВРЕМЕНИ", "t_ghost_s": "ОХОТНИК НА ПРИЗРАКОВ", "t_scholar": "УЧЁНЫЙ", "t_veteran": "ВЕТЕРАН", "t_champion": "ЧЕМПИОН", "t_diamond": "АЛМАЗ", "trail_ice": "ЛЁД", "trail_dark": "ТЁМНЫЙ", "trail_gold": "ЗОЛОТОЙ СЛЕД", "trail_blood": "КРОВЬ", "ach_title": "ДОСТИЖЕНИЯ", "titles_title": "🏷️ ЗВАНИЯ", "shop_title": "🛒 МАГАЗИН", "tournament_title": "🏆 ТУРНИР", "online_title": "🌍 ОНЛАЙН ОЧКИ", "daily_section": "— ЕЖЕДНЕВНЫЕ ЗАДАЧИ —", "settings_back": "← НАЗАД", "equipped": "✅ ОДЕТО", "equip": "⚡ ОДЕТЬ", "owned": "✓ КУПЛЕНО", "cat_iz": "СЛЕД", "cat_kozmetik": "КОСМЕТИКА", "cat_guc": "УЛУЧШЕНИЕ", "cat_avatar": "АВАТАР", "shop_xp": "ВСЕГО XP", "equipped_title": "✅ АКТИВНОЕ ЗВАНИЕ", "equip_title": "ОДЕТЬ", "pu_freeze": "ЗАМОРОЗИТЬ", "pu_wide": "РАСШИРИТЬ", "pu_auto": "АВТО", "height": "ВЫСОТА", "msg_miss": "💔 МИМО!", "msg_perfect": "✨ ИДЕАЛЬНО!", "msg_combo": "🔥 КОМБО!", "msg_gameover": "ИГРА ОКОНЧЕНА", "title_active": "✅ АКТИВНО", "title_equip": "ОДЕТЬ", "msg_frozen": "❄️ ЗАМОРОЖЕНО!", "msg_wide": "🔍 БЛОК РАСШИРЕН!", "msg_auto": "💫 АВТО!", "msg_life_lost": "💔 ОСТОРОЖНО!", "msg_expand": "⬆ БЛОК РАСШИРЕН!", "msg_gold_perfect": "⭐ ЗОЛОТО ИДЕАЛЬНО! 2×", "msg_perfect_txt": "✦ ИДЕАЛЬНО ✦", "height_lbl": "ВЫСОТА", "score_lbl": "ОЧКИ", "combo_lbl": "КОМБО", "levelup_lbl": "УРОВЕНЬ", "gameover_title": "ИГРА ОКОНЧЕНА", "final_label": "ОЧКИ", "stat_height": "ВЫСОТА", "stat_bestcombo": "ЛУЧШЕЕ КОМБО", "stat_perfect_go": "ИДЕАЛЬНО", "stat_level": "УРОВЕНЬ", "daily_done": "ЕЖЕДНЕВНЫЕ ЗАДАЧИ ВЫПОЛНЕНЫ", "diff_easy": "легко", "diff_normal": "нормально", "diff_hard": "сложно", "retry": "🔄 ЗАНОВО", "go_menu": "🏠 МЕНЮ", "share_btn": "📤 ПОДЕЛИТЬСЯ", "qr_btn": "📱 QR КОД", "new_best": "🏆 НОВЫЙ РЕКОРД!", "ach_first_game": "ПЕРВЫЙ ШАГ", "ach_desc_first_game": "Сыграть первую игру", "ach_first_perfect": "ПЕРВОЕ ИДЕАЛЬНО", "ach_desc_first_perfect": "Первый идеальный блок", "ach_shop_buy": "ПОКУПКИ", "ach_desc_shop_buy": "Купить в магазине", "ach_daily1": "ЕЖЕДНЕВНЫЙ", "ach_desc_daily1": "Выполнить задание", "ach_daily_all": "ПОЛНАЯ КОМАНДА", "ach_desc_daily_all": "Все задания", "ach_shopaholic": "ШОПОГОЛИК", "ach_desc_shopaholic": "5 товаров", "ach_collector": "КОЛЛЕКЦИОНЕР", "ach_desc_collector": "10 товаров", "ach_score_5": "ПЯТЁРКА", "ach_desc_score_5": "5 очков", "ach_score_10": "ПЕРВЫЕ 10", "ach_desc_score_10": "10 очков", "ach_score_25": "ПОДЪЁМ", "ach_desc_score_25": "25 очков", "ach_score_50": "УМЕЛЫЙ", "ach_desc_score_50": "50 очков", "ach_score_75": "ЭЛИТА", "ach_desc_score_75": "75 очков", "ach_score_100": "СОТНЯ", "ach_desc_score_100": "100 очков", "ach_score_150": "ЛЕГЕНДА", "ach_desc_score_150": "150 очков", "ach_score_200": "БОГ", "ach_desc_score_200": "200 очков", "ach_combo3": "ТРОЙНИК", "ach_desc_combo3": "Комбо 3x", "ach_combo5": "МАСТЕР КОМБО", "ach_desc_combo5": "Комбо 5x", "ach_combo10": "РАЗРЫВАТЕЛЬ", "ach_desc_combo10": "Комбо 10x", "ach_combo15": "ВИХРЬ", "ach_desc_combo15": "Комбо 15x", "ach_combo20": "ШТОРМ", "ach_desc_combo20": "Комбо 20x", "ach_games3": "НАЧИНАЮЩИЙ", "ach_desc_games3": "3 игры", "ach_games10": "ПОСТОЯННЫЙ", "ach_desc_games10": "10 игр", "ach_games25": "ЕЖЕНЕДЕЛЬНЫЙ", "ach_desc_games25": "25 игр", "ach_games50": "БЕГУН", "ach_desc_games50": "50 игр", "ach_games100": "КУЗНЕЦ", "ach_desc_games100": "100 игр", "ach_games200": "МАШИНА", "ach_desc_games200": "200 игр", "ach_perf5": "ТОЧНЫЙ", "ach_desc_perf5": "5 идеальных", "ach_perf10": "АЛМАЗНАЯ РУКА", "ach_desc_perf10": "10 идеальных", "ach_perf25": "ВОЛШЕБНИК", "ach_desc_perf25": "25 идеальных", "ach_perf50": "ЧАРОДЕЙ", "ach_desc_perf50": "50 идеальных", "ach_no_miss": "БЕЗУПРЕЧНЫЙ", "ach_desc_no_miss": "Без промахов", "ach_gold_perfect": "ЗОЛОТО ИДЕАЛЬНО", "ach_desc_gold_perfect": "Идеально на золоте", "ach_gold5": "ЗОЛОТАЯ КОЛЛЕКЦИЯ", "ach_desc_gold5": "5 золотых", "ach_gold10": "ЗОЛОТАЯ ЛЕГЕНДА", "ach_desc_gold10": "10 золотых", "ach_hardmode": "ТЯЖЁЛЫЙ ПУТЬ", "ach_desc_hardmode": "Сложный режим", "ach_hard25": "ТОРГОВЕЦ СМЕРТЬЮ", "ach_desc_hard25": "25 на сложном", "ach_survival_s": "ВЫЖИВШИЙ", "ach_desc_survival_s": "20 блоков выживание", "ach_ghost_s": "ОХОТНИК НА ПРИЗРАКОВ", "ach_desc_ghost_s": "10 блоков призрак", "ach_chaos_s": "КАПИТАН ХАОСА", "ach_desc_chaos_s": "15 блоков хаос", "ach_time_s": "СВИДЕТЕЛЬ ВРЕМЕНИ", "ach_desc_time_s": "30 блоков время", "ach_allmode": "ВСЕ РЕЖИМЫ", "ach_desc_allmode": "Все режимы", "ach_level5": "УРОВЕНЬ 5", "ach_desc_level5": "Уровень 5", "ach_level10": "УРОВЕНЬ 10", "ach_desc_level10": "Уровень 10", "ach_level20": "УРОВЕНЬ 20", "ach_desc_level20": "Уровень 20", "ach_xp1000": "ТЫСЯЧА XP", "ach_desc_xp1000": "1000 XP", "ach_night_owl": "НОЧНАЯ СОВА", "ach_desc_night_owl": "Аврора (85+)", "ach_powerup_use": "ЗАЛ СИЛЫ", "ach_desc_powerup_use": "Использовать усиление", "ach_powerup10": "СКЛАД", "ach_desc_powerup10": "10 усилений", "ach_share_score": "ДЕЛИТЕЛЬ", "ach_desc_share_score": "Поделиться", "ach_long_game": "ДОЛГОЕ ДЫХАНИЕ", "ach_desc_long_game": "5 мин", "ach_come_back": "ВЕРНУЛСЯ", "ach_desc_come_back": "2+ игры", "ach_three_lives": "ЖЕЛЕЗНАЯ СТОЙКА", "ach_desc_three_lives": "20 с 3 жизнями"}};
+let currentLang=LS.get('stack_lang','tr');
+function T(k){const v=(LANGS[currentLang]||LANGS.tr)[k]||(LANGS.tr||{})[k];return v||null;}
+function applyLang(){
+  if(typeof currentTheme==='undefined')return;
+  // Mod butonları
+  document.querySelectorAll('.mode-btn').forEach(b=>{
+    const k=b.dataset.mode;if(k)b.textContent=T(k);
+  });
+  // Trail select options
+  const ts=document.getElementById('trail-style');
+  if(ts){Array.from(ts.options).forEach(o=>{
+    const key='trail_'+o.value;const tr=T(key);
+    if(tr!==key)o.text=tr+(o.dataset.locked==='1'?' 🔒':'');
+  });}
+
+  // Profil level
+  const plvl=document.getElementById('prof-level');
+  if(plvl&&xpData)plvl.textContent=T('prof_level')+' '+xpData.level+' · '+xpData.xp+'/'+xpForLevel(xpData.level)+' XP';
+  // Profil mod row labels
+  document.querySelectorAll('.pmc-lbl').forEach(el=>{
+    if(el.dataset.mode)el.textContent=T(el.dataset.mode);
+  });
+  // Görevler yeniden render (renderDailyTasks çevirili hale gelecek)
+  renderDailyTasks();
+  // Mute butonu
+  const mb=document.getElementById('mute-btn');
+  if(mb)mb.textContent=settings&&settings.muted?T('unmute'):T('mute');
+  // Share/QR
+  const sh=document.getElementById('share-btn');if(sh)sh.textContent=T('share');
+  const qr=document.getElementById('qr-btn');if(qr)qr.textContent=T('qr');
+  // Start button
+  const sb=document.getElementById('start-btn');if(sb)sb.textContent=T('play');
+  // Section titles via data-lang
+  document.querySelectorAll('[data-lang]').forEach(el=>{const v=T(el.dataset.lang);if(v&&v!==el.dataset.lang)el.textContent=v;});
+  // Difficulty buttons
+  document.querySelectorAll('.diff-btn').forEach(b=>{if(b.dataset.diff)b.textContent=T(b.dataset.diff);});
+  // Menu buttons
+  const menuBtns={'profile-btn':'profile','shop-btn':'shop','online-btn':'online','tournament-menu-btn':'tournament'};
+  Object.entries(menuBtns).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.textContent=T(key);});
+  // Settings screen
+  const st=document.querySelector('#settings-screen h2');if(st)st.textContent=T('settings_title');
+  // Settings labels via data-lang
+  document.querySelectorAll('.settings-label[data-lang]').forEach(el=>{el.textContent=T(el.dataset.lang);});
+  // Profile buttons
+  const pa=document.getElementById('prof-achs-corner');if(pa)pa.textContent=T('achievements');
+  const pt=document.getElementById('prof-titles-btn');if(pt)pt.textContent=T('titles');
+  const pb=document.getElementById('prof-back-btn');if(pb)pb.textContent=T('back');
+  // Back buttons with data-back
+  document.querySelectorAll('[data-back]').forEach(el=>el.textContent=T('back'));
+  // All menu-btn with id ending in -back
+  ['ach-back','shop-back','online-back','t-back-btn','titles-back','settings-back'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.textContent=T('back');
+  });
+  // Name placeholder
+  const ni=document.getElementById('player-name-input');if(ni)ni.placeholder=T('name_placeholder');
+  // Game over screen
+  const got=document.getElementById('gameover-title');if(got)got.textContent=T('gameover');
+  const gosl=document.getElementById('score-label');if(gosl)gosl.textContent=T('score');
+  const gonb=document.getElementById('new-best-badge');
+  // Pause screen
+  const pt2=document.getElementById('pause-title');if(pt2)pt2.textContent=T('paused');
+  const re=document.getElementById('resume-btn');if(re)re.textContent=T('resume');
+  const rt=document.getElementById('retry-btn');if(rt)rt.textContent=T('restart');
+  const gmb=document.getElementById('pause-menu-btn');if(gmb)gmb.textContent=T('menu');
+  const rt2=document.getElementById('go-menu-btn');if(rt2)rt2.textContent=T('menu');
+  const rr=document.getElementById('go-retry-btn')||document.getElementById('retry-btn');
+  // HUD labels
+  const scl=document.getElementById('score-label');if(scl)scl.textContent=T('score');
+  // Profile section titles
+  document.querySelectorAll('.prof-section[data-lang]').forEach(el=>{el.textContent=T(el.dataset.lang);});
+}
+
+const THEMES={
+  neon:{accent:'#00ffe7',body:'#0a0a0f',block:i=>['#00ffe7','#00d4c0','#00a896','#ff6b6b','#ffd32a','#a29bfe','#fd79a8'][i%7]},
+  retro:{accent:'#ff6b35',body:'#1a0a00',block:i=>['#ff6b35','#ffa552','#ffcc00','#ff3333','#ff9900','#cc4400','#ff6699'][i%7]},
+  minimal:{accent:'#ffffff',body:'#111111',block:i=>{const g=[240,220,200,180,160,140,120];return `rgb(${g[i%7]},${g[i%7]},${g[i%7]})`;}},
+  ghost:{accent:'#c0b4ff',body:'#07050f',block:i=>['#c0b4ff','#a29bfe','#6c5ce7','#fd79a8','#e84393','#74b9ff','#00cec9'][i%7]},
+};
+let currentTheme=(()=>{const t=LS.get('stack_theme','neon');return THEMES[t]?t:'neon';})();
+function applyTheme(name){currentTheme=THEMES[name]?name:'neon';LS.set('stack_theme',currentTheme);renderThemeRow();restartMusicForTheme();}
+function renderThemeRow(){const colors={neon:'#00ffe7',retro:'#ff6b35',minimal:'#dddddd',ghost:'#a29bfe'};document.getElementById('theme-row').innerHTML=Object.keys(THEMES).map(k=>`<button class="theme-btn${k===currentTheme?' active':''}" data-theme="${k}" style="background:${colors[k]}"></button>`).join('');}
+
+// ══ TITLES ══
+const TITLES=[
+  // Skor unvanları
+  {id:'t_beginner',  label:'ACEMI',          color:'#aaa',    border:'rgba(180,180,180,.4)', c:()=>getBest()>=1},
+  {id:'t_builder',   label:'İNŞAATÇI',       color:'#7bed9f', border:'rgba(123,237,159,.4)', c:()=>getBest()>=10},
+  {id:'t_stacker',   label:'YIĞICI',         color:'#00ffe7', border:'rgba(0,255,231,.4)',   c:()=>getBest()>=25},
+  {id:'t_master',    label:'USTA YIĞICI',    color:'#ffd32a', border:'rgba(255,211,42,.4)',  c:()=>getBest()>=50},
+  {id:'t_elite',     label:'ELİT YIĞICI',    color:'#ff6b35', border:'rgba(255,107,53,.4)',  c:()=>getBest()>=75},
+  {id:'t_legend',    label:'EFSANE',         color:'#fd79a8', border:'rgba(253,121,168,.4)', c:()=>getBest()>=100},
+  {id:'t_god',       label:'TANRI',          color:'#a29bfe', border:'rgba(162,155,254,.4)', c:()=>getBest()>=200},
+  // Kombo unvanları
+  {id:'t_combo',     label:'KOMBO KRALI',    color:'#ffd32a', border:'rgba(255,211,42,.4)',  c:()=>stats.bestCombo>=10},
+  {id:'t_storm',     label:'FIRTINA',        color:'#74b9ff', border:'rgba(116,185,255,.4)', c:()=>stats.bestCombo>=20},
+  // Mod unvanları
+  {id:'t_ghost',     label:'HAYALET',        color:'#c0b4ff', border:'rgba(192,180,255,.4)', c:()=>leaderboard.some(e=>e.mode==='ghost'&&e.score>=10)},
+  {id:'t_chaos',     label:'KAOS LORDU',     color:'#ff4757', border:'rgba(255,71,87,.4)',   c:()=>leaderboard.some(e=>e.mode==='chaos'&&e.score>=15)},
+  {id:'t_survivor',  label:'HAYATTA KALAN',  color:'#7bed9f', border:'rgba(123,237,159,.4)', c:()=>leaderboard.some(e=>e.mode==='survival'&&e.score>=20)},
+  {id:'t_timeking',  label:'ZAMAN KRALI',    color:'#00cec9', border:'rgba(0,206,201,.4)',   c:()=>leaderboard.some(e=>e.mode==='time'&&e.score>=30)},
+  // Özel unvanlar
+  {id:'t_hard',      label:'ÖLÜMSÜZ',        color:'#ff4757', border:'rgba(255,71,87,.4)',   c:()=>leaderboard.some(e=>e.diff==='hard'&&e.score>=25)},
+  {id:'t_streak7',   label:'TUTKUNLU',       color:'#ff6b35', border:'rgba(255,107,53,.4)',  c:()=>getStreak()>=7},
+  {id:'t_streak30',  label:'BAĞIMLI',        color:'#e17055', border:'rgba(225,112,85,.4)',  c:()=>getStreak()>=30},
+  {id:'t_allmode',   label:'ÇOKLU USTA',     color:'#fdcb6e', border:'rgba(253,203,110,.4)', c:()=>['classic','time','survival','chaos','ghost'].every(m=>leaderboard.some(e=>e.mode===m))},
+  {id:'t_collector', label:'KOLEKSİYONCU',  color:'#a29bfe', border:'rgba(162,155,254,.4)', c:()=>shopOwned.length>=10},
+  {id:'t_perfect',   label:'MÜKEMMEL EL',    color:'#00ffe7', border:'rgba(0,255,231,.4)',   c:()=>(stats.bestPerfects||0)>=25},
+  {id:'t_veteran',   label:'VETERAn',        color:'#b2bec3', border:'rgba(178,190,195,.4)', c:()=>stats.totalGames>=100},
+  {id:'t_machine',   label:'MAKİNE',         color:'#74b9ff', border:'rgba(116,185,255,.4)', c:()=>stats.totalGames>=200},
+];
+let equippedTitle=LS.get('stack_title','');
+function getBestTitle(){
+  // Return highest unlocked title
+  for(let i=TITLES.length-1;i>=0;i--){
+    if(TITLES[i].c())return TITLES[i];
+  }
+  return null;
+}
+function getEquippedTitle(){
+  if(equippedTitle){
+    const t=TITLES.find(t=>t.id===equippedTitle);
+    if(t&&t.c())return t;
+  }
+  return getBestTitle();
+}
+function renderTitleBadge(){
+  const t=getEquippedTitle();
+  const el=document.getElementById('title-badge');
+  if(!el||!t)return;
+  el.style.display='block';
+  el.style.color=t.color;
+  el.style.borderColor=t.border;
+  el.style.textShadow=`0 0 8px ${t.color}`;
+  el.textContent=(settings.playerName||'OYUNCU')+' · '+t.label;
+}
+
+// ══ STREAK ══
+function getTodayStr(){return new Date().toISOString().slice(0,10);}
+function getStreak(){return LS.get('stack_streak_count',0);}
+function updateStreak(){
+  const today=getTodayStr();
+  const lastDay=LS.get('stack_streak_last','');
+  const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  let streak=LS.get('stack_streak_count',0);
+  if(lastDay===today)return streak; // already counted today
+  if(lastDay===yesterday){streak++;}  // consecutive day
+  else if(lastDay!==today){streak=1;} // broke streak or first time
+  LS.set('stack_streak_count',streak);
+  LS.set('stack_streak_last',today);
+  return streak;
+}
+function renderStreakDisplay(){
+  const streak=getStreak();
+  const el=document.getElementById('streak-display');
+  if(!el)return;
+  const base='font-family:DM Mono,monospace;font-size:.8rem;letter-spacing:3px;text-align:center;padding:3px 12px;';
+  if(streak>=2){
+    const flames=Array(Math.min(streak,5)+1).join('🔥');
+    el.innerHTML=`<span class="streak-flame">${flames}</span> SERİ: ${streak} GÜN`;
+    el.setAttribute('style',base+'color:#ff6b35;border:1px solid rgba(255,107,53,.4);text-shadow:0 0 10px rgba(255,107,53,.5);');
+  } else {
+    el.textContent='🔥 SERİ: '+streak+' GÜN';
+    el.setAttribute('style',base+'color:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.08);');
+  }
+}
+// ══ MODES ══
+const MODES={
+  classic:{icon:'🏛',key:'classic'},
+  time:{icon:'⏱',key:'time'},
+  survival:{icon:'💀',key:'survival'},
+  chaos:{icon:'🌀',key:'chaos'},
+  ghost:{icon:'👻',key:'ghost'},
+};
+function getModeLabel(k){return (MODES[k]?MODES[k].icon+' ':'')+T(k);}
+function getModeDesc(k){return T(k+'_desc');}
+let currentMode=LS.get('stack_mode','classic');
+function renderModeRow(){document.getElementById('mode-row').innerHTML=Object.keys(MODES).map(k=>`<button class="mode-btn${k===currentMode?' active':''}" data-mode="${k}">${getModeLabel(k)}</button>`).join('');document.getElementById('mode-desc').textContent=getModeDesc(currentMode);}
+
+// ══ SETTINGS ══
+let settings=LS.get('stack_settings',{playerName:'',avatar:'🧱',musicVol:55,sfxVol:100,haptic:true,swipe:false,trailStyle:'classic'});
+function saveSettings(){LS.set('stack_settings',settings);}
+
+// ══ SEASONAL EVENTS ══
+const SEASONS=[
+  {name:'❄️ KIŞ SEZONU',color:'#74b9ff',border:'rgba(116,185,255,.4)',weather:'snow',bonus:'Kar yağarken +10% XP'},
+  {name:'🌸 BAHAR YARIŞMASI',color:'#fd79a8',border:'rgba(253,121,168,.4)',weather:'none',bonus:'Özel çiçek teması'},
+  {name:'🔥 YAZ ATEŞI',color:'#ff6b35',border:'rgba(255,107,53,.4)',weather:'none',bonus:'Ateş iz efekti ücretsiz'},
+  {name:'🍂 SONBAHAR KUPASİ',color:'#fdcb6e',border:'rgba(253,203,110,.4)',weather:'none',bonus:'Özel sonbahar renkleri'},
+];
+const currentSeason=SEASONS[Math.floor((new Date().getMonth()/12)*4)];
+
+// ══ WEATHER SYSTEM ══
+const WEATHER_STAGES=[
+  {min:0,max:9,type:'clear',sky:'rgba(0,0,0,0)',label:''},
+  {min:10,max:19,type:'dusk',sky:'rgba(255,100,50,0.06)',label:'🌅'},
+  {min:20,max:29,type:'night',sky:'rgba(0,20,60,0.15)',label:'🌙'},
+  {min:30,max:44,type:'storm',sky:'rgba(30,0,60,0.2)',label:'⛈'},
+  {min:45,max:64,type:'rain',sky:'rgba(0,10,30,0.18)',label:'🌧'},
+  {min:65,max:84,type:'snow',sky:'rgba(200,230,255,0.08)',label:'❄️'},
+  {min:85,max:999,type:'aurora',sky:'rgba(0,60,20,0.15)',label:'🌌'},
+];
+function getWeatherStage(s){return WEATHER_STAGES.find(w=>s>=w.min&&s<=w.max)||WEATHER_STAGES[0];}
+let activeWeather='clear';
+let weatherParticles=[];
+function updateWeather(score){
+  const ws=getWeatherStage(score);
+  const w=currentSeason.weather==='snow'?'snow':ws.type;
+  document.getElementById('sky-overlay').style.background=ws.sky;
+  document.getElementById('weather-hud').textContent=ws.label;
+  if(w!==activeWeather){
+    activeWeather=w;
+    document.getElementById('weather-wrap').innerHTML='';
+    weatherParticles=[];
+    if(w==='rain'||w==='storm'){for(let i=0;i<60;i++)spawnWeatherParticle('rain');}
+    else if(w==='snow'){for(let i=0;i<40;i++)spawnWeatherParticle('snow');}
+  }
+}
+function spawnWeatherParticle(type){
+  const el=document.createElement('div');
+  const x=Math.random()*100;
+  const dur=type==='rain'?(0.4+Math.random()*.3):(3+Math.random()*3);
+  const size=type==='rain'?(8+Math.random()*20):(10+Math.random()*6);
+  if(type==='rain'){el.className='raindrop';el.style.cssText=`left:${x}%;height:${size}px;animation-duration:${dur}s;animation-delay:${Math.random()*2}s;`;}
+  else{el.className='snowflake';el.textContent='*';el.style.cssText=`left:${x}%;font-size:${Math.random()*8+8}px;animation-duration:${dur}s;animation-delay:${Math.random()*4}s;`;}
+  document.getElementById('weather-wrap').appendChild(el);
+}
+
+// ══ PARALLAX STARS ══
+function buildParallax(){
+  const wrap=document.getElementById('parallax-wrap');wrap.innerHTML='';
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div');s.className='p-star';
+    const sz=Math.random()*2.5+0.5;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;opacity:${0.1+Math.random()*.3}`;
+    wrap.appendChild(s);
+  }
+}
+
+// ══ AUDIO ══
+let audioCtx=null,muted=false,musicPlaying=false,musicGain=null;
+function getAC(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function tone(f,d,type='sine',vol=0.25){if(muted)return;const v=vol*(settings.sfxVol/100);if(v<=0)return;try{const ac=getAC(),o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+d);o.start();o.stop(ac.currentTime+d);}catch(e){}}
+function sfxPlace(){tone(440,0.08,'square',0.18);}
+function sfxPerfect(){tone(523,0.09,'sine',0.22);setTimeout(()=>tone(659,0.09,'sine',0.22),80);setTimeout(()=>tone(784,0.14,'sine',0.26),160);}
+function sfxGameOver(){tone(300,0.14,'sawtooth',0.28);setTimeout(()=>tone(200,0.18,'sawtooth',0.28),140);setTimeout(()=>tone(100,0.38,'sawtooth',0.32),280);}
+function sfxExpand(){tone(600,0.05,'sine',0.18);setTimeout(()=>tone(900,0.1,'sine',0.22),60);}
+function sfxPowerup(){tone(800,0.05,'sine',0.2);setTimeout(()=>tone(1000,0.05,'sine',0.2),60);setTimeout(()=>tone(1200,0.1,'sine',0.25),120);}
+function sfxGold(){tone(880,0.05,'sine',0.2);setTimeout(()=>tone(1100,0.05,'sine',0.22),60);setTimeout(()=>tone(1320,0.08,'sine',0.25),120);setTimeout(()=>tone(1760,0.18,'sine',0.3),190);}
+function sfxLifeLost(){tone(220,0.2,'square',0.3);setTimeout(()=>tone(180,0.3,'square',0.25),200);}
+function sfxMilestone(){tone(440,0.05,'sine',.3);setTimeout(()=>tone(550,0.05,'sine',.3),60);setTimeout(()=>tone(660,0.05,'sine',.3),120);setTimeout(()=>tone(880,0.3,'sine',.35),180);}
+// ══ MUSIC THEMES ══
+const MUSIC_THEMES={
+  neon:{
+    name:'SYNTHWAVE',
+    notes:[261,329,392,523,392,329,261,220,261,329,392,440,523,440,392,329],
+    type:'sawtooth', tempo:280, vol:0.04,
+    desc:'Neon synth dalgaları'
+  },
+  retro:{
+    name:'CHİPTUNE',
+    notes:[330,330,330,262,330,392,196,262,196,165,220,247,262,247,220,196],
+    type:'square', tempo:200, vol:0.035,
+    desc:'8-bit retro chip sesi'
+  },
+  minimal:{
+    name:'AMBİENT',
+    notes:[220,247,261,294,220,196,175,196,220,247,220,196,175,165,175,196],
+    type:'sine', tempo:600, vol:0.05,
+    desc:'Sakin ambient drone'
+  },
+  ghost:{
+    name:'PSİKEDELİK',
+    notes:[659,587,523,494,440,415,392,370,349,370,392,415,440,494,523,587],
+    type:'triangle', tempo:140, vol:0.028,
+    desc:'Hızlı tiz arpej, gizemli'
+  },
+};
+// Per-theme extra: bass pulse for neon/retro
+function startMusicBass(ac,gain,tempo,freq,waveType){
+  let on=true;
+  function pulse(){
+    if(!on)return;
+    try{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(gain);
+      o.type=waveType;o.frequency.value=freq;
+      g.gain.setValueAtTime(0.18,ac.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+tempo/1000*0.9);
+      o.start();o.stop(ac.currentTime+tempo/1000*0.9);
+    }catch(e){}
+    setTimeout(pulse,tempo);
+  }
+  pulse();
+  return ()=>{on=false;};
+}
+let _stopBass=null;
+function startMusic(){
+  if(muted||musicPlaying)return;
+  const mvol=settings.musicVol/100;if(mvol<=0)return;
+  try{
+    const ac=getAC();
+    musicGain=ac.createGain();
+    // Reverb-like: connect to a slight delay node for ghost/minimal
+    const theme=MUSIC_THEMES[currentTheme]||MUSIC_THEMES.neon;
+    musicGain.gain.value=mvol*theme.vol;
+    musicGain.connect(ac.destination);
+    musicPlaying=true;
+    let step=0;
+    const {notes,type,tempo}=theme;
+    function next(){
+      if(!musicPlaying||muted)return;
+      try{
+        const o=ac.createOscillator(),g=ac.createGain();
+        o.connect(g);g.connect(musicGain);
+        o.type=type;
+        // Add slight pitch variation for ambient themes
+        const detune=(type==='sine')?Math.random()*4-2:0;
+        o.frequency.value=notes[step%notes.length];
+        o.detune.value=detune;
+        const noteLen=tempo/1000;
+        g.gain.setValueAtTime(type==='square'?0.5:0.55,ac.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+noteLen*0.85);
+        o.start();o.stop(ac.currentTime+noteLen*0.85);
+        step++;
+      }catch(e){}
+      setTimeout(next,tempo);
+    }
+    next();
+    // Bass for neon & retro
+    if(currentTheme==='neon'){
+      const bassGain=ac.createGain();bassGain.gain.value=mvol*0.025;bassGain.connect(ac.destination);
+      let bOn=true;
+      function bass(){if(!bOn||!musicPlaying)return;try{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(bassGain);o.type='sawtooth';o.frequency.value=55;g.gain.setValueAtTime(0.3,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.5);o.start();o.stop(ac.currentTime+0.5);}catch(e){}setTimeout(bass,560);}
+      bass();_stopBass=()=>{bOn=false;};
+    } else if(currentTheme==='ghost'){
+      // Tremolo/vibrato layer — rapid pulsing high note
+      let gOn=true;
+      const tremGain=ac.createGain();tremGain.gain.value=mvol*0.015;tremGain.connect(ac.destination);
+      function trem(){if(!gOn||!musicPlaying)return;try{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(tremGain);o.type='triangle';o.frequency.value=1046+Math.random()*100;g.gain.setValueAtTime(0.3,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.08);o.start();o.stop(ac.currentTime+0.08);}catch(e){}setTimeout(trem,90+Math.random()*40);}
+      trem();_stopBass=()=>{gOn=false;};
+    } else if(currentTheme==='retro'){
+      let bOn=true;
+      const bassGain=ac.createGain();bassGain.gain.value=mvol*0.02;bassGain.connect(ac.destination);
+      const bassNotes=[65,65,73,65,58,65,65,73];let bi=0;
+      function rbass(){if(!bOn||!musicPlaying)return;try{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(bassGain);o.type='square';o.frequency.value=bassNotes[bi%bassNotes.length];g.gain.setValueAtTime(0.4,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.18);o.start();o.stop(ac.currentTime+0.18);bi++;}catch(e){}setTimeout(rbass,200);}
+      rbass();_stopBass=()=>{bOn=false;};
+    }
+  }catch(e){}
+}
+function stopMusic(){
+  musicPlaying=false;
+  if(musicGain)musicGain.gain.value=0;
+  if(_stopBass){_stopBass();_stopBass=null;}
+}
+function restartMusicForTheme(){
+  if(state==='playing'&&musicPlaying&&!muted){stopMusic();setTimeout(startMusic,80);}
+}
+function haptic(d=20){if(settings.haptic&&navigator.vibrate)navigator.vibrate(d);}
+
+// ══ CANVAS ══
+const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
+let W=window.innerWidth;
+let H=window.innerHeight;
+canvas.width=W;canvas.height=H;
+const BH=26,PERFECT_PX=6,DROP_SPEED=14,SLIDE_GAP=75,COMBO_EXPAND=3;
+const INIT_W=Math.round(W*0.43);
+const DIFF_CFG={easy:{sb:1.4,si:0.04},normal:{sb:1.8,si:0.06},hard:{sb:2.8,si:0.12}};
+let difficulty='normal',SPEED_BASE=1.8,SPEED_INC=0.06;
+const GROUND_SCR=H-40;
+
+// ══ GAME STATE ══
+let state='menu',blocks=[],mover=null,particles=[],trails=[],chunks=[];
+let score=0,combo=0,bestCombo=0,animId=null;
+let camTop=-GROUND_SCR,camTopTarget=-GROUND_SCR;
+let powerups={freeze:0,wide:0,auto:0};
+let frozen=false,frozenTimer=0,ghostVisible=true,ghostTimer=0;
+let timeLeft=60,timerInterval=null;
+let stats=LS.get('stack_stats',{totalGames:0,totalBlocks:0,bestCombo:0,history:[]});
+let leaderboard=LS.get('stack_lb',[]);
+let lives=3,specialBlockCounter=0,nextSpecialType='normal',gamePerfects=0;
+
+
+// ══ XP & LEVEL ══
+let xpData=(()=>{const d=LS.get('stack_xp',{xp:0,level:1});return {xp:Number(d.xp)||0, level:Number(d.level)||1};})();
+function xpForLevel(l){return l*100;}
+function triggerLevelUp(lv){
+  // Rays burst
+  const ov=document.getElementById('levelup-overlay');
+  const rays=document.getElementById('levelup-rays');
+  const num=document.getElementById('levelup-num');
+  const txt=document.getElementById('levelup-txt');
+  rays.innerHTML='';
+  const rayCount=12;
+  for(let i=0;i<rayCount;i++){
+    const r=document.createElement('div');
+    const angle=(360/rayCount)*i;
+    const len=250+Math.random()*200;
+    r.style.cssText=`position:absolute;left:50%;top:50%;width:3px;height:${len}px;background:linear-gradient(#a29bfe,transparent);transform-origin:top center;transform:translateX(-50%) rotate(${angle}deg);opacity:0.35;animation:ray-spin 8s linear infinite;`;
+    rays.appendChild(r);
+  }
+  num.textContent=T('levelup_lbl')+' '+lv;
+  txt.textContent='TEBRİKLER!';
+  ov.style.background='radial-gradient(ellipse at center,rgba(162,155,254,.18) 0%,rgba(0,0,0,0) 70%)';
+  num.className='show';
+  ov.style.opacity='1';
+  // Particle burst
+  for(let i=0;i<60;i++){
+    const angle=Math.random()*Math.PI*2;
+    const spd=3+Math.random()*6;
+    particles.push({x:W/2,y:H/2,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd-2,life:1,decay:.018+Math.random()*.018,r:2+Math.random()*4,color:['#a29bfe','#ffd32a','#00ffe7','#fd79a8'][Math.floor(Math.random()*4)]});
+  }
+  sfxPowerup();
+  setTimeout(()=>{num.className='hide';setTimeout(()=>{ov.style.opacity='0';num.className='';},600);},2200);
+}
+function addXP(n){
+  const seasonBonus=currentSeason.weather==='snow'?1.1:1;
+  const xp2=shopOwned.includes('perk_xp2')?2:1;
+  xpData.xp+=Math.round(n*seasonBonus*xp2);
+  let leveled=false;
+  while(xpData.xp>=xpForLevel(xpData.level)){xpData.xp-=xpForLevel(xpData.level);xpData.level++;leveled=true;}
+  if(leveled)setTimeout(()=>triggerLevelUp(xpData.level),300);
+  LS.set('stack_xp',xpData);renderXP();
+}
+function renderXP(){
+  const lvlEl=document.getElementById('xp-level');
+  const valEl=document.getElementById('xp-val');
+  const nxtEl=document.getElementById('xp-next');
+  const fillEl=document.getElementById('xp-fill');
+  if(lvlEl)lvlEl.textContent=xpData.level;
+  if(valEl)valEl.textContent=xpData.xp;
+  if(nxtEl)nxtEl.textContent=xpForLevel(xpData.level);
+  if(fillEl)fillEl.style.width=(xpData.xp/xpForLevel(xpData.level)*100)+'%';
+}
+
+// ══ SHOP ══
+const SHOP_ITEMS=[
+  // ── İZ ──
+  {id:'trail_fire',icon:'🔥',name:'ATEŞ İZİ',desc:'Alev efekti',price:200,type:'trail',value:'fire',cat:'İZ'},
+  {id:'trail_rainbow',icon:'🌈',name:'GÖKKUŞAĞI',desc:'Rengarenk iz',price:300,type:'trail',value:'rainbow',cat:'İZ'},
+  {id:'trail_ghost',icon:'👻',name:'HAYALET',desc:'Dalgalı hayalet',price:250,type:'trail',value:'ghost',cat:'İZ'},
+  {id:'trail_pixel',icon:'🎮',name:'PİKSEL',desc:'Retro piksel',price:150,type:'trail',value:'pixel',cat:'İZ'},
+  {id:'trail_neon',icon:'💡',name:'NEON',desc:'Parlayan neon',price:180,type:'trail',value:'neon',cat:'İZ'},
+  {id:'trail_ice',icon:'❄️',name:'BUZUL',desc:'Buz mavisi iz',price:220,type:'trail',value:'ice',cat:'İZ'},
+  {id:'trail_dark',icon:'🌑',name:'KARANLIK',desc:'Gölge izi',price:120,type:'trail',value:'dark',cat:'İZ'},
+  {id:'trail_gold',icon:'✨',name:'ALTIN İZ',desc:'Altın pırıltılar',price:400,type:'trail',value:'gold',cat:'İZ'},
+  {id:'trail_matrix',icon:'💚',name:'MATRİX',desc:'Yeşil kod yağmuru',price:350,type:'trail',value:'matrix',cat:'İZ'},
+  {id:'trail_blood',icon:'🩸',name:'KAN',desc:'Kırmızı damla',price:280,type:'trail',value:'blood',cat:'İZ'},
+  // ── AVATAR ──
+  {id:'avatar_dragon',icon:'🐉',name:'EJDERHA',desc:'Güçlü avatar',price:400,type:'avatarUnlock',value:'🐉',cat:'AVATAR'},
+  {id:'avatar_alien',icon:'👽',name:'UZAYLI',desc:'Gizemli avatar',price:350,type:'avatarUnlock',value:'👽',cat:'AVATAR'},
+  {id:'avatar_robot',icon:'🤖',name:'ROBOT',desc:'Makine avatar',price:300,type:'avatarUnlock',value:'🤖',cat:'AVATAR'},
+  {id:'avatar_crown',icon:'👑',name:'KRAL',desc:'Kraliyet avatarı',price:500,type:'avatarUnlock',value:'👑',cat:'AVATAR'},
+  {id:'avatar_ninja',icon:'🥷',name:'NİNJA',desc:'Gizli avatar',price:280,type:'avatarUnlock',value:'🥷',cat:'AVATAR'},
+  {id:'avatar_skull',icon:'💀',name:'KAFATASI',desc:'Sert avatar',price:320,type:'avatarUnlock',value:'💀',cat:'AVATAR'},
+  {id:'avatar_cat',icon:'🐱',name:'KEDİ',desc:'Sevimli avatar',price:180,type:'avatarUnlock',value:'🐱',cat:'AVATAR'},
+  {id:'avatar_fox',icon:'🦊',name:'TİLKİ',desc:'Kurnaz avatar',price:200,type:'avatarUnlock',value:'🦊',cat:'AVATAR'},
+  {id:'avatar_wolf',icon:'🐺',name:'KURT',desc:'Güçlü avatar',price:260,type:'avatarUnlock',value:'🐺',cat:'AVATAR'},
+  {id:'avatar_ghost2',icon:'👾',name:'UZAY GOST',desc:'Retro uzay avatar',price:220,type:'avatarUnlock',value:'👾',cat:'AVATAR'},
+  {id:'avatar_devil',icon:'😈',name:'ŞEYTAN',desc:'Şeytani avatar',price:380,type:'avatarUnlock',value:'😈',cat:'AVATAR'},
+  {id:'avatar_angel',icon:'😇',name:'MELEK',desc:'Kutsal avatar',price:380,type:'avatarUnlock',value:'😇',cat:'AVATAR'},
+  {id:'avatar_fire2',icon:'🔥',name:'ATEŞ',desc:'Yakıcı avatar',price:230,type:'avatarUnlock',value:'🔥',cat:'AVATAR'},
+  {id:'avatar_star',icon:'⭐',name:'YILDIZ',desc:'Parlak avatar',price:190,type:'avatarUnlock',value:'⭐',cat:'AVATAR'},
+  // ── GÜÇLENDIRME ──
+  {id:'life_boost',icon:'❤️',name:'4 CAN',desc:'Başlangıçta 4 can',price:600,type:'perk',value:'lives4',cat:'GÜÇLENDIRME'},
+  {id:'speed_down',icon:'🐢',name:'YAVAŞ BAŞLA',desc:'Başlangıç hızı %30 düşük',price:250,type:'perk',value:'slowstart',cat:'GÜÇLENDIRME'},
+  {id:'perk_wide',icon:'↔️',name:'GENİŞ BAŞLA',desc:'İlk blok +30px geniş',price:350,type:'perk',value:'widestart',cat:'GÜÇLENDIRME'},
+  {id:'perk_xp2',icon:'⚡',name:'2× XP',desc:'Tüm XP kazancı 2 katı',price:800,type:'perk',value:'xp2',cat:'GÜÇLENDIRME'},
+  {id:'perk_perfect',icon:'🎯',name:'PERFECT ZONE',desc:'Mükemmel alanı 2× geniş',price:450,type:'perk',value:'perfectwide',cat:'GÜÇLENDIRME'},
+  {id:'perk_magnet',icon:'🧲',name:'MANYETIK',desc:'Blok merkeze %15 çekilir',price:550,type:'perk',value:'magnet',cat:'GÜÇLENDIRME'},
+  {id:'perk_combo',icon:'🔗',name:'COMBO KORUMA',desc:'İlk kaçırmada combo sıfırlanmaz',price:480,type:'perk',value:'comboprotect',cat:'GÜÇLENDIRME'},
+  {id:'perk_gold2',icon:'🥇',name:'ALTIN AVCI',desc:'Altın blok 2× daha sık',price:520,type:'perk',value:'goldboost',cat:'GÜÇLENDIRME'},
+  // ── KOZMETİK ──
+  {id:'cosmetic_dark',   icon:'🌚',name:'KARANLIK MOD',    desc:'Canvas tam siyah arka plan',     price:100, type:'cosmetic',value:'darkbg',      cat:'KOZMETİK'},
+  {id:'cosmetic_grid',   icon:'📐',name:'IZGARA',           desc:'Bloklarda ızgara çizgisi',       price:150, type:'cosmetic',value:'grid',        cat:'KOZMETİK'},
+  {id:'cosmetic_shadow', icon:'🌫️',name:'DERİN GÖLGE',     desc:'Bloklarda güçlü glow efekti',    price:200, type:'cosmetic',value:'deepshadow',  cat:'KOZMETİK'},
+  {id:'cosmetic_flash',  icon:'💥',name:'PERFECT FLASH',    desc:'Mükemmelde ekran parlar',        price:250, type:'cosmetic',value:'perfectflash', cat:'KOZMETİK'},
+  {id:'cosmetic_scanline',icon:'📺',name:'SCANLINE',        desc:'Retro CRT tarama çizgileri',     price:180, type:'cosmetic',value:'scanline',    cat:'KOZMETİK'},
+  {id:'cosmetic_blur',   icon:'🌊',name:'MOTION BLUR',      desc:'Düşen blokta blur efekti',       price:220, type:'cosmetic',value:'motionblur',  cat:'KOZMETİK'},
+  {id:'cosmetic_outline',icon:'🖊️',name:'KENAR ÇİZGİSİ',  desc:'Bloklarda parlak outline',       price:160, type:'cosmetic',value:'outline',     cat:'KOZMETİK'},
+  {id:'cosmetic_rainbow_bg',icon:'🌈',name:'GÖKKUŞAĞI ZEMIN',desc:'Arka plan renk döngüsü',       price:300, type:'cosmetic',value:'rainbowbg',   cat:'KOZMETİK'},
+];
+let shopOwned=LS.get('stack_shop_owned',[]);
+let shopEquipped=LS.get('stack_shop_equipped',{trail:'classic',perk:null});
+let activeCosmetics=new Set(LS.get('stack_active_cosmetics',[]));
+function isCosmeticActive(id){return activeCosmetics.has(id);}
+function toggleCosmetic(id){
+  if(activeCosmetics.has(id)){activeCosmetics.delete(id);showToast('⭕ DEVRE DIŞI: '+id.replace('cosmetic_','').toUpperCase());}
+  else{activeCosmetics.add(id);showToast('✅ AKTİF: '+id.replace('cosmetic_','').toUpperCase());}
+  LS.set('stack_active_cosmetics',[...activeCosmetics]);
+  renderShop();
+  // Update HUD
+  const ach=document.getElementById('active-cos-hud');
+  if(ach){const names=[...activeCosmetics].map(id=>id.replace('cosmetic_',''));ach.textContent=names.length?'✦ '+names.join(' · '):'';} 
+}
+// Total XP as currency
+function getTotalXP(){return xpData.level*100+xpData.xp+(xpData.level-1)*100;}
+function buyItem(id){
+  const item=SHOP_ITEMS.find(i=>i.id===id);if(!item||shopOwned.includes(id))return;
+  const total=getTotalXP();if(total<item.price){showToast('❌ YETERLİ XP YOK');return;}
+  // Deduct from xpData
+  let debt=item.price;
+  while(debt>0){
+    if(xpData.xp>=debt){xpData.xp-=debt;debt=0;}
+    else{debt-=xpData.xp;xpData.xp=0;if(xpData.level>1){xpData.level--;xpData.xp=xpForLevel(xpData.level)-1;}else break;}
+  }
+  LS.set('stack_xp',xpData);renderXP();
+  shopOwned.push(id);LS.set('stack_shop_owned',shopOwned);
+  if(item.type==='trail'){shopEquipped.trail=item.value;settings.trailStyle=item.value;saveSettings();}
+  else if(item.type==='avatarUnlock'){settings.avatar=item.value;saveSettings();}
+  LS.set('stack_shop_equipped',shopEquipped);
+  if(item.type==='cosmetic'){showToast('✅ ALINDI — Aktifleştirmek için tekrar tıkla');}else{showToast('✅ SATIN ALINDI: '+item.name);}renderShop();
+}
+function renderShop(){
+  document.getElementById('shop-xp-val').textContent=getTotalXP();
+  const cats=[...new Set(SHOP_ITEMS.map(i=>i.cat))];
+  document.getElementById('shop-grid').innerHTML=cats.map(cat=>{
+    const items=SHOP_ITEMS.filter(i=>i.cat===cat);
+    const catKeyMap={'İZ':'cat_iz','KOZMETİK':'cat_kozmetik','GÜÇLENDIRME':'cat_guc','AVATAR':'cat_avatar'};
+    const catLabel=T(catKeyMap[cat]||cat)||cat;
+    return `<div style="grid-column:1/-1;font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:3px;margin-top:6px;">— ${catLabel} —</div>`+
+    items.map(item=>{
+      const owned=shopOwned.includes(item.id);
+      const equipped=shopEquipped.trail===item.value;
+      const cosActive=item.type==='cosmetic'&&isCosmeticActive(item.id);
+      let label=owned?(item.type==='trail'?(equipped?T('equipped'):T('equip')):item.type==='cosmetic'?(cosActive?T('active'):T('inactive')):T('owned')):'💫 '+item.price+' XP';
+      let clickFn;
+      if(!owned) clickFn=`buyItem('${item.id}')`;
+      else if(item.type==='trail') clickFn=`equipTrail('${item.value}')`;
+      else if(item.type==='cosmetic') clickFn=`toggleCosmetic('${item.id}')`;
+      else clickFn='';
+      return `<div class="shop-item${owned?' owned':''}${(equipped||cosActive)?' equipped':''}" onclick="${clickFn}">
+        <span class="shop-icon">${item.icon}</span>
+        <span class="shop-name">${item.name}</span>
+        <span class="shop-price" style="font-size:.55rem">${item.desc}</span>
+        <span class="shop-price">${label}</span>
+      </div>`;
+    }).join('');
+  }).join('');
+}
+function equipTrail(val){shopEquipped.trail=val;settings.trailStyle=val;saveSettings();LS.set('stack_shop_equipped',shopEquipped);renderShop();showToast('✅ '+val.toUpperCase()+' İZİ TAKILDI');}
+
+// ══ ONLINE LB (Claude AI Simüle) ══
+let onlineLB=LS.get('stack_online_lb',null);
+// ══ TOURNAMENT ══
+const T_GOALS_FALLBACK=[
+  {mode:'ghost',    metric:'score',   target:35,  label:'HAYALET MODDA 35 SKOR',    unit:'puan'},
+  {mode:'hard',     metric:'score',   target:30,  label:'ZOR MODDA 30 SKOR',        unit:'puan'},
+  {mode:'survival', metric:'score',   target:40,  label:'HAYATTA KAL 40 SKOR',      unit:'puan'},
+  {mode:'chaos',    metric:'score',   target:32,  label:'KAOS MODDA 32 SKOR',       unit:'puan'},
+  {mode:'time',     metric:'score',   target:55,  label:'ZAMAN MODDA 55 SKOR',      unit:'puan'},
+  {mode:'classic',  metric:'combo',   target:15,  label:'KLASİK 15X KOMBO',         unit:'kombo'},
+  {mode:'classic',  metric:'score',   target:75,  label:'KLASİK 75 SKOR',           unit:'puan'},
+  {mode:'classic',  metric:'perfect', target:50,  label:'50 MÜKEMMEL BAS',          unit:'mükemmel'},
+  {mode:'hard',     metric:'combo',   target:8,   label:'ZOR MODDA 8X KOMBO',       unit:'kombo'},
+  {mode:'ghost',    metric:'perfect', target:20,  label:'HAYALET MODDA 20 MÜKEMMEL',unit:'mükemmel'},
+  {mode:'survival', metric:'score',   target:60,  label:'HAYATTA KAL 60 SKOR',      unit:'puan'},
+  {mode:'classic',  metric:'score',   target:100, label:'KLASİK 100 SKOR',          unit:'puan'},
+];
+function getWeekKey(){
+  const d=new Date();
+  const jan1=new Date(d.getFullYear(),0,1);
+  const week=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);
+  return `${d.getFullYear()}-W${week}`;
+}
+function getTournamentGoal(){
+  const wk=getWeekKey();
+  const cacheKey='stack_t_goal_v2_'+wk; // v2 = clears old cache
+  const saved=LS.get(cacheKey,null);
+  if(saved)return saved;
+  const wnum=parseInt(wk.split('W')[1])||1;
+  const goal=T_GOALS_FALLBACK[wnum%T_GOALS_FALLBACK.length];
+  LS.set(cacheKey,goal);
+  return goal;
+}
+function getTournamentMyScore(){
+  const goal=getTournamentGoal();
+  if(goal.metric==='score'){
+    const relevant=leaderboard.filter(e=>!goal.mode||e.mode===goal.mode||goal.mode==='classic');
+    return relevant.length?relevant[0].score:0;
+  } else if(goal.metric==='combo'){
+    return stats.bestCombo||0;
+  } else if(goal.metric==='perfect'){
+    return stats.totalPerfects||0;
+  }
+  return 0;
+}
+let tournamentLB=LS.get('stack_t_lb_v2_'+getWeekKey(),null);
+async function fetchTournamentLB(){
+  const goal=getTournamentGoal();
+  const myScore=getTournamentMyScore();
+  const myName=settings.playerName||'SEN';
+  document.getElementById('t-status').textContent='🤖 Claude AI turnuva tablosu üretiyor...';
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:500,
+        messages:[{role:'user',content:`You are generating a weekly tournament leaderboard for a mobile block stacking game called STACK.
+This week's goal: ${goal.label} (metric: ${goal.metric}, target: ${goal.target}).
+Player "${myName}" has achieved: ${myScore} ${goal.unit}.
+Generate 10 realistic leaderboard entries including this player. Mix Turkish and international names.
+Scores should be realistic around the target (range: ${Math.floor(goal.target*0.4)}-${Math.floor(goal.target*1.4)}).
+Return ONLY a JSON array: [{"name":"AYŞE","score":18,"country":"🇹🇷"},{"name":"STACKER_X","score":15,"country":"🇺🇸"},...].
+Include the player at their appropriate position. No markdown, only JSON.`}]
+      })
+    });
+    const data=await resp.json();
+    const arr=JSON.parse(data.content[0].text);
+    // Insert player
+    let found=arr.find(e=>e.name.toUpperCase()===myName.toUpperCase());
+    if(!found){arr.push({name:myName,score:myScore,country:'🇹🇷',isMe:true,avatar:settings.avatar||'🧱'});}
+    else{found.isMe=true;found.avatar=settings.avatar||'🧱';found.score=Math.max(found.score,myScore);}
+    arr.sort((a,b)=>b.score-a.score);
+    tournamentLB=arr;LS.set('stack_t_lb_v2_'+getWeekKey(),arr);
+    renderTournamentScreen();
+    document.getElementById('t-status').textContent='✅ Canlı turnuva tablosu';
+  }catch(e){
+    // Fallback
+    const names=['AHMET','ZEYNEP','EMRE','SELIN','MURAT','DEFNE','KEREM','ALPER','TOKYO99','BLOCKGOD'];
+    const tgt=goal.target;
+    const arr=names.map(n=>({name:n,score:Math.floor(tgt*(0.4+Math.random()*1.0)),country:Math.random()>.4?'🇹🇷':['🇺🇸','🇯🇵','🇩🇪','🇧🇷'][Math.floor(Math.random()*4)]}));
+    arr.push({name:myName,score:myScore,country:'🇹🇷',isMe:true,avatar:settings.avatar||'🧱'});
+    arr.sort((a,b)=>b.score-a.score);
+    tournamentLB=arr;LS.set('stack_t_lb_v2_'+getWeekKey(),arr);
+    renderTournamentScreen();
+    document.getElementById('t-status').textContent='📡 Çevrimdışı mod';
+  }
+}
+function renderTournamentBanner(){} // banner removed from menu
+function renderTournamentScreen(){
+  const goal=getTournamentGoal();
+  const myScore=getTournamentMyScore();
+  const wk=getWeekKey();
+  const daysLeft=7-new Date().getDay()||7;
+  document.getElementById('t-week-label').textContent=wk+' · '+daysLeft+' GÜN KALDI';
+  document.getElementById('t-goal-val').textContent=goal.label;
+  document.getElementById('t-goal-sub').textContent='Hedef: '+goal.target+' '+goal.unit;
+  document.getElementById('t-my-score').textContent=myScore;
+  const pct=Math.min(myScore/goal.target*100,100);
+  document.getElementById('t-my-progress').textContent=Math.floor(pct)+'% tamamlandı';
+  document.getElementById('t-prog-fill').style.width=pct+'%';
+  if(pct>=100){document.getElementById('t-prog-fill').style.background='#7bed9f';}
+  // Winner badge
+  const won=myScore>=goal.target;
+  const ww=document.getElementById('t-winner-wrap');
+  if(won){ww.style.display='block';document.getElementById('t-winner-badge').textContent='🏆 BU HAFTAYI TAMAMLADIN! +200 XP';}
+  else{ww.style.display='none';}
+  // LB
+  if(!tournamentLB){fetchTournamentLB();return;}
+  const myName=(settings.playerName||'SEN').toUpperCase();
+  document.getElementById('t-lb-body').innerHTML=tournamentLB.map((e,i)=>{
+    const isMe=e.isMe||(e.name&&e.name.toUpperCase()===myName);
+    const rank=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+    return `<tr${isMe?' class="me"':''}><td>${rank}</td><td>${e.avatar||''}</td><td>${e.country||''} ${e.name}</td><td style="color:#ffd32a">${e.score}</td></tr>`;
+  }).join('');
+}
+
+async function fetchOnlineLB(){
+  document.getElementById('online-status').textContent='🤖 Claude AI skorlar üretiyor...';
+  const myName=settings.playerName||'SEN';
+  const myScore=leaderboard.length?leaderboard[0].score:0;
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:600,
+        messages:[{role:'user',content:`Generate a realistic online leaderboard for a block stacking game called STACK. The player "${myName}" has a score of ${myScore}. Create 10 total entries including the player. Mix Turkish and international names. Vary scores realistically (10-120 range). Return ONLY a JSON array like: [{"rank":1,"name":"AYŞE","score":98,"country":"🇹🇷"},{"rank":2,...},...]. Include the player at their appropriate rank. No markdown, no text, only the JSON array.`}]
+      })
+    });
+    const data=await resp.json();
+    const text=data.content[0].text;
+    const arr=JSON.parse(text);
+    onlineLB=arr;LS.set('stack_online_lb',arr);
+    renderOnlineLB(myName);
+    document.getElementById('online-status').textContent='✅ '+arr.length+' oyuncu · az önce güncellendi';
+  }catch(e){
+    // Fallback: generate locally
+    const names=['AHMET','ZEYNEP','EMRE','SELIN','MURAT','DEFNE','KEREM','YAĞMUR','ALPER','CEREN','TOKYO99','STACKER_X','BLOCKGOD','CUBEMAN','NEON_KID'];
+    const entries=names.slice(0,9).map(n=>({name:n,score:Math.floor(Math.random()*100)+10,country:Math.random()>.5?'🇹🇷':['🇺🇸','🇯🇵','🇩🇪','🇧🇷'][Math.floor(Math.random()*4)]}));
+    entries.push({name:myName,score:myScore,country:'🇹🇷',isMe:true,avatar:settings.avatar||'🧱'});
+    entries.sort((a,b)=>b.score-a.score);
+    entries.forEach((e,i)=>e.rank=i+1);
+    onlineLB=entries;LS.set('stack_online_lb',entries);
+    renderOnlineLB(myName);
+    document.getElementById('online-status').textContent='📡 Çevrimdışı mod · yerel simülasyon';
+  }
+}
+function renderOnlineLB(myName){
+  if(!onlineLB){document.getElementById('online-lb-body').innerHTML='';return;}
+  const myN=(myName||'SEN').toUpperCase();
+  document.getElementById('online-lb-body').innerHTML=onlineLB.map((e,i)=>{
+    const isMe=e.isMe||(e.name&&e.name.toUpperCase()===myN);
+    const rankIcon=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+    const av=isMe?(settings.avatar||'🧱'):(e.avatar||'');return `<tr${isMe?' class="me"':''}><td>${rankIcon}</td><td>${av}</td><td${isMe?' class="online-name"':''}>${e.country||''} ${e.name}</td><td class="sc">${e.score}</td></tr>`;
+  }).join('');
+}
+
+
+function vsBar(label,n1,v1,n2,v2,max){
+  const p1=Math.round(v1/max*100);const p2=Math.round(v2/max*100);
+  return `<div class="vs-bar-wrap">
+    <div class="vs-label"><span style="color:#00ffe7">${n1} ${v1}</span><span>${label}</span><span style="color:#a29bfe">${v2} ${n2}</span></div>
+    <div class="vs-bar"><div class="vs-bar-me" style="width:${p1}%"></div><div class="vs-bar-friend" style="width:${p2}%"></div></div>
+  </div>`;
+}
+
+// ══ ACHIEVEMENTS ══
+const ACHS=[
+  {id:'first_game',    icon:'🎮', name:'İLK ADIM',           desc:'İlk oyunu oyna',                      c:()=>stats.totalGames>=1},
+  {id:'first_perfect', icon:'✨', name:'İLK MÜKEMMEL',       desc:'İlk mükemmel bloğu koy',              c:()=>(stats.totalPerfects||0)>=1},
+  {id:'shop_buy',      icon:'🛒', name:'ALIŞVERİŞ',          desc:'Mağazadan bir şey al',                c:()=>shopOwned.length>=1},
+  {id:'daily1',        icon:'📅', name:'GÜNLÜK OYUNCU',      desc:'Bir günlük görevi tamamla',            c:()=>dailyTasks.some(t=>t.completed)},
+  {id:'daily_all',     icon:'🌟', name:'TAM TAKIM',          desc:'Tüm günlük görevleri bitir',           c:()=>dailyTasks.length>0&&dailyTasks.every(t=>t.completed)},
+  {id:'shopaholic',    icon:'💳', name:'ALIŞVERİŞ KRALI',    desc:'5 mağaza ürünü al',                   c:()=>shopOwned.length>=5},
+  {id:'collector',     icon:'🏺', name:'KOLEKSİYONCU',       desc:'10 mağaza ürünü al',                  c:()=>shopOwned.length>=10},
+  {id:'score_5',       icon:'5️⃣', name:'BEŞLİK',            desc:'5 puana ulaş',                        c:()=>leaderboard.some(e=>e.score>=5)},
+  {id:'score_10',      icon:'🔟', name:'İLK 10',             desc:'10 puana ulaş',                       c:()=>leaderboard.some(e=>e.score>=10)},
+  {id:'score_25',      icon:'⭐', name:'YÜKSELİŞ',          desc:'25 puana ulaş',                       c:()=>leaderboard.some(e=>e.score>=25)},
+  {id:'score_50',      icon:'💫', name:'USTA',               desc:'50 puana ulaş',                       c:()=>leaderboard.some(e=>e.score>=50)},
+  {id:'score_75',      icon:'🔥', name:'ELİT',               desc:'75 puana ulaş',                       c:()=>leaderboard.some(e=>e.score>=75)},
+  {id:'score_100',     icon:'💯', name:'YÜZLÜK',             desc:'100 puana ulaş',                      c:()=>leaderboard.some(e=>e.score>=100)},
+  {id:'score_150',     icon:'🏆', name:'EFSANE',             desc:'150 puana ulaş',                      c:()=>leaderboard.some(e=>e.score>=150)},
+  {id:'score_200',     icon:'👑', name:'TANRI',              desc:'200 puana ulaş',                      c:()=>leaderboard.some(e=>e.score>=200)},
+  {id:'combo3',        icon:'🔗', name:'ÜÇLEME',             desc:'3x kombo yap',                        c:()=>stats.bestCombo>=3},
+  {id:'combo5',        icon:'🔥', name:'KOMBO USTASI',       desc:'5x kombo yap',                        c:()=>stats.bestCombo>=5},
+  {id:'combo10',       icon:'⚡', name:'ÇIĞIR AÇICI',        desc:'10x kombo yap',                       c:()=>stats.bestCombo>=10},
+  {id:'combo15',       icon:'🌀', name:'VİHRAN',             desc:'15x kombo yap',                       c:()=>stats.bestCombo>=15},
+  {id:'combo20',       icon:'🌪️', name:'FIRTINA',           desc:'20x kombo yap',                       c:()=>stats.bestCombo>=20},
+  {id:'games3',        icon:'🕹️', name:'BAŞLANGIÇ',         desc:'3 oyun oyna',                         c:()=>stats.totalGames>=3},
+  {id:'games10',       icon:'🎯', name:'DÜZENLİ',           desc:'10 oyun oyna',                        c:()=>stats.totalGames>=10},
+  {id:'games25',       icon:'📅', name:'HAFTALIK',           desc:'25 oyun oyna',                        c:()=>stats.totalGames>=25},
+  {id:'games50',       icon:'🏃', name:'KOŞUCU',             desc:'50 oyun oyna',                        c:()=>stats.totalGames>=50},
+  {id:'games100',      icon:'💪', name:'DEMİRCİ',            desc:'100 oyun oyna',                       c:()=>stats.totalGames>=100},
+  {id:'games200',      icon:'🤖', name:'MAKİNE',             desc:'200 oyun oyna',                       c:()=>stats.totalGames>=200},
+  {id:'perf5',         icon:'🎯', name:'KESKİN',             desc:'Tek oyunda 5 mükemmel',               c:()=>(stats.bestPerfects||0)>=5},
+  {id:'perf10',        icon:'💎', name:'ELMAS EL',           desc:'Tek oyunda 10 mükemmel',              c:()=>(stats.bestPerfects||0)>=10},
+  {id:'perf25',        icon:'🪄', name:'SİHİRBAZ',           desc:'Tek oyunda 25 mükemmel',              c:()=>(stats.bestPerfects||0)>=25},
+  {id:'perf50',        icon:'🧙', name:'BÜYÜCÜ',             desc:'Tek oyunda 50 mükemmel',              c:()=>(stats.bestPerfects||0)>=50},
+  {id:'no_miss',       icon:'🎪', name:'HATASIZ',            desc:'Hiç kaçırmadan bitir',                c:()=>(stats.perfectGames||0)>=1},
+  {id:'gold_perfect',  icon:'🥇', name:'ALTIN MÜKEMMEL',     desc:'Altin bloga mükemmel bas',            c:()=>stats.goldPerfects>=1},
+  {id:'gold5',         icon:'🏅', name:'ALTIN KOLEKSİYON',   desc:'5 altin mükemmel',                   c:()=>stats.goldPerfects>=5},
+  {id:'gold10',        icon:'🌠', name:'ALTIN EFSANE',        desc:'10 altin mükemmel',                  c:()=>stats.goldPerfects>=10},
+  {id:'hardmode',      icon:'💀', name:'ZOR YOLCU',           desc:'Zor modda oyna',                     c:()=>leaderboard.some(e=>e.diff==='hard')},
+  {id:'hard25',        icon:'☠️', name:'ÖLÜM TACIRI',        desc:'Zor modda 25 skor',                  c:()=>leaderboard.some(e=>e.diff==='hard'&&e.score>=25)},
+  {id:'survival_s',    icon:'🧗', name:'HAYATTA KALAN',       desc:'Hayatta Kal modda 20 blok',          c:()=>leaderboard.some(e=>e.mode==='survival'&&e.score>=20)},
+  {id:'ghost_s',       icon:'👻', name:'HAYALET AVCISI',      desc:'Hayalet modda 10 blok',              c:()=>leaderboard.some(e=>e.mode==='ghost'&&e.score>=10)},
+  {id:'chaos_s',       icon:'🌀', name:'KAOS KAPTAN',         desc:'Kaos modda 15 blok',                 c:()=>leaderboard.some(e=>e.mode==='chaos'&&e.score>=15)},
+  {id:'time_s',        icon:'⏱️', name:'ZAMAN TANIKLI',      desc:'Zaman modda 30 blok',                c:()=>leaderboard.some(e=>e.mode==='time'&&e.score>=30)},
+  {id:'allmode',       icon:'🎪', name:'ÇOKLU KİŞİLİK',      desc:'Tüm modlarda en az 1 oyna',          c:()=>['classic','time','survival','chaos','ghost'].every(m=>leaderboard.some(e=>e.mode===m))},
+  {id:'level5',        icon:'🆙', name:'SEVİYE 5',            desc:'5. seviyeye ulaş',                   c:()=>xpData.level>=5},
+  {id:'level10',       icon:'🎖️', name:'SEVİYE 10',          desc:'10. seviyeye ulaş',                  c:()=>xpData.level>=10},
+  {id:'level20',       icon:'🏅', name:'SEVİYE 20',           desc:'20. seviyeye ulaş',                  c:()=>xpData.level>=20},
+  {id:'xp1000',        icon:'💰', name:'BİN XP',              desc:'Toplam 1000 XP kazan',               c:()=>xpData.level*100+xpData.xp>=1000},
+  {id:'night_owl',     icon:'🦉', name:'GECE BAYKUŞU',        desc:'Aurora moduna ulaş (85+ skor)',      c:()=>leaderboard.some(e=>e.score>=85)},
+  {id:'powerup_use',   icon:'⚡', name:'GÜÇ ODASI',           desc:'Bir güçlendirme kullan',             c:()=>(stats.powerupsUsed||0)>=1},
+  {id:'powerup10',     icon:'🔋', name:'ENERJİ DEPOSU',       desc:'10 güçlendirme kullan',              c:()=>(stats.powerupsUsed||0)>=10},
+  {id:'share_score',   icon:'📤', name:'PAYLAŞIMCI',          desc:'Skoru paylaş',                       c:()=>(stats.shared||0)>=1},
+  {id:'long_game',     icon:'⌛', name:'UZUN NEFES',          desc:'Tek oyunda 5 dk oyna',               c:()=>(stats.longestGame||0)>=300},
+  {id:'come_back',     icon:'🔄', name:'GERİ DÖNDÜM',        desc:'2 veya daha fazla oyun oyna',         c:()=>stats.totalGames>=2},
+  {id:'three_lives',   icon:'❤️', name:'SAĞLAM DURUŞ',       desc:'3 canla 20 skora ulaş',              c:()=>(stats.full_lives_20||0)>=1},
+];
+let unlockedAchs=LS.get('stack_achs',[]);
+function checkAchs(){let neu=[];for(const a of ACHS)if(!unlockedAchs.includes(a.id)&&a.c()){unlockedAchs.push(a.id);neu.push(a);}if(neu.length){LS.set('stack_achs',unlockedAchs);let i=0;function nx(){if(i>=neu.length)return;showToast('🏅 '+neu[i].name);i++;setTimeout(nx,2400);}nx();addXP(neu.length*30);}}
+function renderAchs(){document.getElementById('ach-grid').innerHTML=ACHS.map(a=>{const d=unlockedAchs.includes(a.id);return `<div class="ach-card${d?' unlocked':''}"><span class="ach-icon">${d?a.icon:'🔒'}</span><span class="ach-name">${T('ach_'+a.id)||a.name}</span><span class="ach-desc">${T('ach_desc_'+a.id)||a.desc}</span></div>`;}).join('');}
+
+let _tt=null;
+function showToast(m){const t=document.getElementById('achievement-toast');t.textContent=m;t.classList.add('show');if(_tt)clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2200);}
+
+// ══ MILESTONE FLASH ══
+const MILESTONES=[10,25,50,75,100,150,200];
+let lastMilestone=0;
+function checkMilestone(s){
+  for(const m of MILESTONES){
+    if(s>=m&&m>lastMilestone){
+      lastMilestone=m;
+      triggerMilestone(m);
+    }
+  }
+}
+function triggerMilestone(m){
+  sfxMilestone();haptic([30,20,30,20,30]);
+  const flash=document.getElementById('milestone-flash');
+  const text=document.getElementById('milestone-text');
+  const accent=THEMES[currentTheme].accent;
+  flash.style.background=accent;
+  flash.classList.remove('show');void flash.offsetWidth;flash.classList.add('show');
+  text.textContent=m+' BLOK! 🎆';
+  text.style.color=accent;
+  text.style.textShadow=`0 0 40px ${accent},0 0 80px ${accent}`;
+  text.classList.remove('show');void text.offsetWidth;text.classList.add('show');
+  // Burst particles
+  for(let i=0;i<40;i++){
+    particles.push({x:W/2+Math.random()*80-40,y:H/2,vx:(Math.random()-.5)*12,vy:-(Math.random()*8+2),life:1,decay:.02+Math.random()*.02,r:3+Math.random()*4,color:accent});
+  }
+}
+
+// ══ DAILY TASKS ══
+const TASK_DEFS=[
+  {id:'play3',target:3,key:'gamesPlayed'},
+  {id:'perf5',target:5,key:'perfects'},
+  {id:'score15',target:15,key:'maxScore'},
+  {id:'combo3',target:3,key:'maxCombo'},
+];
+let dailyTasks=[];
+function initDailyTasks(){const k='stack_daily_'+new Date().toISOString().slice(0,10);let s=LS.get(k,null);if(!s){s=[...TASK_DEFS].sort(()=>Math.random()-.5).slice(0,3).map(t=>({...t,progress:0,completed:false}));LS.set(k,s);}dailyTasks=s;}
+function saveDailyTasks(){LS.set('stack_daily_'+new Date().toISOString().slice(0,10),dailyTasks);}
+function updateDailyTasks(gs,gp,gc){let anyNew=false;for(const t of dailyTasks){if(t.completed)continue;if(t.key==='gamesPlayed')t.progress=Math.min(t.progress+1,t.target);else if(t.key==='perfects')t.progress=Math.min(t.progress+gp,t.target);else if(t.key==='maxScore')t.progress=Math.max(t.progress,gs);else if(t.key==='maxCombo')t.progress=Math.max(t.progress,gc);if(!t.completed&&t.progress>=t.target){t.completed=true;anyNew=true;showToast('✅ GÖREV: '+t.label);addXP(50);}}saveDailyTasks();if(anyNew)checkAchs();renderDailyTasks();}
+function renderDailyTasks(){
+  const w=document.getElementById('daily-tasks-wrap');
+  if(!w)return;
+  w.innerHTML=dailyTasks.map(t=>`<div class="task-row"><span>${t.completed?'✅ ':''} ${T(t.id)}</span><span class="${t.completed?'task-done':'task-prog'}">${t.progress}/${t.target}</span></div>`).join('');
+}
+
+function getBest(){return leaderboard.length?leaderboard[0].score:0;}
+function getTodayKey(){return 'daily_'+new Date().toISOString().slice(0,10);}
+function getDailyBest(){return LS.get(getTodayKey(),0);}
+function setDailyBest(s){if(s>getDailyBest())LS.set(getTodayKey(),s);}
+function saveLB(s,d,m){const n=settings.playerName||'ANONIM';const av=settings.avatar||'🧱';leaderboard.push({score:s,diff:d,mode:m,date:new Date().toLocaleDateString('tr'),name:n,avatar:av});leaderboard.sort((a,b)=>b.score-a.score);leaderboard=leaderboard.slice(0,5);LS.set('stack_lb',leaderboard);}
+function getColor(i){const th=THEMES[currentTheme]||THEMES['neon'];return th.block(i);}
+const BG_COLORS=[[10,10,15],[5,15,25],[15,5,20],[5,20,15],[20,10,5],[10,5,25],[25,5,10]];
+function updateBgColor(s){}
+function toSY(wy){return wy-camTop;}
+
+// ══ PARTICLES ══
+function spawnParts(x,y,w,color,n=12){for(let i=0;i<n;i++)particles.push({x:x+Math.random()*w,y,vx:(Math.random()-.5)*5,vy:-(Math.random()*4+1),life:1,decay:.028+Math.random()*.028,r:2+Math.random()*3,color});}
+function updateParts(){particles=particles.filter(p=>p.life>0);for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vy+=.15;p.life-=p.decay;}}
+function drawParts(){for(const p of particles){ctx.globalAlpha=p.life;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;}
+
+// ══ TRAILS (multiple styles) ══
+let trailTick=0;
+function addTrail(){
+  if(!mover||!mover.falling)return;
+  trailTick++;
+  const style=settings.trailStyle||'classic';
+  let color=mover.color;
+  if(style==='fire'){const h=Math.random()*40;color=`hsl(${h},100%,${50+Math.random()*20}%)`;}
+  else if(style==='rainbow'){const h=(Date.now()/8)%360;color=`hsl(${h},100%,60%)`;}
+  else if(style==='ghost'){color='rgba(180,160,255,0.5)';}
+  else if(style==='pixel'){color=trailTick%2===0?mover.color:'rgba(255,255,255,0.8)';}
+  else if(style==='neon'){color=THEMES[currentTheme].accent;}
+  else if(style==='ice'){const b=Math.floor(180+Math.random()*75);color=`rgb(${b-60},${b},255)`;}
+  else if(style==='dark'){color='rgba(20,20,20,0.9)';}
+  else if(style==='gold'){const h=40+Math.random()*20;color=`hsl(${h},100%,${55+Math.random()*15}%)`;}
+  else if(style==='matrix'){color=`hsl(${120+Math.random()*20},100%,${40+Math.random()*30}%)`;}
+  else if(style==='blood'){color=`hsl(${350+Math.random()*20},90%,${35+Math.random()*20}%)`;}
+  // Store world Y so trail moves with camera
+  trails.push({x:mover.wx,wy:mover.wy,w:mover.w,life:1,color,style,size:BH});
+  // Extra particles for fire/rainbow
+  if((style==='fire'||style==='rainbow')&&trailTick%2===0){
+    for(let i=0;i<3;i++){
+      particles.push({x:mover.wx+Math.random()*mover.w,y:toSY(mover.wy)+BH/2,vx:(Math.random()-.5)*2,vy:-(Math.random()*2+0.5),life:.8,decay:.06+Math.random()*.04,r:2+Math.random()*3,color});
+    }
+  }
+}
+function updateTrails(){trails=trails.filter(t=>t.life>0);for(const t of trails)t.life-=.12;}
+function drawTrails(){
+  for(const t of trails){
+    const sy=toSY(t.wy); // convert world Y to screen Y each frame
+    if(sy>H+BH||sy+BH<0)continue;
+    ctx.globalAlpha=t.life*.55;
+    const style=t.style;
+    if(style==='pixel'){
+      ctx.fillStyle=t.color;
+      for(let x=t.x;x<t.x+t.w;x+=10)ctx.fillRect(x,sy,5,t.size);
+    } else if(style==='fire'){
+      ctx.shadowColor=t.color;ctx.shadowBlur=10;
+      ctx.fillStyle=t.color;
+      const h=t.size*(0.4+t.life*0.6);
+      ctx.fillRect(t.x,sy+t.size-h,t.w,h);
+      ctx.shadowBlur=0;
+    } else if(style==='ghost'){
+      ctx.fillStyle=t.color;
+      ctx.fillRect(t.x,sy,t.w,t.size);
+    } else if(style==='neon'){
+      ctx.shadowColor=t.color;ctx.shadowBlur=14;
+      ctx.strokeStyle=t.color;ctx.lineWidth=2;
+      ctx.strokeRect(t.x,sy,t.w,t.size);
+      ctx.shadowBlur=0;
+    } else if(style==='ice'){
+      ctx.fillStyle=t.color;
+      ctx.fillRect(t.x,sy,t.w,t.size);
+      ctx.globalAlpha=t.life*.3;
+      ctx.fillStyle='rgba(255,255,255,0.6)';
+      ctx.fillRect(t.x,sy,t.w,4);
+    } else if(style==='dark'){
+      ctx.fillStyle=t.color;
+      ctx.fillRect(t.x,sy,t.w,t.size);
+    } else if(style==='gold'){
+      ctx.shadowColor='#ffd32a';ctx.shadowBlur=12;
+      ctx.fillStyle=t.color;ctx.fillRect(t.x,sy,t.w,t.size);
+      ctx.shadowBlur=0;
+      // sparkles
+      ctx.fillStyle='rgba(255,255,200,.8)';
+      for(let i=0;i<3;i++)ctx.fillRect(t.x+Math.random()*t.w,sy+Math.random()*t.size,2,2);
+    } else if(style==='matrix'){
+      ctx.fillStyle=t.color;ctx.font='bold 10px monospace';
+      const chars='01';
+      for(let x=t.x;x<t.x+t.w;x+=10)ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,sy+BH*.7);
+    } else if(style==='blood'){
+      ctx.shadowColor='#c00';ctx.shadowBlur=8;
+      ctx.fillStyle=t.color;ctx.fillRect(t.x,sy,t.w,t.size);
+      ctx.shadowBlur=0;
+      // drip
+      ctx.fillStyle='rgba(160,0,0,0.6)';
+      ctx.fillRect(t.x+t.w*.3,sy+t.size,4,6+Math.random()*8);
+    } else {
+      ctx.fillStyle=t.color;ctx.fillRect(t.x,sy,t.w,t.size);
+    }
+  }
+  ctx.globalAlpha=1;ctx.shadowBlur=0;
+}
+
+function spawnChunks(){chunks=[];for(const b of blocks){const sy=toSY(b.wy);if(sy<-BH||sy>H+BH)continue;chunks.push({x:b.wx,y:sy,w:b.w,vx:(Math.random()-.5)*6,vy:(Math.random()-1)*4,rot:0,rotV:(Math.random()-.5)*.25,color:b.color,life:1});}}
+function updateChunks(){for(const c of chunks){c.x+=c.vx;c.y+=c.vy;c.vy+=.4;c.rot+=c.rotV;c.life-=.014;}chunks=chunks.filter(c=>c.life>0&&c.y<H+100);}
+function drawChunks(){for(const c of chunks){ctx.save();ctx.globalAlpha=c.life;ctx.translate(c.x+c.w/2,c.y+BH/2);ctx.rotate(c.rot);ctx.fillStyle=c.color;ctx.shadowColor=c.color;ctx.shadowBlur=8;ctx.fillRect(-c.w/2,-BH/2,c.w,BH);ctx.shadowBlur=0;ctx.restore();}ctx.globalAlpha=1;}
+
+function awardPowerup(){const keys=Object.keys(powerups);const k=keys[Math.floor(Math.random()*keys.length)];powerups[k]=Math.min(powerups[k]+1,3);updatePuUI();setMsg('⚡ '+k.toUpperCase()+' KAZANILDI!','powerup');}
+function updatePuUI(){for(const k of Object.keys(powerups)){document.getElementById('pu-'+k+'-count').textContent=powerups[k];document.getElementById('pu-'+k).classList.toggle('ready',powerups[k]>0);}}
+function usePowerup(k){if(state!=='playing'||powerups[k]<=0)return;powerups[k]--;updatePuUI();sfxPowerup();haptic(30);stats.powerupsUsed=(stats.powerupsUsed||0)+1;LS.set('stack_stats',stats);if(k==='freeze'){frozen=true;frozenTimer=120;setMsg(T('msg_frozen'),'powerup');}else if(k==='wide'){if(mover)mover.w=Math.min(mover.w+30,INIT_W);setMsg(T('msg_wide'),'powerup');}else if(k==='auto'){if(mover&&!mover.falling){const top=blocks[blocks.length-1];mover.wx=top.wx;mover.falling=true;setMsg(T('msg_auto'),'powerup');}}}
+function renderLives(){document.getElementById('lives-display').textContent='❤️'.repeat(lives)+'🖤'.repeat(3-lives);}
+
+function rollSpecial(){specialBlockCounter++;const goldFreq=shopOwned.includes('perk_goldboost')?4:8;if(specialBlockCounter%goldFreq===0)nextSpecialType='gold';else nextSpecialType='normal';}
+
+// ══ INIT ══
+function initGame(){
+  cancelAnimationFrame(animId);clearInterval(timerInterval);
+  blocks=[];combo=0;bestCombo=0;score=0;gamePerfects=0;
+  particles=[];trails=[];chunks=[];
+  camTop=-GROUND_SCR;camTopTarget=-GROUND_SCR;
+  powerups={freeze:0,wide:0,auto:0};
+  frozen=false;frozenTimer=0;ghostVisible=true;ghostTimer=0;
+  lastMilestone=0;
+  const hasPerk4lives=shopOwned.includes('life_boost');
+  lives=hasPerk4lives?4:3;renderLives();
+  if(hasPerk4lives)document.getElementById('lives-display').textContent='❤️❤️❤️❤️';
+  specialBlockCounter=0;nextSpecialType='normal';
+  SPEED_BASE=DIFF_CFG[difficulty].sb;SPEED_INC=DIFF_CFG[difficulty].si;
+  if(shopOwned.includes('speed_down'))SPEED_BASE*=0.7;
+  const initW=shopOwned.includes('perk_wide')?Math.min(INIT_W+30,260):INIT_W;
+  const perfectMult=shopOwned.includes('perk_perfect')?2:1;
+  window._perfectPx=PERFECT_PX*perfectMult;
+  blocks.push({wx:(W-initW)/2,wy:-BH,w:initW,color:getColor(0),stype:'normal'});
+  spawnMover();
+  document.getElementById('score-display').textContent='0';
+  document.getElementById('height-display').textContent='0m';
+  setMsg('','');document.getElementById('combo-display').classList.remove('show');
+  updatePuUI();updateBgColor(0);
+  document.getElementById('avatar-display').textContent=settings.avatar||'';
+  updateWeather(0);
+  if(currentMode==='time'){
+    timeLeft=60;
+    document.getElementById('timer-display').style.display='block';
+    document.getElementById('timer-label').style.display='block';
+    document.getElementById('height-display').style.display='none';
+    document.getElementById('height-label').style.display='none';
+    document.getElementById('timer-display').textContent='60';
+    timerInterval=setInterval(()=>{if(state!=='playing')return;timeLeft--;document.getElementById('timer-display').textContent=timeLeft;if(timeLeft<=0){clearInterval(timerInterval);gameOver();}},1000);
+  } else {
+    document.getElementById('timer-display').style.display='none';
+    document.getElementById('timer-label').style.display='none';
+    document.getElementById('height-display').style.display='block';
+    document.getElementById('height-label').style.display='block';
+  }
+  updateStreak();window._gameStartTime=Date.now();
+  // Show music theme name in HUD
+  const mtheme=MUSIC_THEMES[currentTheme];
+  const mhud=document.getElementById('music-theme-hud');
+  if(mhud&&mtheme)mhud.textContent='♪ '+mtheme.name;
+  state='playing';startMusic();tick();
+}
+
+function spawnMover(){
+  const top=blocks[blocks.length-1];
+  if(!top||top.w<4){gameOver();return;}
+  let spd=(SPEED_BASE+score*SPEED_INC)*(Math.random()<.5?1:-1);
+  if(currentMode==='chaos')spd*=(0.5+Math.random()*1.5);
+  rollSpecial();const st=nextSpecialType;
+  let color=getColor(blocks.length);
+  if(st==='gold')color='#ffd32a';
+  mover={wx:spd>0?-top.w:W,wy:top.wy-SLIDE_GAP,w:top.w,xSpeed:spd,falling:false,color,stype:st};
+  ghostVisible=true;ghostTimer=0;
+  const hint=document.getElementById('special-hint');
+  if(st==='gold'){hint.style.color='#ffd32a';hint.textContent='⭐ ALTIN BLOK! MÜKEMMEL = 2X PUAN';hint.style.opacity='1';setTimeout(()=>hint.style.opacity='0',2200);stats.goldSeen=(stats.goldSeen||0)+1;}
+  else hint.style.opacity='0';
+}
+
+function triggerDrop(){if(state!=='playing'||!mover||mover.falling)return;mover.falling=true;sfxPlace();haptic(15);}
+
+function land(){
+  const top=blocks[blocks.length-1];
+  const ol=Math.max(top.wx,mover.wx),or_=Math.min(top.wx+top.w,mover.wx+mover.w);
+  const overlap=or_-ol;
+  if(overlap<=0){
+        lives--;renderLives();sfxLifeLost();haptic([30,20,30]);
+    setMsg(T('msg_life_lost'),'life-lost');
+    mover=null;if(lives<=0){gameOver();return;}
+    spawnMover();return;
+  }
+  // Magnet perk: applied in tick() during movement, not here
+  const perfect=Math.abs(mover.wx-top.wx)<=(window._perfectPx||PERFECT_PX);
+  if(!perfect&&shopOwned.includes('perk_combo')&&combo>0){combo=Math.max(combo-1,0);}else{combo=perfect?combo+1:0;}if(combo>bestCombo)bestCombo=combo;
+  let newW=perfect?top.w:overlap;
+  if(currentMode==='survival'){
+    if(perfect){
+      // Mükemmelde de küçülür ama az
+      newW=Math.max(top.w-4, 8);
+    } else {
+      // Hatalı koymada overlap'e göre küçül, minimum 8
+      newW=Math.max(overlap-10, 8);
+    }
+    if(newW<8){gameOver();return;}
+  }
+  else if(!perfect)newW=Math.min(overlap+3,top.w);
+  const expanding=perfect&&combo>0&&combo%COMBO_EXPAND===0;
+  if(expanding)newW=Math.min(top.w+12,INIT_W);
+  let scoreGain=1;
+  if(mover.stype==='gold'&&perfect){scoreGain=2;sfxGold();haptic(45);stats.goldPerfects=(stats.goldPerfects||0)+1;}
+  const nb={wx:perfect?top.wx:ol,wy:top.wy-BH,w:newW,color:getColor(blocks.length),stype:'normal'};
+  blocks.push(nb);
+    spawnParts(nb.wx,toSY(nb.wy),nb.w,nb.color,perfect?22:10);
+  camTopTarget=nb.wy-(SLIDE_GAP+BH+10);
+  if(expanding){setMsg(T('msg_expand'),'expand');sfxExpand();}
+  else if(perfect&&mover.stype==='gold')setMsg(T('msg_gold_perfect'),'gold');
+  else if(perfect){
+    setMsg(T('msg_perfect_txt'),'perfect');sfxPerfect();
+    if(isCosmeticActive('cosmetic_perfectflash')){
+      const fl=document.getElementById('milestone-flash');
+      fl.style.background=THEMES[currentTheme].accent;
+      fl.style.opacity='0.55';
+      setTimeout(()=>{fl.style.opacity='0';},160);
+    }
+  }
+  else setMsg('','');
+  const cd=document.getElementById('combo-display');
+  if(combo>=2){cd.textContent=combo+'× KOMBONASYON!';cd.classList.add('show');}else cd.classList.remove('show');
+  if(score>0&&score%5===0)awardPowerup();
+  if(perfect)gamePerfects++;
+  score+=scoreGain;
+  checkMilestone(score);
+  updateWeather(score);
+  const sd=document.getElementById('score-display');
+  sd.textContent=score;sd.classList.remove('pop');void sd.offsetWidth;sd.classList.add('pop');
+  document.getElementById('height-display').textContent=Math.round(score*.5*10)/10+'m';
+  updateBgColor(score);trails=[];mover=null;spawnMover();
+}
+
+function gameOver(){
+  if(window._gameStartTime){const dur=Math.round((Date.now()-window._gameStartTime)/1000);if(dur>(stats.longestGame||0))stats.longestGame=dur;}state='dead';cancelAnimationFrame(animId);clearInterval(timerInterval);stopMusic();sfxGameOver();haptic([80,40,80]);
+  spawnChunks();blocks=[];
+  stats.totalGames++;stats.totalBlocks+=score;
+  if(bestCombo>stats.bestCombo)stats.bestCombo=bestCombo;
+  if(gamePerfects>(stats.bestPerfects||0))stats.bestPerfects=gamePerfects;
+  if(!stats.perfectGames)stats.perfectGames=0;
+  if(lives>=3&&score>0)stats.perfectGames++;
+  if(score>=20&&lives>=3)stats.full_lives_20=(stats.full_lives_20||0)+1;
+  stats.totalPerfects=(stats.totalPerfects||0)+gamePerfects;
+  if(gamePerfects>(stats.bestPerfects||0))stats.bestPerfects=gamePerfects;
+  if(!stats.perfectGames)stats.perfectGames=0;
+  if(lives===3&&score>0)stats.perfectGames++;  // no lives lost
+  stats.totalPerfects=(stats.totalPerfects||0)+gamePerfects;
+  stats.history.push(score);stats.history=stats.history.slice(-10);
+  LS.set('stack_stats',stats);
+  saveLB(score,difficulty,currentMode);setDailyBest(score);
+  addXP(score*2);updateDailyTasks(score,gamePerfects,bestCombo);checkAchs();
+  // Tournament completion reward
+  const tGoal=getTournamentGoal();const tScore=getTournamentMyScore();
+  const tKey='stack_t_rewarded_v2_'+getWeekKey();
+  if(tScore>=tGoal.target&&!LS.get(tKey,false)){
+    LS.set(tKey,true);addXP(200);
+    setTimeout(()=>showToast('🏆 TURNUVA TAMAMLANDI! +200 XP'),1500);
+  }
+  renderTournamentBanner();
+  const isNewBest=score>0&&leaderboard[0]&&score>=leaderboard[0].score;
+  document.getElementById('final-score').textContent=score;
+  document.getElementById('new-best-badge').textContent=isNewBest?T('new_best'):'';
+  const nm=settings.playerName?settings.playerName+' · ':'';
+  document.getElementById('final-stats').innerHTML=nm+T('stat_height')+': '+Math.round(score*.5*10)/10+'m &nbsp;|&nbsp; '+T('stat_bestcombo')+': '+bestCombo+'<br>'+T('stat_perfect_go')+': '+gamePerfects+' &nbsp;|&nbsp; '+T('stat_level')+': '+xpData.level;
+  renderGoLb();
+  const ct=dailyTasks.filter(t=>t.completed).length;
+  document.getElementById('go-daily-task').textContent=ct>0?'✅ '+ct+'/'+dailyTasks.length+' '+T('daily_done'):'';
+  const gt=getEquippedTitle();
+  const goTitle=document.getElementById('go-title');
+  if(gt&&goTitle){goTitle.textContent=gt.label;goTitle.setAttribute('style','font-size:.7rem;letter-spacing:3px;text-align:center;margin-top:2px;padding:2px 10px;color:'+gt.color+';border:1px solid '+gt.border+';text-shadow:0 0 8px '+gt.color);}
+  activeWeather='clear';document.getElementById('weather-wrap').innerHTML='';
+  let t=0;function animDeath(){drawBg();updateChunks();drawChunks();updateParts();drawParts();t++;if(t<80)requestAnimationFrame(animDeath);else showScreen('gameover');}
+  animDeath();
+}
+
+// ══ DRAW ══
+function drawBg(){
+  ctx.clearRect(0,0,W,H);
+  const darkBg=isCosmeticActive('cosmetic_dark');
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,darkBg?'rgba(0,0,0,.98)':'rgba(0,0,0,.45)');g.addColorStop(1,darkBg?'rgba(0,0,0,.95)':'rgba(0,0,0,.12)');
+  if(darkBg){ctx.fillStyle='rgba(0,0,0,.98)';ctx.fillRect(0,0,W,H);}
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const gsy=toSY(0);if(gsy>=0&&gsy<=H){ctx.strokeStyle='rgba(0,255,231,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,gsy);ctx.lineTo(W,gsy);ctx.stroke();}
+  // Weather rain overlay on canvas
+  if(activeWeather==='storm'){ctx.fillStyle='rgba(30,0,80,.04)';ctx.fillRect(0,0,W,H);}
+  if(isCosmeticActive('cosmetic_rainbow_bg')){
+    const hue=(Date.now()/40)%360;
+    ctx.fillStyle=`hsla(${hue},80%,10%,0.35)`;ctx.fillRect(0,0,W,H);
+    // Color tint on sides
+    const gl=ctx.createLinearGradient(0,0,W,0);
+    gl.addColorStop(0,`hsla(${hue},100%,50%,0.06)`);
+    gl.addColorStop(0.5,'transparent');
+    gl.addColorStop(1,`hsla(${(hue+120)%360},100%,50%,0.06)`);
+    ctx.fillStyle=gl;ctx.fillRect(0,0,W,H);
+  }
+}
+const BLOCK_FACES={
+  neon:   ['◈','◇','◆','○','●','◉','▣'],
+  retro:  ['★','☆','♦','♠','♥','♣','◎'],
+  minimal:['·','—','|','+','×','÷','='],
+  ghost:  ['✦','✧','✩','✪','✫','✬','✭'],
+};
+function drawBlock(wx,wy,w,color,alpha=1,st='normal',idx=0){
+  const sy=toSY(wy);if(sy>H+BH||sy+BH<0)return;
+  ctx.globalAlpha=alpha;
+  if(st==='gold'){
+    ctx.shadowColor='#ffd32a';ctx.shadowBlur=24;ctx.fillStyle='#ffd32a';
+    ctx.fillRect(wx,sy,w,BH);
+    ctx.shadowBlur=0;ctx.fillStyle='rgba(255,255,200,.4)';ctx.fillRect(wx,sy,w,6);
+    // Gold sparkle face
+    ctx.globalAlpha=alpha*.7;ctx.fillStyle='#fff';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('★',wx+w/2,sy+BH/2);ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  } else {
+    const shadowBlur=isCosmeticActive('cosmetic_shadow')?40:10;
+    ctx.shadowColor=color;ctx.shadowBlur=shadowBlur;ctx.fillStyle=color;
+    ctx.fillRect(wx,sy,w,BH);ctx.shadowBlur=0;
+    ctx.fillStyle='rgba(255,255,255,.15)';ctx.fillRect(wx,sy,w,5);
+    ctx.fillStyle='rgba(0,0,0,.28)';ctx.fillRect(wx,sy+BH-5,w,5);
+    if(isCosmeticActive('cosmetic_grid')){ctx.strokeStyle='rgba(255,255,255,.35)';ctx.lineWidth=1.5;ctx.shadowColor='rgba(255,255,255,.3)';ctx.shadowBlur=3;ctx.strokeRect(wx+0.5,sy+0.5,w-1,BH-1);ctx.shadowBlur=0;}
+    // Block face symbol
+    if(w>30){
+      const faces=BLOCK_FACES[currentTheme]||BLOCK_FACES.neon;
+      const sym=faces[idx%faces.length];
+      ctx.globalAlpha=alpha*0.28;ctx.fillStyle='#fff';
+      ctx.font='bold 11px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(sym,wx+w/2,sy+BH/2);
+      ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    }
+  }
+  ctx.globalAlpha=1;
+}
+function drawTowerShadow(){
+  if(!blocks.length)return;
+  const gsy=toSY(0);if(gsy<0||gsy>H)return;
+  const base=blocks[0];
+  const top=blocks[blocks.length-1];
+  const topSy=toSY(top.wy);
+  const towerH=gsy-topSy;
+  if(towerH<=0)return;
+  // Shadow ellipse on ground
+  const shadowW=Math.min(base.w+towerH*0.15,W*0.8);
+  const cx2=base.wx+base.w/2;
+  ctx.save();
+  ctx.globalAlpha=0.18;
+  const sg=ctx.createRadialGradient(cx2,gsy,4,cx2,gsy,shadowW/2);
+  sg.addColorStop(0,'rgba(0,0,0,0.7)');
+  sg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=sg;
+  ctx.beginPath();
+  ctx.ellipse(cx2,gsy+4,shadowW/2,10,0,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+}
+function draw(){
+  drawBg();drawTrails();drawTowerShadow();
+  for(let bi=0;bi<blocks.length;bi++){const b=blocks[bi];drawBlock(b.wx,b.wy,b.w,b.color,1,b.stype||'normal',bi);}
+  if(mover){
+    if(!mover)return;
+  if(!mover.falling){const top=blocks[blocks.length-1];ctx.strokeStyle='rgba(255,255,255,.1)';ctx.setLineDash([4,4]);ctx.strokeRect(top.wx+.5,toSY(top.wy-BH)+.5,top.w-1,BH-1);ctx.setLineDash([]);}
+    if(mover.falling&&isCosmeticActive('cosmetic_motionblur')){
+      for(let i=1;i<=5;i++){drawBlock(mover.wx,mover.wy+i*8,mover.w,mover.color,0.15*(6-i)/5,mover.stype||'normal');}
+    }
+    drawBlock(mover.wx,mover.wy,mover.w,mover.color,(currentMode==='ghost'&&!ghostVisible)?0:1,mover.stype||'normal');
+  }
+  updateParts();drawParts();ctx.shadowBlur=0;ctx.shadowColor='transparent';
+  // Scanline overlay
+  if(isCosmeticActive('cosmetic_scanline')){
+    for(let y=0;y<H;y+=3){ctx.fillStyle='rgba(0,0,0,0.22)';ctx.fillRect(0,y,W,2);}
+    ctx.fillStyle='rgba(0,255,200,0.015)';ctx.fillRect(0,0,W,H);
+  }
+  // Outline on mover
+  if(mover&&isCosmeticActive('cosmetic_outline')){
+    const sy=toSY(mover.wy);const acc=THEMES[currentTheme].accent;
+    ctx.strokeStyle=acc;ctx.lineWidth=2.5;ctx.shadowColor=acc;ctx.shadowBlur=14;
+    ctx.strokeRect(mover.wx-1,sy-1,mover.w+2,BH+2);ctx.shadowBlur=0;
+    // Also outline all stacked blocks
+    for(const b of blocks){const bsy=toSY(b.wy);if(bsy<-BH||bsy>H+BH)continue;ctx.strokeStyle=acc+'44';ctx.lineWidth=1;ctx.strokeRect(b.wx,bsy,b.w,BH);}
+  }
+}
+
+function tick(){
+  if(state!=='playing')return;
+  if(frozen){frozenTimer--;if(frozenTimer<=0)frozen=false;}
+  if(currentMode==='ghost'){ghostTimer++;ghostVisible=ghostTimer%90<45;}
+  if(!mover)return;
+  if(!mover.falling){
+    if(!frozen){
+      mover.wx+=mover.xSpeed;
+      if(mover.wx+mover.w>W){mover.wx=W-mover.w;mover.xSpeed=-Math.abs(mover.xSpeed);}
+      if(mover.wx<0){mover.wx=0;mover.xSpeed=Math.abs(mover.xSpeed);}
+      // Magnet perk: gentle nudge toward top block (symmetric, same force both directions)
+      if(shopOwned.includes('perk_magnet')){
+        const top=blocks[blocks.length-1];
+        const targetX=top.wx+(top.w-mover.w)/2;
+        mover.wx+=(targetX-mover.wx)*0.018;
+      }
+    }
+  } else {
+    addTrail();updateTrails();
+    const top=blocks[blocks.length-1];mover.wy+=DROP_SPEED;
+    if(mover.wy>=top.wy-BH){mover.wy=top.wy-BH;land();}
+  }
+  camTop+=(camTopTarget-camTop)*0.1;draw();animId=requestAnimationFrame(tick);
+}
+
+// ══ SCREENS ══
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+  document.getElementById('game-ui').style.display='none';
+  if(name==='menu'){
+    document.getElementById('menu').classList.remove('hidden');
+    renderDailyTasks();renderStreakDisplay();
+    const sb=document.getElementById('season-banner');
+    sb.textContent=currentSeason.name+' · '+currentSeason.bonus;
+    sb.style.color=currentSeason.color;sb.style.borderColor=currentSeason.border;
+  } else if(name==='game'){document.getElementById('game-ui').style.display='block';}
+  else if(name==='pause'){document.getElementById('pause-screen').classList.remove('hidden');document.getElementById('game-ui').style.display='block';}
+  else if(name==='gameover'){document.getElementById('gameover-screen').classList.remove('hidden');}
+  else if(name==='achievements'){document.getElementById('achievements-screen').classList.remove('hidden');renderAchs();}
+  else if(name==='shop'){document.getElementById('shop-screen').classList.remove('hidden');renderShop();}
+  else if(name==='online'){document.getElementById('online-screen').classList.remove('hidden');fetchOnlineLB();}
+  else if(name==='settings'){document.getElementById('settings-screen').classList.remove('hidden');loadSettingsUI();}
+  else if(name==='titles'){document.getElementById('titles-screen').classList.remove('hidden');renderTitlesScreen();}
+  else if(name==='profile'){document.getElementById('profile-screen').classList.remove('hidden');renderProfile();}
+  else if(name==='tournament'){document.getElementById('tournament-screen').classList.remove('hidden');renderTournamentScreen();if(!tournamentLB)fetchTournamentLB();}
+  // Her ekran açılışında çeviriyi uygula
+  if(name!=='game')applyLang();
+}
+function renderLbRows(d){return d.length?d.map((e,i)=>`<tr><td>${i+1}.</td><td>${e.avatar||''}</td><td class="sc">${e.score}</td><td>${e.name||''}</td><td>${e.diff||''}</td><td>${e.date||''}</td></tr>`).join(''):`<tr><td colspan="7" style="color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;font-size:.7rem">Henüz skor yok</td></tr>`;}
+function renderMenuLb(){}
+
+function renderProfile(){
+  const accent=THEMES[currentTheme].accent;
+  // Avatar & name
+  document.getElementById('prof-avatar').textContent=settings.avatar||'🧱';
+  document.getElementById('prof-avatar').style.color=accent;
+  const name=settings.playerName||'OYUNCU';
+  document.getElementById('player-name-input').value=settings.playerName||'';
+  // Title
+  const t=getEquippedTitle();
+  const tb=document.getElementById('prof-title-badge');
+  if(t){tb.textContent=t.label;tb.style.color=t.color;tb.style.borderColor=t.border;tb.style.textShadow='0 0 10px '+t.color;tb.style.display='inline-block';}
+  else tb.style.display='none';
+  // Streak
+  const streak=getStreak();
+  const sf=document.getElementById('prof-streak');
+  sf.textContent=streak>=2?'🔥'.repeat(Math.min(streak,7))+' '+streak+' GÜNLÜK SERİ':'';
+  // XP bar
+  const lvl=xpData.level,xp=xpData.xp,needed=xpForLevel(lvl);
+  document.getElementById('prof-level').textContent=T('prof_level')+' '+lvl+' · '+xp+'/'+needed+' XP';
+  document.getElementById('prof-xp-fill').style.width=Math.round(xp/needed*100)+'%';
+  document.getElementById('prof-xp-fill').style.background=accent;
+  // Stats
+  document.getElementById('pst-best').textContent=getBest();
+  // Stat labels
+  const slabels={'pst-best':'stat_best','pst-games':'stat_games','pst-combo':'stat_combo','pst-perf':'stat_perfect','pst-blocks':'stat_blocks','pst-achs':'stat_achs'};
+  Object.entries(slabels).forEach(([id,key])=>{const el=document.getElementById(id);if(el&&el.nextElementSibling)el.nextElementSibling.textContent=T(key);});
+  document.getElementById('pst-games').textContent=stats.totalGames||0;
+  document.getElementById('pst-combo').textContent=stats.bestCombo||0;
+  document.getElementById('pst-perf').textContent=stats.totalPerfects||0;
+  document.getElementById('pst-blocks').textContent=stats.totalBlocks||0;
+  document.getElementById('pst-achs').textContent=unlockedAchs.length+'/'+ACHS.length;
+  // Mode bests
+  const modes=[
+    {key:'classic',label:'KLASİK'},
+    {key:'time',label:'ZAMAN'},
+    {key:'survival',label:'HAYATTA KAL'},
+    {key:'chaos',label:'KAOS'},
+    {key:'ghost',label:'HAYALET'},
+  ];
+  document.getElementById('prof-mode-row').innerHTML=modes.map(m=>{
+    const best=leaderboard.filter(e=>e.mode===m.key);
+    const top=best.length?best[0].score:'-';
+    return `<div class="prof-mode-card"><div class="pmc-val" style="color:${accent}">${top}</div><div class="pmc-lbl" data-mode="${m.key}">${T(m.key)}</div></div>`;
+  }).join('');
+  // Active cosmetics
+  const cosNames=[...activeCosmetics].map(id=>{
+    const item=SHOP_ITEMS.find(i=>i.id===id);
+    return item?item.icon+' '+item.name:'';
+  }).filter(Boolean);
+}
+function renderTitlesScreen(){
+  const eq=getEquippedTitle();
+  document.getElementById('titles-equipped').textContent=eq?'AKTİF UNVAN: '+eq.label:'Henüz unvan yok';
+  document.getElementById('titles-grid').innerHTML=TITLES.map(t=>{
+    const unlocked=t.c();
+    const isEq=equippedTitle===t.id||(equippedTitle===''&&eq&&eq.id===t.id);
+    return `<div onclick="equipTitle('${t.id}')" style="background:rgba(255,255,255,.03);border:1px solid ${unlocked?t.border:'rgba(255,255,255,.06)'};padding:8px 10px;cursor:pointer;transition:all .2s;opacity:${unlocked?1:.35};">
+      <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:${unlocked?t.color:'rgba(255,255,255,.3)'};letter-spacing:2px;">${unlocked?(T(t.id)||t.label):'🔒 ???'}</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.3);letter-spacing:1px;margin-top:3px;">${isEq&&unlocked?'✅ TAKILDI':''}</div>
+    </div>`;
+  }).join('');
+}
+function equipTitle(id){
+  const t=TITLES.find(t=>t.id===id);
+  if(!t||!t.c())return;
+  equippedTitle=id;LS.set('stack_title',id);
+  showToast('🏷️ UNVAN: '+t.label);
+  renderTitlesScreen();renderTitleBadge();
+}
+function renderGoLb(){document.getElementById('go-lb').innerHTML=renderLbRows(leaderboard);}
+function setMsg(t,c){const m=document.getElementById('msg-display');m.textContent=t;m.className=c;}
+
+// ══ SHARE & QR ══
+function shareScore(){stats.shared=(stats.shared||0)+1;LS.set('stack_stats',stats);
+  const n=settings.playerName?settings.playerName+' ':'';
+  const txt='🎮 STACK oyununda '+n+score+' blok yığdım! Sen geçebilir misin? 🏆';
+  if(navigator.share){navigator.share({title:'STACK',text:txt}).catch(()=>{copyToClipboard(txt);});}
+  else{copyToClipboard(txt);}
+}
+function copyToClipboard(txt){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>showToast('📋 KOPYALANDI!')).catch(()=>fallbackCopy(txt));}else{fallbackCopy(txt);}}
+function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');showToast('📋 KOPYALANDI!');}catch{showToast('🎮 '+txt);}document.body.removeChild(ta);}
+function showQR(){
+  const qc=document.getElementById('qr-canvas'),qx=qc.getContext('2d');
+  const size=200;qc.width=size;qc.height=size;
+  qx.fillStyle='#fff';qx.fillRect(0,0,size,size);qx.fillStyle='#0a0a0f';
+  function sq(ox,oy){qx.fillRect(ox,oy,7*9,7*9);qx.fillStyle='#fff';qx.fillRect(ox+9,oy+9,5*9,5*9);qx.fillStyle='#0a0a0f';qx.fillRect(ox+2*9,oy+2*9,3*9,3*9);qx.fillStyle='#0a0a0f';}
+  sq(0,0);sq(200-63,0);sq(0,200-63);
+  let r=(score*137+1)>>>0;
+  for(let y=0;y<21;y++)for(let x=0;x<21;x++){if((x<8&&y<8)||(x>12&&y<8)||(x<8&&y>12))continue;r=(Math.imul(r,1664525)+1013904223)>>>0;if(r&1)qx.fillRect(x*9,y*9,9,9);}
+  qx.font='bold 11px monospace';qx.textAlign='center';qx.fillText('STACK · '+score+' PUAN',100,196);
+  document.getElementById('qr-modal').classList.add('show');
+}
+
+// ══ SETTINGS UI ══
+const FREE_AVATARS=['🧱','🚀','⚡','🎮','🔥','💎','🌀','🦊'];
+const LOCKED_AVATARS=['🐉','👽','🤖','👑','🥷','💀','🐱','🦊','🐺','👾','😈','😇','🔥','⭐'];
+const AVATAR_SHOP_ID={'🐉':'avatar_dragon','👽':'avatar_alien','🤖':'avatar_robot','👑':'avatar_crown','🥷':'avatar_ninja','💀':'avatar_skull','🐱':'avatar_cat','🦊':'avatar_fox','🐺':'avatar_wolf','👾':'avatar_ghost2','😈':'avatar_devil','😇':'avatar_angel','🔥':'avatar_fire2','⭐':'avatar_star'};
+const TRAIL_SHOP_ID={fire:'trail_fire',rainbow:'trail_rainbow',ghost:'trail_ghost',pixel:'trail_pixel',neon:'trail_neon',ice:'trail_ice',dark:'trail_dark'};
+function loadSettingsUI(){
+  const ls=document.getElementById('lang-select');
+  if(ls)ls.value=currentLang;
+  document.getElementById('music-vol').value=settings.musicVol;
+  document.getElementById('sfx-vol').value=settings.sfxVol;
+  // Trail select with lock
+  const trailSel=document.getElementById('trail-style');
+  const trailDefs=[
+    {v:'classic',label:'🌟 KLAŞİK',free:true},
+    {v:'fire',label:'🔥 ATEŞ',id:'trail_fire'},
+    {v:'rainbow',label:'🌈 GÖKKUŞAĞI',id:'trail_rainbow'},
+    {v:'ghost',label:'👻 HAYALET',id:'trail_ghost'},
+    {v:'pixel',label:'🎮 PİKSEL',id:'trail_pixel'},
+    {v:'neon',label:'💡 NEON',id:'trail_neon'},
+    {v:'ice',label:'❄️ BUZUL',id:'trail_ice'},
+    {v:'dark',label:'🌑 KARANLIK',id:'trail_dark'},
+  ];
+  trailSel.innerHTML=trailDefs.map(t=>{
+    const owned=t.free||shopOwned.includes(t.id);
+    return `<option value="${t.v}"${!owned?' disabled style="color:#555"':''}>${owned?t.label:'🔒 '+t.label.split(' ').slice(1).join(' ')+' (Mağaza)'}</option>`;
+  }).join('');
+  const curTrail=settings.trailStyle||'classic';
+  const trailOwned=curTrail==='classic'||shopOwned.includes(TRAIL_SHOP_ID[curTrail]);
+  trailSel.value=trailOwned?curTrail:'classic';
+  // Music theme buttons
+  const mtr=document.getElementById('music-theme-row');
+  if(mtr){
+    mtr.innerHTML=Object.entries(MUSIC_THEMES).map(([k,v])=>`
+      <div onclick="applyTheme('${k}');this.parentNode.querySelectorAll('.mtheme-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');"
+        class="mtheme-btn${currentTheme===k?' active':''}"
+        style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;padding:6px 10px;border:1px solid ${currentTheme===k?THEMES[k].accent:'rgba(255,255,255,.15)'};color:${currentTheme===k?THEMES[k].accent:'rgba(255,255,255,.5)'};cursor:pointer;background:${currentTheme===k?'rgba(255,255,255,.05)':'transparent'};transition:all .2s;text-align:center;">
+        <div>${v.name}</div>
+        <div style="opacity:.5;font-size:.5rem;margin-top:2px;">${v.desc}</div>
+      </div>`).join('');
+  }
+  ['haptic','swipe'].forEach(k=>{const b=document.getElementById(k+'-toggle');if(b){b.textContent=settings[k]?'AÇIK':'KAPALI';b.classList.toggle('on',settings[k]);}});
+  // Avatar row
+  const ar=document.getElementById('avatar-row');
+  const allAvatars=[...FREE_AVATARS,...LOCKED_AVATARS];
+  ar.innerHTML=allAvatars.map(a=>{
+    const shopId=AVATAR_SHOP_ID[a];
+    const owned=!shopId||shopOwned.includes(shopId);
+    if(!owned){
+      return `<button class="avatar-btn" style="opacity:.35;position:relative;cursor:pointer;" onclick="event.stopPropagation();showScreen('shop')" title="Mağazadan aç">${a}<span style="position:absolute;top:-3px;right:-3px;font-size:.5rem">🔒</span></button>`;
+    }
+    return `<button class="avatar-btn${settings.avatar===a?' active':''}" data-av="${a}">${a}</button>`;
+  }).join('');
+  ar.querySelectorAll('.avatar-btn[data-av]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();settings.avatar=b.dataset.av;saveSettings();ar.querySelectorAll('.avatar-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');}));
+}
+
+// ══ SWIPE ══
+let swipeStartY=null;
+document.addEventListener('touchstart',e=>{if(!settings.swipe)return;swipeStartY=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',e=>{
+  if(settings.swipe){
+    if(swipeStartY===null)return;
+    if(swipeStartY-e.changedTouches[0].clientY>30&&state==='playing')triggerDrop();
+    swipeStartY=null;
+  }
+},{passive:true});
+
+
+// ══ EVENTS ══
+document.querySelectorAll('.diff-btn').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.diff-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');difficulty=b.dataset.diff;}));
+document.getElementById('mode-row').addEventListener('click',e=>{const b=e.target.closest('.mode-btn');if(!b)return;e.stopPropagation();document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentMode=b.dataset.mode;LS.set('stack_mode',currentMode);document.getElementById('mode-desc').textContent=getModeDesc(currentMode);});
+document.getElementById('theme-row').addEventListener('click',e=>{const b=e.target.closest('.theme-btn');if(!b)return;e.stopPropagation();applyTheme(b.dataset.theme);});
+document.getElementById('start-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('game');initGame();});
+document.getElementById('pause-btn').addEventListener('click',e=>{e.stopPropagation();if(state==='playing'){state='paused';cancelAnimationFrame(animId);stopMusic();showScreen('pause');}});
+document.getElementById('resume-btn').addEventListener('click',e=>{e.stopPropagation();state='playing';showScreen('game');startMusic();tick();});
+document.getElementById('pause-menu-btn').addEventListener('click',e=>{e.stopPropagation();state='menu';cancelAnimationFrame(animId);clearInterval(timerInterval);stopMusic();applyLang();showScreen('menu');});
+document.getElementById('retry-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('game');initGame();});
+document.getElementById('go-menu-btn').addEventListener('click',e=>{e.stopPropagation();state='menu';applyLang();showScreen('menu');});
+document.getElementById('mute-btn').addEventListener('click',e=>{e.stopPropagation();muted=!muted;e.target.textContent=muted?'🔇':'🔊';if(muted)stopMusic();else if(state==='playing')startMusic();});
+document.getElementById('share-btn').addEventListener('click',e=>{e.stopPropagation();shareScore();});
+document.getElementById('qr-btn').addEventListener('click',e=>{e.stopPropagation();showQR();});
+document.getElementById('qr-close').addEventListener('click',e=>{e.stopPropagation();document.getElementById('qr-modal').classList.remove('show');});
+document.getElementById('ach-back').addEventListener('click',e=>{e.stopPropagation();showScreen('profile');});
+document.getElementById('shop-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('shop');});
+document.getElementById('shop-back').addEventListener('click',e=>{e.stopPropagation();applyLang();showScreen('menu');});
+document.getElementById('online-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('online');});
+document.getElementById('online-back').addEventListener('click',e=>{e.stopPropagation();applyLang();showScreen('menu');});
+document.getElementById('settings-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('settings');});
+document.getElementById('profile-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('profile');});
+document.getElementById('tournament-menu-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('tournament');});
+document.getElementById('titles-back').addEventListener('click',e=>{e.stopPropagation();showScreen('profile');});
+document.getElementById('t-back-btn').addEventListener('click',e=>{e.stopPropagation();applyLang();showScreen('menu');});
+document.getElementById('prof-back-btn').addEventListener('click',e=>{e.stopPropagation();applyLang();showScreen('menu');});
+document.getElementById('prof-titles-btn').addEventListener('click',e=>{e.stopPropagation();showScreen('titles');});
+document.getElementById('prof-achs-corner').addEventListener('click',e=>{e.stopPropagation();});
+document.getElementById('settings-back').addEventListener('click',e=>{e.stopPropagation();applyLang();showScreen('menu');});
+document.getElementById('lang-select').addEventListener('change',e=>{
+  e.stopPropagation();
+  currentLang=e.target.value;
+  LS.set('stack_lang',currentLang);
+  applyLang();
+});
+['freeze','wide','auto'].forEach(k=>{document.getElementById('pu-'+k).addEventListener('click',e=>{e.stopPropagation();usePowerup(k);});});
+document.getElementById('player-name-input').addEventListener('input',e=>{settings.playerName=e.target.value.trim().toUpperCase();saveSettings();});
+document.getElementById('music-vol').addEventListener('input',e=>{settings.musicVol=+e.target.value;saveSettings();if(musicGain&&!muted)musicGain.gain.value=settings.musicVol/100*0.055;});
+document.getElementById('sfx-vol').addEventListener('input',e=>{settings.sfxVol=+e.target.value;saveSettings();});
+document.getElementById('trail-style').addEventListener('change',e=>{settings.trailStyle=e.target.value;shopEquipped.trail=e.target.value;LS.set('stack_shop_equipped',shopEquipped);saveSettings();});
+document.getElementById('haptic-toggle').addEventListener('click',e=>{e.stopPropagation();settings.haptic=!settings.haptic;saveSettings();e.target.textContent=settings.haptic?'AÇIK':'KAPALI';e.target.classList.toggle('on',settings.haptic);});
+document.getElementById('swipe-toggle').addEventListener('click',e=>{e.stopPropagation();settings.swipe=!settings.swipe;saveSettings();e.target.textContent=settings.swipe?'AÇIK':'KAPALI';e.target.classList.toggle('on',settings.swipe);});
+// Click/tap to drop block - document level to catch all taps during game
+// Fare click
+canvas.addEventListener('click',e=>{
+  if(state!=='playing'||settings.swipe)return;
+  triggerDrop();
+});
+// Dokunmatik
+canvas.addEventListener('touchend',e=>{
+  if(state!=='playing'||settings.swipe)return;
+  e.preventDefault();
+  triggerDrop();
+},{passive:false});
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'||e.code==='ArrowDown'){e.preventDefault();if(state==='playing')triggerDrop();}
+  if(e.code==='Escape'){if(state==='playing')document.getElementById('pause-btn').click();else if(state==='paused')document.getElementById('resume-btn').click();}
+  if(e.code==='Digit1')usePowerup('freeze');if(e.code==='Digit2')usePowerup('wide');if(e.code==='Digit3')usePowerup('auto');
+});
+
+function handleResize(){
+  W=window.innerWidth;
+  H=window.innerHeight;
+  canvas.width=W;canvas.height=H;
+  drawBg();
+}
+window.addEventListener('resize',handleResize);handleResize();
+
+// ══ BOOT ══
+// Clear legacy/broken localStorage keys from old versions
+(()=>{
+  const legacyKeys=['stack_shop_equipped'];
+  // Reset equipped if it has bad data
+  const eq=LS.get('stack_shop_equipped',null);
+  if(eq&&typeof eq==='object'&&eq.trail&&!['classic','fire','rainbow','ghost','pixel','neon','sparkle','comet','matrix','minimal'].includes(eq.trail)){
+    LS.set('stack_shop_equipped',{trail:'classic',perk:null});
+  }
+})();
+if(!stats.goldPerfects)stats.goldPerfects=0;
+buildParallax();
+initDailyTasks();
+applyTheme(currentTheme);
+renderModeRow();
+drawBg();
+applyLang();showScreen('menu');
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
