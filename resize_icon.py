@@ -1,13 +1,10 @@
-import os
+import os, shutil
 from PIL import Image
 
 icon_path = 'icon_512_final.png'
 base_path = 'android/app/src/main/res'
 
-print(f"Icon exists: {os.path.exists(icon_path)}")
-print(f"Base path exists: {os.path.exists(base_path)}")
-
-img = Image.open(icon_path).convert('RGBA')
+img = Image.open(icon_path).convert('RGB')
 
 sizes = {
     'mipmap-mdpi':    48,
@@ -23,13 +20,15 @@ for folder, size in sizes.items():
     resized = img.resize((size, size), Image.LANCZOS)
     resized.save(os.path.join(path, 'ic_launcher.png'))
     resized.save(os.path.join(path, 'ic_launcher_round.png'))
+    fg = os.path.join(path, 'ic_launcher_foreground.png')
+    if os.path.exists(fg):
+        resized.save(fg)
     print(f"Done: {folder} ({size}x{size})")
 
-# adaptive icon klasörü varsa xml'leri sil (varsayılan ikonu devre dışı bırak)
+# anydpi-v26 tamamen sil
 anydpi = os.path.join(base_path, 'mipmap-anydpi-v26')
 if os.path.exists(anydpi):
-    for f in os.listdir(anydpi):
-        os.remove(os.path.join(anydpi, f))
-        print(f"Removed adaptive icon: {f}")
+    shutil.rmtree(anydpi)
+    print(f"Deleted adaptive icons: {anydpi}")
 
-print('All icons created!')
+print('All done!')
