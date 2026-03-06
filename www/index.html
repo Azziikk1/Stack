@@ -1868,9 +1868,34 @@ function setMsg(t,c){const m=document.getElementById('msg-display');m.textConten
 //  SHARE & QR 
 function shareScore(){stats.shared=(stats.shared||0)+1;LS.set('stack_stats',stats);
   const n=settings.playerName?settings.playerName+' ':'';
-  const txt=' STACK oyununda '+n+score+' blok yığdım! Sen geçebilir misin? ';
-  if(navigator.share){navigator.share({title:'STACK',text:txt}).catch(()=>{copyToClipboard(txt);});}
-  else{copyToClipboard(txt);}
+  const txt='🎮 STACK oyununda '+n+score+' blok yığdım! Sen geçebilir misin? #StackGame';
+  // Android WebView için intent URL dene
+  const encoded=encodeURIComponent(txt);
+  if(navigator.share){
+    navigator.share({title:'STACK',text:txt}).catch(()=>{
+      tryAndroidShare(encoded,txt);
+    });
+  } else {
+    tryAndroidShare(encoded,txt);
+  }
+}
+function tryAndroidShare(encoded,txt){
+  // Capacitor Share API dene
+  try {
+    if(window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Share){
+      window.Capacitor.Plugins.Share.share({title:'STACK',text:txt,dialogTitle:'Skoru Paylaş'});
+      return;
+    }
+  } catch(e){}
+  // Android intent
+  try {
+    const a=document.createElement('a');
+    a.href='intent:#Intent;action=android.intent.action.SEND;type=text/plain;S.android.intent.extra.TEXT='+encoded+';end';
+    a.click();
+    setTimeout(()=>copyToClipboard(txt),800);
+    return;
+  } catch(e){}
+  copyToClipboard(txt);
 }
 function copyToClipboard(txt){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>showToast(' KOPYALANDI!')).catch(()=>fallbackCopy(txt));}else{fallbackCopy(txt);}}
 function fallbackCopy(txt){const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');showToast(' KOPYALANDI!');}catch{showToast(' '+txt);}document.body.removeChild(ta);}
