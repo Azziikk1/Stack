@@ -1,0 +1,74 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Capacitor CLI
+        run: npm install -g @capacitor/cli
+
+      - name: Add Android platform
+        run: npx cap add android || true
+
+      - name: Sync web files
+        run: npx cap sync android
+
+      - name: Remove ripple effect
+        run: |
+          cat > android/app/src/main/res/values/styles.xml << 'STYLES_EOF'
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">#0a0a0f</item>
+        <item name="colorPrimaryDark">#0a0a0f</item>
+        <item name="colorAccent">#00ffe7</item>
+        <item name="android:colorBackground">#0a0a0f</item>
+        <item name="android:windowBackground">#0a0a0f</item>
+        <item name="android:colorControlHighlight">@android:color/transparent</item>
+        <item name="colorControlHighlight">@android:color/transparent</item>
+        <item name="selectableItemBackground">@android:color/transparent</item>
+        <item name="android:selectableItemBackground">@android:color/transparent</item>
+    </style>
+    <style name="AppTheme.NoActionBarLaunch" parent="AppTheme">
+        <item name="android:background">#0a0a0f</item>
+    </style>
+</resources>
+STYLES_EOF
+
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
+
+      - name: Build debug APK
+        run: |
+          cd android
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: stack-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
