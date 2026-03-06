@@ -1330,8 +1330,7 @@ function setDailyBest(s){if(s>getDailyBest())LS.set(getTodayKey(),s);}
 function saveLB(s,d,m){const n=settings.playerName||'ANONIM';const av=settings.avatar||'🧱';leaderboard.push({score:s,diff:d,mode:m,date:new Date().toLocaleDateString('tr'),name:n,avatar:av});leaderboard.sort((a,b)=>b.score-a.score);leaderboard=leaderboard.slice(0,5);LS.set('stack_lb',leaderboard);}
 function getColor(i){const th=THEMES[currentTheme]||THEMES['neon'];return th.block(i);}
 const BG_COLORS=[[10,10,15],[5,15,25],[15,5,20],[5,20,15],[20,10,5],[10,5,25],[25,5,10]];
-let _bgColor=[10,10,15];
-function updateBgColor(s){_bgColor=BG_COLORS[Math.floor(s/8)%BG_COLORS.length];}
+function updateBgColor(s){const[r,g,b]=BG_COLORS[Math.floor(s/8)%BG_COLORS.length];document.body.style.background=`rgb(${r},${g},${b})`;}
 function toSY(wy){return wy-camTop;}
 
 // ══ PARTICLES ══
@@ -1601,9 +1600,7 @@ function gameOver(){
 
 // ══ DRAW ══
 function drawBg(){
-  const bgc=_bgColor;
-  ctx.fillStyle=`rgb(${bgc[0]},${bgc[1]},${bgc[2]})`;
-  ctx.fillRect(0,0,W,H);
+  ctx.clearRect(0,0,W,H);
   const darkBg=isCosmeticActive('cosmetic_dark');
   const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,darkBg?'rgba(0,0,0,.98)':'rgba(0,0,0,.45)');g.addColorStop(1,darkBg?'rgba(0,0,0,.95)':'rgba(0,0,0,.12)');
   if(darkBg){ctx.fillStyle='rgba(0,0,0,.98)';ctx.fillRect(0,0,W,H);}
