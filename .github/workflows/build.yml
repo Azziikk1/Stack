@@ -36,38 +36,6 @@ jobs:
       - name: Sync web files
         run: npx cap sync android
 
-      - name: Patch MainActivity to disable ripple
-        run: |
-          MA=$(find android -name "MainActivity.kt" | head -1)
-          echo "Patching $MA"
-          python3 - << 'PYEOF'
-import re, os, glob
-
-# MainActivity.kt bul
-files = glob.glob('android/**/MainActivity.kt', recursive=True)
-if not files:
-    files = glob.glob('android/**/MainActivity.java', recursive=True)
-f = files[0]
-print(f"Found: {f}")
-c = open(f).read()
-
-# WebView ayarlarını inject et
-old = 'super.onCreate(savedInstanceState)'
-new = '''super.onCreate(savedInstanceState)
-        // Disable ripple/highlight on WebView
-        val webView = findViewById<android.webkit.WebView>(com.getcapacitor.R.id.webview)
-        webView?.isHapticFeedbackEnabled = false
-        window.decorView.background = android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#0a0a0f"))'''
-
-if old in c and 'Disable ripple' not in c:
-    c = c.replace(old, new)
-    open(f, 'w').write(c)
-    print("Patched!")
-else:
-    print("Already patched or pattern not found")
-    print(c[:500])
-PYEOF
-
       - name: Patch styles.xml
         run: python3 -c "open('android/app/src/main/res/values/styles.xml','w').write('<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n  <style name=\"AppTheme\" parent=\"Theme.AppCompat.NoActionBar\">\n    <item name=\"colorPrimary\">#0a0a0f</item>\n    <item name=\"colorPrimaryDark\">#0a0a0f</item>\n    <item name=\"colorAccent\">#00ffe7</item>\n    <item name=\"android:colorBackground\">#0a0a0f</item>\n    <item name=\"android:windowBackground\">#0a0a0f</item>\n    <item name=\"android:colorControlHighlight\">@android:color/transparent</item>\n    <item name=\"colorControlHighlight\">@android:color/transparent</item>\n    <item name=\"selectableItemBackground\">@android:color/transparent</item>\n    <item name=\"android:selectableItemBackground\">@android:color/transparent</item>\n  </style>\n  <style name=\"AppTheme.NoActionBarLaunch\" parent=\"AppTheme\">\n    <item name=\"android:background\">#0a0a0f</item>\n  </style>\n</resources>')"
 
@@ -83,5 +51,3 @@ PYEOF
           name: stack-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
-
-
