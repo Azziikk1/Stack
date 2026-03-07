@@ -2265,36 +2265,38 @@ function applyObLang(){
 
 
 // Android geri tuşu
+// Android geri tuşu - MainActivity.java tarafından çağrılır
+window.handleAndroidBack = function(){
+  const t = OB_LANGS[currentLang] || OB_LANGS.en;
+  const confirmShowing = document.getElementById('confirm-overlay').style.display === 'flex';
+  if(confirmShowing) return;
+  if(state === 'playing'){
+    state = 'paused';
+    cancelAnimationFrame(animId);
+    stopMusic();
+    showScreen('pause');
+    showConfirm(t.confirmMenu, ()=>{
+      state='menu'; cancelAnimationFrame(animId); clearInterval(timerInterval); stopMusic(); applyLang(); showScreen('menu');
+    }, ()=>{
+      state='playing'; showScreen('game'); startMusic(); tick();
+    });
+  } else if(state === 'paused'){
+    showConfirm(t.confirmMenu, ()=>{
+      state='menu'; cancelAnimationFrame(animId); clearInterval(timerInterval); stopMusic(); applyLang(); showScreen('menu');
+    }, ()=>{
+      state='playing'; showScreen('game'); startMusic(); tick();
+    });
+  } else if(state === 'dead'){
+    state='menu'; applyLang(); showScreen('menu');
+  } else if(state === 'menu'){
+    if(window.Capacitor) window.Capacitor.Plugins.App.exitApp();
+  } else {
+    applyLang(); showScreen('menu');
+  }
+};
+
 if(window.Capacitor){
   try {
-    window.Capacitor.Plugins.App.addListener('backButton', ()=>{
-      const t = OB_LANGS[currentLang] || OB_LANGS.en;
-      const confirmShowing = document.getElementById('confirm-overlay').style.display === 'flex';
-      if(confirmShowing) return; // zaten dialog açık, bir şey yapma
-      if(state === 'playing'){
-        state = 'paused';
-        cancelAnimationFrame(animId);
-        stopMusic();
-        showScreen('pause');
-        showConfirm(t.confirmMenu, ()=>{
-          state='menu'; cancelAnimationFrame(animId); clearInterval(timerInterval); stopMusic(); applyLang(); showScreen('menu');
-        }, ()=>{
-          state='playing'; showScreen('game'); startMusic(); tick();
-        });
-      } else if(state === 'paused'){
-        showConfirm(t.confirmMenu, ()=>{
-          state='menu'; cancelAnimationFrame(animId); clearInterval(timerInterval); stopMusic(); applyLang(); showScreen('menu');
-        }, ()=>{
-          state='playing'; showScreen('game'); startMusic(); tick();
-        });
-      } else if(state === 'dead'){
-        state='menu'; applyLang(); showScreen('menu');
-      } else if(state === 'menu'){
-        showConfirm(t.confirmExit, ()=>{ window.Capacitor.Plugins.App.exitApp(); });
-      } else {
-        applyLang(); showScreen('menu');
-      }
-    });
   } catch(e){}
 }
 
