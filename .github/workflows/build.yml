@@ -67,25 +67,8 @@ jobs:
         run: |
           MAIN=$(find android/app/src/main/java -name "MainActivity.java" | head -1)
           echo "Found: $MAIN"
-          cat > "$MAIN" << 'JAVAEOF'
-package com.stackgame.app;
-
-import android.os.Bundle;
-import android.webkit.WebView;
-import com.getcapacitor.BridgeActivity;
-
-public class MainActivity extends BridgeActivity {
-    @Override
-    public void onBackPressed() {
-        WebView webView = getBridge().getWebView();
-        if (webView != null) {
-            webView.evaluateJavascript("window.handleAndroidBack && window.handleAndroidBack();", null);
-        }
-    }
-}
-JAVAEOF
+          cp MainActivity.java "$MAIN"
           echo "MainActivity patched"
-          cat "$MAIN"
 
 
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/stackgame.keystore
