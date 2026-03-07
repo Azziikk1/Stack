@@ -2268,13 +2268,52 @@ function applyObLang(){
 // Android geri tuşu
 if(window.Capacitor){
   try {
-    window.Capacitor.Plugins.App.addListener('backButton', ()=>{
+    window.Capacitor.Plugins.App.addListener('backButton', ({canGoBack})=>{
       const t = OB_LANGS[currentLang] || OB_LANGS.en;
-      if(state === 'playing' || state === 'paused'){
-        if(state === 'playing'){ state='paused'; cancelAnimationFrame(animId); stopMusic(); showScreen('pause'); }
-        showConfirm(t.confirmMenu, ()=>{ state='menu'; cancelAnimationFrame(animId); clearInterval(timerInterval); stopMusic(); applyLang(); showScreen('menu'); });
+      if(state === 'playing'){
+        // Oyunu durdur, sonra sor
+        state = 'paused';
+        cancelAnimationFrame(animId);
+        stopMusic();
+        showScreen('pause');
+        showConfirm(t.confirmMenu, ()=>{
+          state='menu'; cancelAnimationFrame(animId); clearInterval(timerInterval); stopMusic(); applyLang(); showScreen('menu');
+        }, ()=>{
+          // Hayır: oyuna devam et
+          state='playing'; showScreen('game'); startMusic(); tick();
+        });
+      } else if(state === 'paused'){
+        showConfirm(t.confirmMenu, ()=>{
+          state='menu'; cancelAnimationFrame(animId); clearInterval(timerInterval); stopMusic(); applyLang(); showScreen('menu');
+        }, ()=>{
+          state='playing'; showScreen('game'); startMusic(); tick();
+        });
       } else if(state === 'menu'){
         showConfirm(t.confirmExit, ()=>{ window.Capacitor.Plugins.App.exitApp(); });
+      } else {
+        // diğer ekranlarda (shop, achievements vb.) menüye dön
+        applyLang(); showScreen('menu');
+      }
+    });
+  } catch(e){}
+}
+
+// Arka planda müziği durdur
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){
+    if(state==='playing') stopMusic();
+  } else {
+    if(state==='playing' && !muted) startMusic();
+  }
+});
+// Capacitor için de ayrıca
+if(window.Capacitor){
+  try {
+    window.Capacitor.Plugins.App.addListener('appStateChange', ({isActive})=>{
+      if(!isActive){
+        stopMusic();
+      } else {
+        if(state==='playing' && !muted) startMusic();
       }
     });
   } catch(e){}
