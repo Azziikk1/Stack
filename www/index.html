@@ -2270,6 +2270,12 @@ window.handleAndroidBack = function(){
   const t = OB_LANGS[currentLang] || OB_LANGS.en;
   const confirmShowing = document.getElementById('confirm-overlay').style.display === 'flex';
   if(confirmShowing) return;
+  const onboardingVisible = !document.getElementById('onboarding').classList.contains('hidden');
+  if(onboardingVisible){
+    // Onboarding ekranındayken direkt çık
+    if(window.Capacitor) window.Capacitor.Plugins.App.exitApp();
+    return;
+  }
   if(state === 'playing'){
     state = 'paused';
     cancelAnimationFrame(animId);
@@ -2289,7 +2295,9 @@ window.handleAndroidBack = function(){
   } else if(state === 'dead'){
     state='menu'; applyLang(); showScreen('menu');
   } else if(state === 'menu'){
-    if(window.Capacitor) window.Capacitor.Plugins.App.exitApp();
+    showConfirm(t.confirmExit, ()=>{
+      if(window.Capacitor) window.Capacitor.Plugins.App.exitApp();
+    });
   } else {
     applyLang(); showScreen('menu');
   }
