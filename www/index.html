@@ -1376,7 +1376,7 @@ const ACHS=[
   {id:'three_lives',   icon:'❤️', name:'SAĞLAM DURUŞ',       desc:'3 canla 20 skora ulaş',              c:()=>(stats.full_lives_20||0)>=1},
 ];
 let unlockedAchs=LS.get('stack_achs',[]);
-function checkAchs(){let neu=[];for(const a of ACHS)if(!unlockedAchs.includes(a.id)&&a.c()){unlockedAchs.push(a.id);neu.push(a);}if(neu.length){LS.set('stack_achs',unlockedAchs);let i=0;function nx(){if(i>=neu.length)return;showToast(' '+neu[i].name);i++;setTimeout(nx,2400);}nx();addXP(neu.length*30);}}
+function checkAchs(){let neu=[];for(const a of ACHS)if(!unlockedAchs.includes(a.id)&&a.c()){unlockedAchs.push(a.id);neu.push(a);}if(neu.length){LS.set('stack_achs',unlockedAchs);let i=0;function nx(){if(i>=neu.length)return;showToast(' '+neu[i].name);i++;setTimeout(nx,2400);}nx();addXP(neu.length*10);}}
 function renderAchs(){document.getElementById('ach-grid').innerHTML=ACHS.map(a=>{const d=unlockedAchs.includes(a.id);return `<div class="ach-card${d?' unlocked':''}"><span class="ach-icon">${d?a.icon:''}</span><span class="ach-name">${T('ach_'+a.id)||a.name}</span><span class="ach-desc">${T('ach_desc_'+a.id)||a.desc}</span></div>`;}).join('');}
 
 let _tt=null;
@@ -1420,7 +1420,7 @@ const TASK_DEFS=[
 let dailyTasks=[];
 function initDailyTasks(){const k='stack_daily_'+new Date().toISOString().slice(0,10);let s=LS.get(k,null);if(!s){s=[...TASK_DEFS].sort(()=>Math.random()-.5).slice(0,3).map(t=>({...t,progress:0,completed:false}));LS.set(k,s);}dailyTasks=s;}
 function saveDailyTasks(){LS.set('stack_daily_'+new Date().toISOString().slice(0,10),dailyTasks);}
-function updateDailyTasks(gs,gp,gc){let anyNew=false;for(const t of dailyTasks){if(t.completed)continue;if(t.key==='gamesPlayed')t.progress=Math.min(t.progress+1,t.target);else if(t.key==='perfects')t.progress=Math.min(t.progress+gp,t.target);else if(t.key==='maxScore')t.progress=Math.max(t.progress,gs);else if(t.key==='maxCombo')t.progress=Math.max(t.progress,gc);if(!t.completed&&t.progress>=t.target){t.completed=true;anyNew=true;showToast(' GÖREV: '+t.label);addXP(50);}}saveDailyTasks();if(anyNew)checkAchs();renderDailyTasks();}
+function updateDailyTasks(gs,gp,gc){let anyNew=false;for(const t of dailyTasks){if(t.completed)continue;if(t.key==='gamesPlayed')t.progress=Math.min(t.progress+1,t.target);else if(t.key==='perfects')t.progress=Math.min(t.progress+gp,t.target);else if(t.key==='maxScore')t.progress=Math.max(t.progress,gs);else if(t.key==='maxCombo')t.progress=Math.max(t.progress,gc);if(!t.completed&&t.progress>=t.target){t.completed=true;anyNew=true;showToast(' GÖREV: '+t.label);addXP(30);}}saveDailyTasks();if(anyNew)checkAchs();renderDailyTasks();}
 function renderDailyTasks(){
   const w=document.getElementById('daily-tasks-wrap');
   if(!w)return;
@@ -1666,7 +1666,7 @@ function land(){
   updateWeather(score);
   const sd=document.getElementById('score-display');
   sd.textContent=score;sd.classList.remove('pop');void sd.offsetWidth;sd.classList.add('pop');
-  document.getElementById('height-display').textContent=Math.round(score*.5*10)/10+'m';
+  document.getElementById('height-display').textContent=Math.round((blocks.length-1)*0.5*10)/10+'m';
   updateBgColor(score);trails=[];mover=null;spawnMover();
 }
 
@@ -1687,12 +1687,12 @@ function gameOver(){
   stats.history.push(score);stats.history=stats.history.slice(-10);
   LS.set('stack_stats',stats);
   saveLB(score,difficulty,currentMode);setDailyBest(score);
-  addXP(score*2);updateDailyTasks(score,gamePerfects,bestCombo);checkAchs();
+  addXP(score*1);updateDailyTasks(score,gamePerfects,bestCombo);checkAchs();
   // Tournament completion reward
   const tGoal=getTournamentGoal();const tScore=getTournamentMyScore();
   const tKey='stack_t_rewarded_v2_'+getWeekKey();
   if(tScore>=tGoal.target&&!LS.get(tKey,false)){
-    LS.set(tKey,true);addXP(200);
+    LS.set(tKey,true);addXP(100);
     setTimeout(()=>showToast('TURNUVA TAMAMLANDI! +200 XP'),1500);
   }
   renderTournamentBanner();
