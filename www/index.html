@@ -6,14 +6,17 @@
 <title>Stack Time</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ffe7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=block">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
 @font-face {
   font-family: 'EmojiFont';
   src: local('Noto Color Emoji'), local('Apple Color Emoji'), local('Segoe UI Emoji'), local('Android Emoji');
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;max-height:100vh;overflow:hidden;font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;user-select:none;cursor:pointer;-webkit-overflow-scrolling:touch;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+body{background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;max-height:100vh;overflow:hidden;width:100%;scrollbar-gutter:stable;font-family:'Bebas Neue',Impact,'Arial Narrow',Arial,sans-serif;user-select:none;cursor:pointer;-webkit-overflow-scrolling:touch;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 #bg-grid{display:none;}
 /* PARALLAX LAYERS */
 #parallax-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
@@ -234,7 +237,7 @@ body{background:#0a0a0f;display:flex;flex-direction:column;align-items:center;ju
 #xp-label{font-family:'DM Mono','Courier New',Courier,monospace;font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:2px;text-align:center;margin-bottom:3px;}
 #xp-bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
 #xp-fill{height:100%;background:#a29bfe;border-radius:3px;transition:width .5s;box-shadow:0 0 8px #a29bfe;}
-#daily-tasks-wrap{width:280px;}
+#daily-tasks-wrap{width:280px;min-height:80px;}
 .task-row{display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono','Courier New',Courier,monospace;font-size:.65rem;color:rgba(255,255,255,.4);letter-spacing:1px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .task-prog{color:#7bed9f;}.task-done{color:#ffd32a;}
 /* TOAST & QR */
@@ -2213,6 +2216,18 @@ applyTheme(currentTheme);
 renderModeRow();
 drawBg();
 
+// Menüyü HEMEN hazırla (splash arkasında, görünmez)
+(function(){
+  applyLang();
+  renderDailyTasks();
+  renderStreakDisplay();
+  const sb = document.getElementById('season-banner');
+  if(sb){ sb.textContent = currentSeason.name+' · '+currentSeason.bonus; sb.style.color=currentSeason.color; sb.style.borderColor=currentSeason.border; }
+  // Menü DOM'da hazır ama splash arkasında gizli
+  document.getElementById('menu').classList.remove('hidden');
+  document.getElementById('menu').style.visibility = 'hidden';
+})();
+
 // ONBOARDING çevirileri
 const OB_LANGS = {
   tr: { sub1:'BLOKLARI YIĞMANIN ZAMANI GELDİ', features:'5 oyun modu<br>54 başarım<br>Online liderlik tablosu', howTitle:'— NASIL OYNANIR —', tap:'EKRANA DOKUN', tapDesc:'Hareket eden bloğu<br>tam üste denk getir<br>Ne kadar mükemmel — o kadar puan!', ready:'HAZIR MISIN?', readyDesc:'Rekorunu kır<br>başarımları topla<br>zirveye çık', btn:'OYNAYALIM ▶', next:'İLERİ →', skip:'GEÇ ✕', yes:'EVET', no:'HAYIR', confirmMenu:'Menüye dönmek<br>istediğinden emin misin?<br>Oyun kaybolacak.', confirmExit:'Oyundan çıkmak<br>istediğinden emin misin?' },
@@ -2254,7 +2269,15 @@ function applyObLang(){
   if(seen){ applyLang(); showScreen('menu'); return; }
 
   // Önce splash göster, sonra menüye geç
-  runSplash(()=>{ applyLang(); showScreen('menu'); });
+  runSplash(()=>{
+    // Menü zaten hazır, sadece göster
+    document.querySelectorAll('.screen').forEach(s=>{
+      if(s.id !== 'menu') s.classList.add('hidden');
+    });
+    document.getElementById('game-ui').style.display='none';
+    document.getElementById('menu').classList.remove('hidden');
+    document.getElementById('menu').style.visibility = '';
+  });
 }());
 
 function runSplash(onDone){
@@ -2284,7 +2307,18 @@ function runSplash(onDone){
     runBlockAnim(canvas, titleEl, ()=>{
       splash.style.transition = 'opacity 0.9s ease';
       splash.style.opacity = '0';
-      setTimeout(()=>{ splash.style.display='none'; onDone(); }, 900);
+      setTimeout(()=>{
+        // Menüyü önceden hazırla — layout shift önleme
+        const menuEl = document.getElementById('menu');
+        if(menuEl){
+          menuEl.style.visibility = 'hidden';
+        }
+        setTimeout(()=>{
+          splash.style.display='none';
+          if(menuEl) menuEl.style.visibility = '';
+          onDone();
+        }, 80);
+      }, 900);
     });
   }, 3000);
 }
