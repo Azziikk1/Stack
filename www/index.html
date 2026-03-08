@@ -297,8 +297,8 @@ body.lang-ru .section-title{font-size:0.57rem !important;letter-spacing:2px !imp
 <!-- MENU -->
 <!-- SPLASH -->
 <div id="splash-screen" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#0a0a0f;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
-  <div id="splash-logo-scene" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;opacity:0;transition:opacity 0.8s ease;">
-    <svg width="90" height="90" viewBox="0 0 130 130" style="overflow:visible">
+  <div id="splash-logo-scene" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;opacity:0;transition:opacity 0.8s ease;z-index:10;">
+    <svg width="110" height="110" viewBox="-10 0 150 130" style="overflow:visible">
       <defs>
         <linearGradient id="spGold" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#C9993A"/>
@@ -306,18 +306,30 @@ body.lang-ru .section-title{font-size:0.57rem !important;letter-spacing:2px !imp
         <filter id="spGlow"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         <filter id="spShadow"><feGaussianBlur stdDeviation="7"/></filter>
         <filter id="spGoldGlow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <style>
+          @keyframes spDraw { to { stroke-dashoffset: 0; } }
+          @keyframes spFade { from { opacity:0; } to { opacity:1; } }
+          .sp-stroke { stroke-dasharray: var(--l,400); stroke-dashoffset: var(--l,400); animation: spDraw 0.8s cubic-bezier(.4,0,.2,1) var(--d,0s) forwards; }
+          .sp-fade   { opacity:0; animation: spFade 0.5s ease var(--d,0s) forwards; }
+        </style>
       </defs>
       <g transform="skewX(-10) translate(6,0)">
-        <polygon points="65,10 100,114 86,114 65,58 44,114 30,114" fill="#1a1000" transform="translate(5,6)" filter="url(#spShadow)" opacity="0.9"/>
-        <polygon points="65,10 100,114 86,114 65,58 44,114 30,114" fill="rgba(255,255,255,0.04)"/>
-        <polyline points="30,114 65,10 100,114" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#spGlow)"/>
-        <line x1="86" y1="114" x2="100" y2="114" stroke="rgba(255,255,255,.9)" stroke-width="2.8" stroke-linecap="round"/>
-        <line x1="30" y1="114" x2="44" y2="114" stroke="rgba(255,255,255,.9)" stroke-width="2.8" stroke-linecap="round"/>
-        <polyline points="44,114 65,58 86,114" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="42" y1="82" x2="88" y2="82" stroke="url(#spGold)" stroke-width="2.5" stroke-linecap="round" filter="url(#spGoldGlow)"/>
-        <line x1="89" y1="96" x2="100" y2="96" stroke="#08080e" stroke-width="4"/>
-        <line x1="30" y1="96" x2="41" y2="96" stroke="#08080e" stroke-width="4"/>
-        <circle cx="65" cy="82" r="3" fill="url(#spGold)" filter="url(#spGoldGlow)" opacity="0.85"/>
+        <polygon class="sp-fade" style="--d:.1s" points="65,10 100,114 86,114 65,58 44,114 30,114" fill="#1a1000" transform="translate(5,6)" filter="url(#spShadow)" opacity="0.9"/>
+        <polygon class="sp-fade" style="--d:.15s" points="65,10 100,114 86,114 65,58 44,114 30,114" fill="rgba(255,255,255,0.04)"/>
+        <!-- Sol bacak + tepe + sağ bacak -->
+        <polyline class="sp-stroke" style="--l:155;--d:.2s" points="30,114 65,10 100,114" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#spGlow)"/>
+        <!-- Taban uçları -->
+        <line class="sp-stroke" style="--l:14;--d:.8s" x1="86" y1="114" x2="100" y2="114" stroke="rgba(255,255,255,.9)" stroke-width="2.8" stroke-linecap="round"/>
+        <line class="sp-stroke" style="--l:14;--d:.85s" x1="30" y1="114" x2="44" y2="114" stroke="rgba(255,255,255,.9)" stroke-width="2.8" stroke-linecap="round"/>
+        <!-- İç üçgen -->
+        <polyline class="sp-stroke" style="--l:60;--d:.9s" points="44,114 65,58 86,114" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Orta çizgi altın -->
+        <line class="sp-stroke" style="--l:46;--d:1.0s" x1="42" y1="82" x2="88" y2="82" stroke="url(#spGold)" stroke-width="2.5" stroke-linecap="round" filter="url(#spGoldGlow)"/>
+        <!-- Kesikler -->
+        <line class="sp-fade" style="--d:1.1s" x1="89" y1="96" x2="100" y2="96" stroke="#08080e" stroke-width="4"/>
+        <line class="sp-fade" style="--d:1.1s" x1="30" y1="96" x2="41" y2="96" stroke="#08080e" stroke-width="4"/>
+        <!-- Orta nokta -->
+        <circle class="sp-fade" style="--d:1.2s" cx="65" cy="82" r="3" fill="url(#spGold)" filter="url(#spGoldGlow)" opacity="0.85"/>
       </g>
     </svg>
     <div style="text-align:center;">
@@ -2252,11 +2264,20 @@ function runSplash(onDone){
   const titleEl = document.getElementById('splash-title');
 
   // --- SAHNE 1: Logo ---
+  const logoEl = document.getElementById('splash-logo-scene');
   setTimeout(()=>{
-    const logoEl = document.getElementById('splash-logo-scene');
-    if(logoEl){ logoEl.style.opacity = '1'; }
-    setTimeout(()=>{ if(logoEl) logoEl.style.opacity = '0'; }, 1800);
+    if(logoEl){
+      // Animasyonu sıfırla ve başlat
+      logoEl.querySelectorAll('.sp-stroke,.sp-fade').forEach(el => {
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = '';
+      });
+      logoEl.style.opacity = '1';
+    }
   }, 200);
+  setTimeout(()=>{ if(logoEl) logoEl.style.opacity = '0'; }, 2200);
+  setTimeout(()=>{ if(logoEl) logoEl.style.display = 'none'; }, 3000);
 
   // --- SAHNE 2: Bloklar + Stack Time ---
   setTimeout(()=>{
@@ -2266,7 +2287,7 @@ function runSplash(onDone){
       splash.style.opacity = '0';
       setTimeout(()=>{ splash.style.display='none'; onDone(); }, 900);
     });
-  }, 2400);
+  }, 3000);
 }
 
 function runBlockAnim(canvas, titleEl, onDone){
