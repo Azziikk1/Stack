@@ -747,8 +747,11 @@ const TITLES=[
   {id:'t_timeking',  label:'ZAMAN KRALI',    color:'#00cec9', border:'rgba(0,206,201,.4)',   c:()=>leaderboard.some(e=>e.mode==='time'&&e.score>=30)},
   // Özel unvanlar
   {id:'t_hard',      label:'ÖLÜMSÜZ',        color:'#ff4757', border:'rgba(255,71,87,.4)',   c:()=>leaderboard.some(e=>e.diff==='hard'&&e.score>=25)},
-  {id:'t_streak7',   label:'TUTKUNLU',       color:'#ff6b35', border:'rgba(255,107,53,.4)',  c:()=>getStreak()>=7},
-  {id:'t_streak30',  label:'BAĞIMLI',        color:'#e17055', border:'rgba(225,112,85,.4)',  c:()=>getStreak()>=30},
+  {id:'t_streak7',   label:'🔥 TUTKUNLU',    color:'#ff6b35', border:'rgba(255,107,53,.4)',  c:()=>getStreak()>=7},
+  {id:'t_streak14',  label:'🔥🔥 ATEŞLI',    color:'#e55039', border:'rgba(229,80,57,.4)',   c:()=>getStreak()>=14},
+  {id:'t_streak30',  label:'🔥🔥🔥 BAĞIMLI', color:'#e17055', border:'rgba(225,112,85,.4)',  c:()=>getStreak()>=30},
+  {id:'t_streak60',  label:'💎 ELMASLİ',     color:'#74b9ff', border:'rgba(116,185,255,.4)', c:()=>getStreak()>=60},
+  {id:'t_streak100', label:'👑 EFSANE SERİ', color:'#ffd32a', border:'rgba(255,211,42,.4)',  c:()=>getStreak()>=100},
   {id:'t_allmode',   label:'ÇOKLU USTA',     color:'#fdcb6e', border:'rgba(253,203,110,.4)', c:()=>['classic','time','survival','chaos','ghost'].every(m=>leaderboard.some(e=>e.mode===m))},
   {id:'t_collector', label:'KOLEKSİYONCU',  color:'#a29bfe', border:'rgba(162,155,254,.4)', c:()=>shopOwned.length>=10},
   {id:'t_perfect',   label:'MÜKEMMEL EL',    color:'#00ffe7', border:'rgba(0,255,231,.4)',   c:()=>(stats.bestPerfects||0)>=25},
@@ -784,14 +787,37 @@ function renderTitleBadge(){
 //  STREAK 
 function getTodayStr(){return new Date().toISOString().slice(0,10);}
 function getStreak(){return LS.get('stack_streak_count',0);}
+function getStreakXPBonus(){
+  // Her gün +%1, max %50
+  const streak = getStreak();
+  return 1 + Math.min(streak * 0.01, 0.50);
+}
+function getStreakShields(){return LS.get('stack_streak_shields',0);}
 function updateStreak(){
   const today=getTodayStr();
   const lastDay=LS.get('stack_streak_last','');
   const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
   let streak=LS.get('stack_streak_count',0);
-  if(lastDay===today)return streak; // already counted today
-  if(lastDay===yesterday){streak++;}  // consecutive day
-  else if(lastDay!==today){streak=1;} // broke streak or first time
+  if(lastDay===today)return streak;
+  if(lastDay===yesterday){
+    streak++;
+    // Her 7 günde XP ödülü + unvan bildirimi
+    if(streak===7){addXP(50);showToast('🔥 7 GÜN SERİSİ! +50 XP');}
+    else if(streak===14){addXP(100);showToast('🔥🔥 14 GÜN SERİSİ! +100 XP');}
+    else if(streak===30){addXP(200);showToast('🔥🔥🔥 30 GÜN SERİSİ! +200 XP');}
+    else if(streak===60){addXP(500);showToast('💎 60 GÜN SERİSİ! +500 XP');}
+    else if(streak===100){addXP(1000);showToast('👑 100 GÜN SERİSİ! +1000 XP');}
+  } else if(lastDay!==today){
+    // Seri kırıldı — kalkan var mı?
+    const shields = getStreakShields();
+    if(shields > 0 && lastDay !== ''){
+      LS.set('stack_streak_shields', shields - 1);
+      showToast('🛡️ SERİ KALKANI DEVREYİ GİRDİ! (' + (shields-1) + ' kaldı)');
+      // streak korunuyor, sıfırlanmıyor
+    } else {
+      streak = 1;
+    }
+  }
   LS.set('stack_streak_count',streak);
   LS.set('stack_streak_last',today);
   return streak;
@@ -829,10 +855,10 @@ function saveSettings(){LS.set('stack_settings',settings);}
 
 //  SEASONAL EVENTS 
 const SEASONS=[
-  {name:'❄️ KIŞ SEZONU',    color:'#74b9ff',border:'rgba(116,185,255,.4)',weather:'snow', bonus:'+5% XP · Kar yağışı · 1.5x Altın Blok', xpBonus:1.05, goldMult:1.5, freeTrail:null,  speedBonus:0, blockBonus:0},
-  {name:'🌸 BAHAR YARIŞMASI',color:'#fd79a8',border:'rgba(253,121,168,.4)',weather:'sakura',bonus:'+5% XP · 2x Altın Blok · Çiçek Efekti',   xpBonus:1.05, goldMult:2.0, freeTrail:null,  speedBonus:0, blockBonus:0},
+  {name:'❄️ KIŞ SEZONU',    color:'#74b9ff',border:'rgba(116,185,255,.4)',weather:'snow', bonus:'+5% XP · 1.5x Altın Blok', xpBonus:1.05, goldMult:1.5, freeTrail:null,  speedBonus:0, blockBonus:0},
+  {name:'🌸 BAHAR YARIŞMASI',color:'#fd79a8',border:'rgba(253,121,168,.4)',weather:'sakura',bonus:'+5% XP · 2x Altın Blok',   xpBonus:1.05, goldMult:2.0, freeTrail:null,  speedBonus:0, blockBonus:0},
   {name:'☀️ YAZ ATEŞİ',     color:'#ff6b35',border:'rgba(255,107,53,.4)', weather:'none',  bonus:'+5% XP · Ateş İzi Ücretsiz · Hız +10%',  xpBonus:1.05, goldMult:1.0, freeTrail:'trail_fire', speedBonus:0.1, blockBonus:0},
-  {name:'🍂 SONBAHAR KUPASI',color:'#fdcb6e',border:'rgba(253,203,110,.4)',weather:'leaves',bonus:'+5% XP · Her 10 Blokta +1 Puan · Yaprak', xpBonus:1.05, goldMult:1.0, freeTrail:null,  speedBonus:0, blockBonus:10},
+  {name:'🍂 SONBAHAR KUPASI',color:'#fdcb6e',border:'rgba(253,203,110,.4)',weather:'leaves',bonus:'+5% XP · Her 10 Blokta +1 Puan', xpBonus:1.05, goldMult:1.0, freeTrail:null,  speedBonus:0, blockBonus:10},
 ];
 // Random sezon — her girişte farklı, art arda aynısı gelmesin
 (function(){
@@ -1089,8 +1115,9 @@ function triggerLevelUp(lv){
 }
 function addXP(n){
   const seasonBonus=currentSeason.xpBonus||1;
+  const streakBonus=getStreakXPBonus();
   const xp2=shopOwned.includes('perk_xp2')?2:1;
-  xpData.xp+=Math.round(n*seasonBonus*xp2);
+  xpData.xp+=Math.round(n*seasonBonus*streakBonus*xp2);
   let leveled=false;
   while(xpData.xp>=xpForLevel(xpData.level)){xpData.xp-=xpForLevel(xpData.level);xpData.level++;leveled=true;}
   if(leveled)setTimeout(()=>triggerLevelUp(xpData.level),300);
@@ -1144,6 +1171,7 @@ const SHOP_ITEMS=[
   {id:'perk_magnet',icon:'🧲',name:'MANYETIK',desc:'Blok merkeze %15 çekilir',price:1800,type:'perk',value:'magnet',cat:'GÜÇLENDIRME'},
   {id:'perk_combo',icon:'🔗',name:'COMBO KORUMA',desc:'İlk kaçırmada combo sıfırlanmaz',price:1500,type:'perk',value:'comboprotect',cat:'GÜÇLENDIRME'},
   {id:'perk_gold2',icon:'🥇',name:'ALTIN AVCI',desc:'Altın blok 2× daha sık',price:1600,type:'perk',value:'goldboost',cat:'GÜÇLENDIRME'},
+  {id:'perk_streak_shield',icon:'🛡️',name:'SERİ KALKANI',desc:'1 günlük seri kırılmasını engeller',price:3000,type:'streak_shield',value:'streak_shield',cat:'GÜÇLENDIRME'},
   //  KOZMETİK 
   {id:'cosmetic_dark',   icon:'🌑',name:'KARANLIK MOD',    desc:'Canvas tam siyah arka plan',     price:300, type:'cosmetic',value:'darkbg',      cat:'KOZMETİK'},
   {id:'cosmetic_grid',   icon:'#️⃣',name:'IZGARA',           desc:'Bloklarda ızgara çizgisi',       price:450, type:'cosmetic',value:'grid',        cat:'KOZMETİK'},
@@ -1182,6 +1210,14 @@ function buyItem(id){
   shopOwned.push(id);LS.set('stack_shop_owned',shopOwned);
   if(item.type==='trail'){shopEquipped.trail=item.value;settings.trailStyle=item.value;saveSettings();}
   else if(item.type==='avatarUnlock'){settings.avatar=item.value;saveSettings();}
+  else if(item.type==='streak_shield'){
+    const cur=getStreakShields();
+    LS.set('stack_streak_shields', cur+1);
+    shopOwned.pop(); // kalkan sınırsız alınabilir, owned listesine ekleme
+    showToast('🛡️ SERİ KALKANI ALINDI! ('+( cur+1)+' adet)');
+    LS.set('stack_shop_owned',shopOwned);
+    renderShop(); return;
+  }
   LS.set('stack_shop_equipped',shopEquipped);
   if(item.type==='cosmetic'){showToast('✓ ALINDI — Aktifleştirmek için tekrar tıkla');}else{showToast('✅ SATIN ALINDI: '+item.name);}renderShop();
 }
@@ -1197,9 +1233,13 @@ function renderShop(){
       const owned=shopOwned.includes(item.id);
       const equipped=shopEquipped.trail===item.value;
       const cosActive=item.type==='cosmetic'&&isCosmeticActive(item.id);
-      let label=owned?(item.type==='trail'?(equipped?T('equipped'):T('equip')):item.type==='cosmetic'?(cosActive?T('active'):T('inactive')):T('owned')):''+item.price+' XP';
+      const isShield=item.type==='streak_shield';
+      const shieldCount=isShield?getStreakShields():0;
+      let label=isShield?('🛡️ '+shieldCount+' ADET · '+item.price+' XP'):
+                owned?(item.type==='trail'?(equipped?T('equipped'):T('equip')):item.type==='cosmetic'?(cosActive?T('active'):T('inactive')):T('owned')):''+item.price+' XP';
       let clickFn;
-      if(!owned) clickFn=`buyItem('${item.id}')`;
+      if(isShield) clickFn=`buyItem('${item.id}')`;
+      else if(!owned) clickFn=`buyItem('${item.id}')`;
       else if(item.type==='trail') clickFn=`equipTrail('${item.value}')`;
       else if(item.type==='cosmetic') clickFn=`toggleCosmetic('${item.id}')`;
       else clickFn='';
