@@ -221,6 +221,7 @@ body{background:#0a0a0f;display:flex;flex-direction:column;align-items:center;ju
 .vs-bar-friend{background:#a29bfe;transition:width .8s;}
 /* SEASONAL */
 #season-banner{font-family:'DM Mono','Courier New',Courier,monospace;font-size:.65rem;letter-spacing:2px;padding:4px 10px;border:1px solid;text-align:center;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:.7;}100%{transform:translateY(110vh) rotate(360deg);opacity:0;}}
 @keyframes tb-blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
 #tournament-screen{background:rgba(5,5,12,.99);gap:10px;}
 #tournament-screen h2{font-size:2.2rem;color:#ffd32a;letter-spacing:4px;}
@@ -828,12 +829,20 @@ function saveSettings(){LS.set('stack_settings',settings);}
 
 //  SEASONAL EVENTS 
 const SEASONS=[
-  {name:'❄️ KIŞ SEZONU',color:'#74b9ff',border:'rgba(116,185,255,.4)',weather:'snow',bonus:'Kar yağarken +10% XP'},
-  {name:'🌸 BAHAR YARIŞMASI',color:'#fd79a8',border:'rgba(253,121,168,.4)',weather:'none',bonus:'Özel çiçek teması'},
-  {name:'☀️ YAZ ATEŞI',color:'#ff6b35',border:'rgba(255,107,53,.4)',weather:'none',bonus:'Ateş iz efekti ücretsiz'},
-  {name:'🍂 SONBAHAR KUPASİ',color:'#fdcb6e',border:'rgba(253,203,110,.4)',weather:'none',bonus:'Özel sonbahar renkleri'},
+  {name:'❄️ KIŞ SEZONU',    color:'#74b9ff',border:'rgba(116,185,255,.4)',weather:'snow', bonus:'+5% XP · Kar yağışı · 1.5x Altın Blok', xpBonus:1.05, goldMult:1.5, freeTrail:null,  speedBonus:0, blockBonus:0},
+  {name:'🌸 BAHAR YARIŞMASI',color:'#fd79a8',border:'rgba(253,121,168,.4)',weather:'sakura',bonus:'+5% XP · 2x Altın Blok · Çiçek Efekti',   xpBonus:1.05, goldMult:2.0, freeTrail:null,  speedBonus:0, blockBonus:0},
+  {name:'☀️ YAZ ATEŞİ',     color:'#ff6b35',border:'rgba(255,107,53,.4)', weather:'none',  bonus:'+5% XP · Ateş İzi Ücretsiz · Hız +10%',  xpBonus:1.05, goldMult:1.0, freeTrail:'trail_fire', speedBonus:0.1, blockBonus:0},
+  {name:'🍂 SONBAHAR KUPASI',color:'#fdcb6e',border:'rgba(253,203,110,.4)',weather:'leaves',bonus:'+5% XP · Her 10 Blokta +1 Puan · Yaprak', xpBonus:1.05, goldMult:1.0, freeTrail:null,  speedBonus:0, blockBonus:10},
 ];
-const currentSeason=SEASONS[Math.floor((new Date().getMonth()/12)*4)];
+// Random sezon — her girişte farklı, art arda aynısı gelmesin
+(function(){
+  const last = parseInt(localStorage.getItem('stack_last_season')||'-1');
+  let idx;
+  do { idx = Math.floor(Math.random()*SEASONS.length); } while(idx === last);
+  localStorage.setItem('stack_last_season', idx);
+  window._seasonIdx = idx;
+})();
+const currentSeason = SEASONS[window._seasonIdx];
 
 //  WEATHER SYSTEM 
 const WEATHER_STAGES=[
@@ -859,6 +868,26 @@ function updateWeather(score){
     weatherParticles=[];
     if(w==='rain'||w==='storm'){for(let i=0;i<60;i++)spawnWeatherParticle('rain');}
     else if(w==='snow'){for(let i=0;i<40;i++)spawnWeatherParticle('snow');}
+  }
+}
+// Menü parçacıkları (BAHAR / SONBAHAR)
+function spawnMenuParticles(){
+  const wrap = document.getElementById('weather-wrap');
+  if(!wrap) return;
+  if(currentSeason.weather==='sakura'){
+    for(let i=0;i<25;i++){
+      const el=document.createElement('div');
+      el.textContent='🌸';
+      el.style.cssText=`position:fixed;left:${Math.random()*100}%;top:-20px;font-size:${10+Math.random()*10}px;animation:fall ${4+Math.random()*4}s linear ${Math.random()*5}s infinite;pointer-events:none;z-index:0;opacity:0.7;`;
+      wrap.appendChild(el);
+    }
+  } else if(currentSeason.weather==='leaves'){
+    for(let i=0;i<25;i++){
+      const el=document.createElement('div');
+      el.textContent=['🍂','🍁'][Math.floor(Math.random()*2)];
+      el.style.cssText=`position:fixed;left:${Math.random()*100}%;top:-20px;font-size:${10+Math.random()*10}px;animation:fall ${4+Math.random()*4}s linear ${Math.random()*5}s infinite;pointer-events:none;z-index:0;opacity:0.7;`;
+      wrap.appendChild(el);
+    }
   }
 }
 function spawnWeatherParticle(type){
@@ -1059,7 +1088,7 @@ function triggerLevelUp(lv){
   setTimeout(()=>{num.className='hide';setTimeout(()=>{ov.style.opacity='0';num.className='';},600);},2200);
 }
 function addXP(n){
-  const seasonBonus=currentSeason.weather==='snow'?1.1:1;
+  const seasonBonus=currentSeason.xpBonus||1;
   const xp2=shopOwned.includes('perk_xp2')?2:1;
   xpData.xp+=Math.round(n*seasonBonus*xp2);
   let leveled=false;
@@ -1569,7 +1598,7 @@ function updatePuUI(){for(const k of Object.keys(powerups)){document.getElementB
 function usePowerup(k){if(state!=='playing'||powerups[k]<=0)return;powerups[k]--;updatePuUI();sfxPowerup();haptic(30);stats.powerupsUsed=(stats.powerupsUsed||0)+1;LS.set('stack_stats',stats);if(k==='freeze'){frozen=true;frozenTimer=120;setMsg(T('msg_frozen'),'powerup');}else if(k==='wide'){if(mover)mover.w=Math.min(mover.w+30,INIT_W);setMsg(T('msg_wide'),'powerup');}else if(k==='auto'){if(mover&&!mover.falling){const top=blocks[blocks.length-1];mover.wx=top.wx;mover.falling=true;setMsg(T('msg_auto'),'powerup');}}}
 function renderLives(){document.getElementById('lives-display').textContent='❤️'.repeat(lives)+'🖤'.repeat(3-lives);}
 
-function rollSpecial(){specialBlockCounter++;const goldFreq=shopOwned.includes('perk_goldboost')?4:8;if(specialBlockCounter%goldFreq===0)nextSpecialType='gold';else nextSpecialType='normal';}
+function rollSpecial(){specialBlockCounter++;const goldFreq=shopOwned.includes('perk_goldboost')?4:8;const seasonedFreq=Math.max(2,Math.round(goldFreq/(currentSeason.goldMult||1)));if(specialBlockCounter%seasonedFreq===0)nextSpecialType='gold';else nextSpecialType='normal';}
 
 //  INIT 
 function initGame(){
@@ -1585,6 +1614,13 @@ function initGame(){
   if(hasPerk4lives)document.getElementById('lives-display').textContent='';
   specialBlockCounter=0;nextSpecialType='normal';
   SPEED_BASE=DIFF_CFG[difficulty].sb;SPEED_INC=DIFF_CFG[difficulty].si;
+  // YAZ: hız bonusu
+  if(currentSeason.speedBonus){ SPEED_BASE *= (1 + currentSeason.speedBonus); }
+  // YAZ: ateş izi ücretsiz
+  if(currentSeason.freeTrail && !shopOwned.includes(currentSeason.freeTrail)){
+    settings._seasonTrail = settings.trailStyle;
+    settings.trailStyle = currentSeason.freeTrail;
+  }
   if(shopOwned.includes('speed_down'))SPEED_BASE*=0.7;
   const initW=shopOwned.includes('perk_wide')?Math.min(INIT_W+30,260):INIT_W;
   const perfectMult=shopOwned.includes('perk_perfect')?2:1;
@@ -1696,6 +1732,8 @@ function land(){
   if(score>0&&score%5===0)awardPowerup();
   if(perfect)gamePerfects++;
   score+=scoreGain;
+  // SONBAHAR: her 10 blokta +1 bonus puan
+  if(currentSeason.blockBonus && blocks.length % currentSeason.blockBonus === 0){ score++; setMsg('🍂 SONBAHAR BONUSU! +1','combo'); }
   checkMilestone(score);
   updateWeather(score);
   const sd=document.getElementById('score-display');
@@ -2277,6 +2315,7 @@ function applyObLang(){
     document.getElementById('game-ui').style.display='none';
     document.getElementById('menu').classList.remove('hidden');
     document.getElementById('menu').style.visibility = '';
+    spawnMenuParticles();
   });
 }());
 
