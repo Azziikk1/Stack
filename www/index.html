@@ -2259,14 +2259,18 @@ function runBlockAnim(canvas, titleEl, onDone){
   const stackX = canvas.width / 2 - BW / 2;
   const baseY = canvas.height * 0.65;
 
+  const startOffsets = [20, -60, 40, -30, 50];
+  const landOffsets  = [0,  14, -10, 20, -6];
   for(let i = 0; i < 5; i++){
     blocks.push({
-      x: stackX,
+      x: stackX + landOffsets[i],
+      startX: stackX + startOffsets[i],
       targetY: baseY - i * (BH + 4),
-      currentY: baseY - i * (BH + 4) - canvas.height * 0.55,
+      currentY: -BH, // ekranın çok üstünden başla
       color: COLORS[i],
       landed: false,
-      delay: i * 180,
+      delay: i * 280,
+      velocity: 0,
     });
   }
 
@@ -2304,15 +2308,33 @@ function runBlockAnim(canvas, titleEl, onDone){
     drawStars(elapsed);
 
     let allLanded = true;
+    const gravity = 0.9;
+    const bounceDamp = 0.35;
     blocks.forEach(b => {
       const be = elapsed - b.delay;
       if(be < 0){ allLanded = false; return; }
+
       if(!b.landed){
-        b.currentY += (b.targetY - b.currentY) * Math.min(be * 0.015, 1);
-        if(Math.abs(b.currentY - b.targetY) < 1){ b.currentY = b.targetY; b.landed = true; }
-        else allLanded = false;
+        b.velocity += gravity;
+        b.currentY += b.velocity;
+        // X kayması - hızlıca hedefe git
+        const tx = Math.min(be / 300, 1);
+        const currentX = b.startX + (b.x - b.startX) * tx;
+
+        if(b.currentY >= b.targetY){
+          b.currentY = b.targetY;
+          if(Math.abs(b.velocity) > 2){
+            b.velocity = -b.velocity * bounceDamp; // bounce!
+          } else {
+            b.velocity = 0;
+            b.landed = true;
+          }
+        }
+        if(!b.landed) allLanded = false;
+        drawBlock(currentX, b.currentY, BW, BH, b.color);
+      } else {
+        drawBlock(b.x, b.currentY, BW, BH, b.color);
       }
-      drawBlock(b.x, b.currentY, BW, BH, b.color);
     });
 
     if(allLanded && !titleShown){
