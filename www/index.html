@@ -298,9 +298,18 @@ body.lang-ru .section-title{font-size:0.57rem !important;letter-spacing:2px !imp
 <!-- SPLASH -->
 <div id="splash-screen" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#0a0a0f;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
   <canvas id="splash-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
-  <div id="splash-logo" style="position:relative;z-index:2;text-align:center;opacity:0;transition:opacity 0.8s ease;">
+  <!-- Sahne 1: AraStudio -->
+  <div id="splash-scene1" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.8s ease;">
+    <div style="text-align:center;">
+      <div style="font-family:'DM Mono',monospace;font-size:1.1rem;color:rgba(255,255,255,.7);letter-spacing:8px;">ARASTUDIO</div>
+      <div style="width:40px;height:1px;background:rgba(255,255,255,.2);margin:12px auto;"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.25);letter-spacing:4px;">PRESENTS</div>
+    </div>
+  </div>
+  <!-- Sahne 2: Bloklar + Stack Time -->
+  <canvas id="splash-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:opacity 0.5s ease;"></canvas>
+  <div id="splash-title" style="position:absolute;top:12%;left:0;right:0;z-index:2;text-align:center;opacity:0;transition:opacity 0.8s ease;">
     <div style="font-family:'Bebas Neue',Impact,sans-serif;font-size:4rem;color:#00ffe7;letter-spacing:6px;text-shadow:0 0 40px rgba(0,255,231,.7);">STACK TIME</div>
-    <div style="font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:4px;margin-top:6px;">BY ÖMER STUDIO</div>
   </div>
 </div>
 
@@ -2209,15 +2218,31 @@ function applyObLang(){
 
 function runSplash(onDone){
   const splash = document.getElementById('splash-screen');
+  const scene1 = document.getElementById('splash-scene1');
   const canvas = document.getElementById('splash-canvas');
-  const logo = document.getElementById('splash-logo');
-  const ctx = canvas.getContext('2d');
+  const titleEl = document.getElementById('splash-title');
 
+  // --- SAHNE 1: AraStudio ---
+  setTimeout(()=>{ scene1.style.opacity = '1'; }, 200);
+  setTimeout(()=>{ scene1.style.opacity = '0'; }, 1800);
+
+  // --- SAHNE 2: Bloklar + Stack Time ---
+  setTimeout(()=>{
+    canvas.style.opacity = '1';
+    runBlockAnim(canvas, titleEl, ()=>{
+      // Fade out ve menüye geç
+      splash.style.transition = 'opacity 0.9s ease';
+      splash.style.opacity = '0';
+      setTimeout(()=>{ splash.style.display='none'; onDone(); }, 900);
+    });
+  }, 2400);
+}
+
+function runBlockAnim(canvas, titleEl, onDone){
+  const ctx = canvas.getContext('2d');
   function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
   resize();
-  window.addEventListener('resize', resize);
 
-  // Blok renkleri - tema renklerine uygun
   const COLORS = [
     {top:'#00ffe7', side:'#00b3a1'},
     {top:'#ff006e', side:'#b30050'},
@@ -2225,50 +2250,42 @@ function runSplash(onDone){
     {top:'#f97316', side:'#c2410c'},
     {top:'#00ffe7', side:'#00b3a1'},
   ];
-
-  const BW = 140, BH = 28; // blok genişlik/yükseklik
+  const BW = 140, BH = 28;
   const blocks = [];
   let startTime = null;
-  let logoShown = false;
+  let titleShown = false;
   let done = false;
 
-  // Blokları hazırla - üst üste yığılacak
-  const totalBlocks = 5;
   const stackX = canvas.width / 2 - BW / 2;
-  const baseY = canvas.height * 0.62;
+  const baseY = canvas.height * 0.65;
 
-  for(let i = 0; i < totalBlocks; i++){
+  for(let i = 0; i < 5; i++){
     blocks.push({
       x: stackX,
       targetY: baseY - i * (BH + 4),
-      currentY: baseY - i * (BH + 4) - canvas.height * 0.6, // başlangıçta üstte
-      color: COLORS[i % COLORS.length],
+      currentY: baseY - i * (BH + 4) - canvas.height * 0.55,
+      color: COLORS[i],
       landed: false,
-      delay: i * 180, // ms
+      delay: i * 180,
     });
   }
 
   function drawBlock(x, y, w, h, color){
-    // Üst yüz
     ctx.fillStyle = color.top;
     ctx.fillRect(x, y, w, h);
-    // Alt gölge
     ctx.fillStyle = color.side;
     ctx.fillRect(x, y + h - 6, w, 6);
-    // Sol kenar highlight
     ctx.fillStyle = 'rgba(255,255,255,0.12)';
     ctx.fillRect(x, y, 4, h);
-    // Parlak çizgi üstte
     ctx.fillStyle = 'rgba(255,255,255,0.25)';
     ctx.fillRect(x + 4, y, w - 8, 2);
   }
 
   function drawStars(t){
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    const stars = [[0.1,0.1],[0.9,0.15],[0.2,0.8],[0.8,0.7],[0.5,0.05],[0.3,0.5],[0.7,0.3],[0.15,0.45],[0.85,0.5],[0.6,0.9]];
+    const stars = [[0.1,0.1],[0.9,0.15],[0.2,0.85],[0.8,0.75],[0.5,0.05],[0.3,0.5],[0.7,0.3],[0.15,0.45],[0.85,0.5],[0.6,0.9]];
     stars.forEach(([sx,sy],i)=>{
-      const twinkle = 0.4 + 0.6 * Math.abs(Math.sin(t*0.001 + i));
-      ctx.globalAlpha = twinkle * 0.7;
+      ctx.globalAlpha = (0.4 + 0.6 * Math.abs(Math.sin(t*0.001 + i))) * 0.7;
+      ctx.fillStyle = '#fff';
       ctx.fillRect(canvas.width*sx, canvas.height*sy, 2, 2);
     });
     ctx.globalAlpha = 1;
@@ -2277,61 +2294,35 @@ function runSplash(onDone){
   function animate(ts){
     if(!startTime) startTime = ts;
     const elapsed = ts - startTime;
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Arka plan
     const grad = ctx.createLinearGradient(0,0,0,canvas.height);
     grad.addColorStop(0, '#0a0a1a');
     grad.addColorStop(1, '#0a0a0f');
     ctx.fillStyle = grad;
     ctx.fillRect(0,0,canvas.width,canvas.height);
-
     drawStars(elapsed);
 
-    // Blokları güncelle ve çiz
     let allLanded = true;
-    blocks.forEach((b, i) => {
-      const blockElapsed = elapsed - b.delay;
-      if(blockElapsed < 0){ allLanded = false; return; }
-
+    blocks.forEach(b => {
+      const be = elapsed - b.delay;
+      if(be < 0){ allLanded = false; return; }
       if(!b.landed){
-        // Gravity + bounce
-        const progress = Math.min(blockElapsed / 400, 1);
-        const eased = progress < 0.7
-          ? progress / 0.7
-          : 1 - (progress - 0.7) / 0.3 * 0.08; // hafif bounce
-        b.currentY = b.currentY + (b.targetY - b.currentY) * Math.min(blockElapsed * 0.015, 1);
-
-        if(Math.abs(b.currentY - b.targetY) < 1){
-          b.currentY = b.targetY;
-          b.landed = true;
-        } else {
-          allLanded = false;
-        }
+        b.currentY += (b.targetY - b.currentY) * Math.min(be * 0.015, 1);
+        if(Math.abs(b.currentY - b.targetY) < 1){ b.currentY = b.targetY; b.landed = true; }
+        else allLanded = false;
       }
       drawBlock(b.x, b.currentY, BW, BH, b.color);
     });
 
-    // Tüm bloklar yerleştiyse logoyu göster
-    if(allLanded && !logoShown){
-      logoShown = true;
-      setTimeout(()=>{ logo.style.opacity = '1'; }, 100);
-      // Logo göründükten 1.8s sonra fade out
-      setTimeout(()=>{
-        splash.style.transition = 'opacity 0.9s ease';
-        splash.style.opacity = '0';
-        setTimeout(()=>{
-          splash.style.display = 'none';
-          window.removeEventListener('resize', resize);
-          onDone();
-        }, 900);
-      }, 1900);
+    if(allLanded && !titleShown){
+      titleShown = true;
+      setTimeout(()=>{ titleEl.style.opacity = '1'; }, 100);
+      setTimeout(()=>{ done = true; onDone(); }, 2000);
     }
 
     if(!done) requestAnimationFrame(animate);
   }
-
   requestAnimationFrame(animate);
 }
   let slide = 1;
