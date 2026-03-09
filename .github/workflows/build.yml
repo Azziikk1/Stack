@@ -44,6 +44,15 @@ jobs:
       - name: Patch styles.xml
         run: python3 patch_styles.py
 
+      - name: Patch targetSdkVersion to 35
+        run: |
+          sed -i 's/targetSdkVersion 33/targetSdkVersion 35/g' android/app/build.gradle
+          sed -i 's/targetSdkVersion 34/targetSdkVersion 35/g' android/app/build.gradle
+          sed -i 's/targetSdk = 33/targetSdk = 35/g' android/app/build.gradle
+          sed -i 's/targetSdk = 34/targetSdk = 35/g' android/app/build.gradle
+          echo "targetSdkVersion patched:"
+          grep -n "targetSdk" android/app/build.gradle
+
       - name: Set app icon
         run: |
           pip install pillow --quiet
