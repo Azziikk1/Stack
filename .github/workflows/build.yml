@@ -39,21 +39,26 @@ jobs:
       - name: Force copy index.html
         run: |
           cp www/index.html android/app/src/main/assets/public/index.html
-          echo "index.html force copied to android assets"
 
       - name: Patch styles.xml
         run: python3 patch_styles.py
 
       - name: Patch targetSdkVersion to 35
         run: |
-          echo "=== BEFORE PATCH ==="
-          cat android/app/build.gradle
-          # Her türlü formatı yakala
-          sed -i 's/targetSdkVersion [0-9]*/targetSdkVersion 35/g' android/app/build.gradle
-          sed -i 's/targetSdk = [0-9]*/targetSdk = 35/g' android/app/build.gradle
-          sed -i 's/targetSdk=[0-9]*/targetSdk=35/g' android/app/build.gradle
-          echo "=== AFTER PATCH ==="
-          cat android/app/build.gradle
+          echo "=== build.gradle before ==="
+          grep -n "targetSdk\|compileSdk\|minSdk" android/app/build.gradle || true
+          python3 - << 'PYEOF'
+          import re
+          with open('android/app/build.gradle', 'r') as f:
+              content = f.read()
+          content = re.sub(r'targetSdkVersion\s+\d+', 'targetSdkVersion 35', content)
+          content = re.sub(r'targetSdk\s*=\s*\d+', 'targetSdk = 35', content)
+          with open('android/app/build.gradle', 'w') as f:
+              f.write(content)
+          print("Patched successfully")
+          PYEOF
+          echo "=== build.gradle after ==="
+          grep -n "targetSdk\|compileSdk\|minSdk" android/app/build.gradle || true
 
       - name: Set app icon
         run: |
