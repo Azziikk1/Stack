@@ -47,71 +47,15 @@ jobs:
       - name: Patch styles.xml
         run: python3 patch_styles.py
 
-      - name: Patch SDK versions and Gradle plugin to support 35
+      - name: Patch SDK versions and Gradle
         run: |
-          python3 - << 'PYEOF'
-          import re, os
-
-          vpath = 'android/variables.gradle'
-          if os.path.exists(vpath):
-              with open(vpath, 'r') as f:
-                  content = f.read()
-              content = re.sub(r'targetSdkVersion\s*=\s*\d+', 'targetSdkVersion = 35', content)
-              content = re.sub(r'compileSdkVersion\s*=\s*\d+', 'compileSdkVersion = 35', content)
-              with open(vpath, 'w') as f:
-                  f.write(content)
-              print("variables.gradle patched")
-
-          rpath = 'android/build.gradle'
-          if os.path.exists(rpath):
-              with open(rpath, 'r') as f:
-                  content = f.read()
-              content = re.sub(r"com\.android\.tools\.build:gradle:[0-9.]+", "com.android.tools.build:gradle:8.3.0", content)
-              with open(rpath, 'w') as f:
-                  f.write(content)
-              print("root build.gradle patched")
-
-          wpath = 'android/gradle/wrapper/gradle-wrapper.properties'
-          if os.path.exists(wpath):
-              with open(wpath, 'r') as f:
-                  content = f.read()
-              content = re.sub(r'gradle-[0-9.]+-all\.zip', 'gradle-8.4-all.zip', content)
-              content = re.sub(r'gradle-[0-9.]+-bin\.zip', 'gradle-8.4-bin.zip', content)
-              with open(wpath, 'w') as f:
-                  f.write(content)
-              print("gradle-wrapper patched")
-          PYEOF
+          python3 patch_sdk.py
 
       - name: Fix Kotlin stdlib duplicates
         run: |
-          python3 - << 'PYEOF'
-          import re
+          python3 fix_kotlin.py
 
-          # Root build.gradle'a kotlin version ve resolutionStrategy ekle
-          rpath = 'android/build.gradle'
-          with open(rpath, 'r') as f:
-              content = f.read()
-
-          # allprojects bloğu içine resolution strategy ekle
-          fix = """
-allprojects {
-    configurations.all {
-        resolutionStrategy {
-            force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
-            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10'
-            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
-        }
-    }
-}
-"""
-          if 'resolutionStrategy' not in content:
-              content += fix
-              with open(rpath, 'w') as f:
-                  f.write(content)
-              print("Kotlin resolution strategy added")
-          else:
-              print("Already has resolutionStrategy")
-          PYEOF
+      - name: Upgrade Capacitor to fix BroadcastReceiver crash
         run: |
           npm install @capacitor/core@latest @capacitor/android@latest @capacitor/cli@latest --legacy-peer-deps
           npx cap sync android
