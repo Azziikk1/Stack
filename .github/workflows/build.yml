@@ -52,7 +52,6 @@ jobs:
           python3 - << 'PYEOF'
           import re, os
 
-          # variables.gradle → targetSdk ve compileSdk = 35
           vpath = 'android/variables.gradle'
           if os.path.exists(vpath):
               with open(vpath, 'r') as f:
@@ -61,10 +60,8 @@ jobs:
               content = re.sub(r'compileSdkVersion\s*=\s*\d+', 'compileSdkVersion = 35', content)
               with open(vpath, 'w') as f:
                   f.write(content)
-              print("variables.gradle patched:")
-              print(content)
+              print("variables.gradle patched")
 
-          # build.gradle (root) → Android Gradle Plugin 8.3.0
           rpath = 'android/build.gradle'
           if os.path.exists(rpath):
               with open(rpath, 'r') as f:
@@ -74,7 +71,6 @@ jobs:
                   f.write(content)
               print("root build.gradle patched")
 
-          # gradle-wrapper.properties → Gradle 8.4
           wpath = 'android/gradle/wrapper/gradle-wrapper.properties'
           if os.path.exists(wpath):
               with open(wpath, 'r') as f:
@@ -83,9 +79,17 @@ jobs:
               content = re.sub(r'gradle-[0-9.]+-bin\.zip', 'gradle-8.4-bin.zip', content)
               with open(wpath, 'w') as f:
                   f.write(content)
-              print("gradle-wrapper patched:")
-              print(content)
+              print("gradle-wrapper patched")
           PYEOF
+
+      - name: Upgrade Capacitor to fix BroadcastReceiver crash
+        run: |
+          npm install @capacitor/core@latest @capacitor/android@latest @capacitor/cli@latest
+          npx cap sync android
+
+      - name: Force copy index.html again after sync
+        run: |
+          cp www/index.html android/app/src/main/assets/public/index.html
 
       - name: Set app icon
         run: |
