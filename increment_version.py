@@ -4,15 +4,17 @@ path = 'android/app/build.gradle'
 with open(path, 'r') as f:
     content = f.read()
 
-# versionCode +1
+# versionCode -> 3
 def bump_code(m):
-    return 'versionCode ' + str(int(m.group(1)) + 1)
+    current = int(m.group(1))
+    new = max(current + 1, 3)
+    return 'versionCode ' + str(new)
 content = re.sub(r'versionCode\s+(\d+)', bump_code, content)
 
-# versionName +0.01 (örn: "1.00" -> "1.01")
+# versionName -> "1.02"
 def bump_name(m):
     v = float(m.group(1))
-    new_v = round(v + 0.01, 2)
+    new_v = max(round(v + 0.01, 2), 1.02)
     return 'versionName "' + format(new_v, '.2f') + '"'
 content = re.sub(r'versionName\s+"([0-9.]+)"', bump_name, content)
 
