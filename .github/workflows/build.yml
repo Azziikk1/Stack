@@ -51,11 +51,6 @@ jobs:
       - name: Fix Kotlin stdlib duplicates
         run: python3 fix_kotlin.py
 
-      - name: Upgrade Capacitor to fix BroadcastReceiver crash
-        run: |
-          npm install @capacitor/core@latest @capacitor/android@latest @capacitor/cli@latest --legacy-peer-deps
-          npx cap sync android
-
       - name: Force copy index.html again after sync
         run: cp www/index.html android/app/src/main/assets/public/index.html
 
